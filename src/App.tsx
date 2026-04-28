@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom'
 
 function App() {
   return (
-    <>
+    <div className="content">
       <Header />
       <main className="site-main">
         <Routes>
@@ -19,7 +19,7 @@ function App() {
       <footer className="site-footer">
         <p>&copy; {new Date().getFullYear()} SwipeIT. All rights reserved.</p>
       </footer>
-    </>
+    </div>
   )
 }
 

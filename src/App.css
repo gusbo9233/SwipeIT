@@ -1,9 +1,15 @@
-main {
-  min-height: calc(100vh - 112px);
+.content {
+  display: flex;
+  flex-direction: column;
 }
 
-.site-footer {
+main {
+  flex-grow: 1;
+}
+
+footer {
   background: var(--color-surface-container);
   padding: 16px 24px;
   text-align: center;
+
 }
