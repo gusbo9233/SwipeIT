@@ -1,4 +1,10 @@
 import type { FormEvent } from 'react'
+import IconInput from '../onboarding/IconInput'
+import OnboardingLayout from '../onboarding/OnboardingLayout'
+import OnboardingSection from '../onboarding/OnboardingSection'
+import OnboardingSubmit from '../onboarding/OnboardingSubmit'
+import PreferenceGrid from '../onboarding/PreferenceGrid'
+import SearchableChips from '../onboarding/SearchableChips'
 
 type CandidatePreferencesSetupProps = {
   onBack: () => void
@@ -23,135 +29,52 @@ function CandidatePreferencesSetup({ onBack }: CandidatePreferencesSetupProps) {
   }
 
   return (
-    <div className="candidate-onboarding">
-      <header className="candidate-topbar">
-        <div className="candidate-topbar-inner">
-          <div className="candidate-brand-row">
-            <button
-              className="candidate-back material-symbols-outlined"
-              onClick={onBack}
-              type="button"
-              aria-label="Back to registration"
-            >
-              arrow_back
-            </button>
-            <span>Swipe IT</span>
-          </div>
-          <div className="candidate-profile-dot" aria-label="Candidate profile">
-            AR
-          </div>
-        </div>
-      </header>
-
-      <main className="candidate-onboarding-main">
-        <section className="candidate-onboarding-heading">
-          <h1>Complete your profile</h1>
-          <p>Help us match you with the right engineering opportunities.</p>
-        </section>
-
-        <form className="candidate-profile-form" onSubmit={handleSubmit}>
-          <section className="candidate-form-section">
-            <SectionTitle icon="person" title="Personal Information" />
-            <div className="candidate-field-grid">
-              <label className="candidate-field">
-                Full Name
-                <input placeholder="Alex Rivera" type="text" />
-              </label>
-              <label className="candidate-field">
-                Phone Number
-                <input placeholder="+1 (555) 000-0000" type="tel" />
-              </label>
-            </div>
-          </section>
-
-          <section className="candidate-form-section">
-            <SectionTitle icon="link" title="Professional Links" />
-            <div className="candidate-link-list">
-              <IconInput icon="share" placeholder="linkedin.com/in/username" />
-              <IconInput icon="code" placeholder="github.com/username" />
-            </div>
-          </section>
-
-          <section className="candidate-form-section skills-section">
-            <div className="section-glow" />
-            <SectionTitle icon="bolt" title="Technical Skills" />
-            <label className="skill-search">
-              <span className="material-symbols-outlined">search</span>
-              <input placeholder="Search skills (e.g. React, Python, AWS)" type="text" />
+    <OnboardingLayout
+      avatarLabel="AR"
+      description="Help us match you with the right engineering opportunities."
+      onBack={onBack}
+      title="Complete your profile"
+    >
+      <form className="candidate-profile-form" onSubmit={handleSubmit}>
+        <OnboardingSection icon="person" title="Personal Information">
+          <div className="candidate-field-grid">
+            <label className="candidate-field">
+              Full Name
+              <input placeholder="Alex Rivera" type="text" />
             </label>
-            <div className="candidate-chip-list">
-              {selectedSkills.map((skill) => (
-                <button className="skill-chip is-selected" key={skill} type="button">
-                  <span>{skill}</span>
-                  <span className="material-symbols-outlined">close</span>
-                </button>
-              ))}
-              {suggestedSkills.map((skill) => (
-                <button className="skill-chip" key={skill} type="button">
-                  <span className="material-symbols-outlined">add</span>
-                  <span>{skill}</span>
-                </button>
-              ))}
-            </div>
-          </section>
-
-          <section className="candidate-form-section">
-            <SectionTitle icon="work_history" title="Working Preferences" />
-            <div className="work-preference-grid">
-              {workPreferences.map((preference) => (
-                <label className="work-preference" key={preference.value}>
-                  <input
-                    defaultChecked={preference.checked}
-                    name={preference.value}
-                    type="checkbox"
-                  />
-                  <span className="material-symbols-outlined">
-                    {preference.icon}
-                  </span>
-                  <strong>{preference.label}</strong>
-                </label>
-              ))}
-            </div>
-          </section>
-
-          <div className="candidate-submit-block">
-            <button className="candidate-submit" type="submit">
-              <span>Complete Profile</span>
-              <span className="material-symbols-outlined">check_circle</span>
-            </button>
-            <p>By continuing, you agree to our Terms of Service</p>
+            <label className="candidate-field">
+              Phone Number
+              <input placeholder="+1 (555) 000-0000" type="tel" />
+            </label>
           </div>
-        </form>
-      </main>
-    </div>
-  )
-}
+        </OnboardingSection>
 
-type SectionTitleProps = {
-  icon: string
-  title: string
-}
+        <OnboardingSection icon="link" title="Professional Links">
+          <div className="candidate-link-list">
+            <IconInput icon="share" placeholder="linkedin.com/in/username" />
+            <IconInput icon="code" placeholder="github.com/username" />
+          </div>
+        </OnboardingSection>
 
-function SectionTitle({ icon, title }: SectionTitleProps) {
-  return (
-    <div className="candidate-section-title">
-      <span className="material-symbols-outlined">{icon}</span>
-      <h2>{title}</h2>
-    </div>
-  )
-}
+        <OnboardingSection className="skills-section" icon="bolt" title="Technical Skills">
+          <div className="section-glow" />
+          <SearchableChips
+            placeholder="Search skills (e.g. React, Python, AWS)"
+            selected={selectedSkills}
+            suggested={suggestedSkills}
+          />
+        </OnboardingSection>
 
-type IconInputProps = {
-  icon: string
-  placeholder: string
-}
+        <OnboardingSection icon="work_history" title="Working Preferences">
+          <PreferenceGrid items={workPreferences} />
+        </OnboardingSection>
 
-function IconInput({ icon, placeholder }: IconInputProps) {
-  return (
-    <label className="candidate-icon-input">
-      <span className="candidate-input-icon material-symbols-outlined">{icon}</span>
-      <input placeholder={placeholder} type="url" />
-    </label>
+        <OnboardingSubmit
+          helperText="By continuing, you agree to our Terms of Service"
+          label="Complete Profile"
+        />
+      </form>
+    </OnboardingLayout>
   )
 }
 

@@ -1,0 +1,73 @@
+[
+  {
+    "name": "Elin Bergström",
+    "email": "elin.bergstrom@example.com",
+    "address": "Hammarby Kaj 5, 120 30 Stockholm, Sweden",
+    "phoneNumber": "+46 70 111 22 33",
+    "linkedInUrl": "https://www.linkedin.com/in/elinbergstrom",
+    "githubUrl": "https://github.com/elinb",
+    "skills": ["React", "TypeScript", "Node.js", "GraphQL"],
+    "education": [
+      {"institution": "KTH Royal Institute of Technology", "degree": "MSc Computer Science", "year": 2022},
+      {"institution": "Stockholm University", "degree": "BSc Software Engineering", "year": 2020}
+    ],
+    "competences": ["UI development", "API design", "test automation", "team collaboration"],
+    "references": ["Linnea Nord, CTO at Digital Health AB", "Marcus Åkesson, Product Manager at FinTech Labs"]
+  },
+  {
+    "name": "Lukas Jensen",
+    "email": "lukas.jensen@example.com",
+    "address": "Vesterbrogade 45, 1620 Copenhagen, Denmark",
+    "phoneNumber": "+45 40 22 33 44",
+    "linkedInUrl": "https://www.linkedin.com/in/lukasjensen",
+    "githubUrl": "https://github.com/lukasjensen",
+    "skills": ["Python", "Django", "Docker", "AWS"],
+    "education": [
+      {"institution": "University of Copenhagen", "degree": "BSc Computer Science", "year": 2019}
+    ],
+    "competences": ["backend architecture", "cloud deployment", "data processing", "mentoring"],
+    "references": ["Sofia Madsen, Engineering Lead at Nordic Data", "Jonas Petersen, CEO at CleverTech"]
+  },
+  {
+    "name": "Mia Lund",
+    "email": "mia.lund@example.com",
+    "address": "Fredrikinkatu 14, 00120 Helsinki, Finland",
+    "phoneNumber": "+358 50 123 4567",
+    "linkedInUrl": "https://www.linkedin.com/in/mialund",
+    "githubUrl": "https://github.com/mialund",
+    "skills": ["Java", "Spring Boot", "Kubernetes", "SQL"],
+    "education": [
+      {"institution": "Aalto University", "degree": "MSc Software Engineering", "year": 2021}
+    ],
+    "competences": ["system design", "microservices", "database tuning", "DevOps"],
+    "references": ["Antti Virtanen, Tech Lead at SmartGrowth", "Nina Laine, Project Manager at CloudCore"]
+  },
+  {
+    "name": "Noah Özkan",
+    "email": "noah.ozkan@example.com",
+    "address": "Landegodegata 11, 9008 Tromsø, Norway",
+    "phoneNumber": "+47 98 76 54 32",
+    "linkedInUrl": "https://www.linkedin.com/in/noahozkan",
+    "githubUrl": "https://github.com/noahozkan",
+    "skills": ["Angular", "RxJS", "Sass", "Accessibility"],
+    "education": [
+      {"institution": "University of Bergen", "degree": "BSc Interaction Design", "year": 2020}
+    ],
+    "competences": ["frontend performance", "mobile-first design", "user research", "cross-team communication"],
+    "references": ["Tove Hansen, UX Director at DesignLab", "Emil Karlsen, Senior Developer at Nordic Apps"]
+  },
+  {
+    "name": "Sara Pettersen",
+    "email": "sara.pettersen@example.com",
+    "address": "Sæterbakken 8, 0672 Oslo, Norway",
+    "phoneNumber": "+47 45 67 89 01",
+    "linkedInUrl": "https://www.linkedin.com/in/sarapp",
+    "githubUrl": "https://github.com/sarapp",
+    "skills": ["UX Research", "Figma", "HTML", "CSS"],
+    "education": [
+      {"institution": "Norwegian University of Science and Technology", "degree": "BSc Design", "year": 2018}
+    ],
+    "competences": ["user testing", "design systems", "prototyping", "visual design"],
+    "references": ["Karoline Evensen, Product Owner at RetailTech", "Henrik Dahl, UX Lead at Travelify"]
+  }
+]
