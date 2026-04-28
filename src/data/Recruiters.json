@@ -7,7 +7,8 @@
     "address": "Storgata 12, 0155 Oslo, Norway",
     "phoneNumber": "+47 22 33 44 55",
     "linkedInUrl": "https://www.linkedin.com/company/nordic-talent-partners",
-    "organisationNumber": "998877665"
+    "organisationNumber": "998877665",
+    "matchedCandidates": []
   },
   {
     "name": "Scandinavian Startups",
@@ -17,7 +18,8 @@
     "address": "Ole Deviks vei 38, 0666 Oslo, Norway",
     "phoneNumber": "+47 21 98 76 54",
     "linkedInUrl": "https://www.linkedin.com/company/scandinavian-startups",
-    "organisationNumber": "112233445"
+    "organisationNumber": "112233445",
+    "matchedCandidates": []
   },
   {
     "name": "GreenTech Recruiters",
@@ -27,7 +29,8 @@
     "address": "Vasagatan 10, 111 20 Stockholm, Sweden",
     "phoneNumber": "+46 8 123 456 78",
     "linkedInUrl": "https://www.linkedin.com/company/greentech-recruiters",
-    "organisationNumber": "556677889"
+    "organisationNumber": "556677889",
+    "matchedCandidates": []
   },
   {
     "name": "Remote Work Talent",
@@ -37,7 +40,8 @@
     "address": "Købmagergade 18, 1150 Copenhagen, Denmark",
     "phoneNumber": "+45 33 44 55 66",
     "linkedInUrl": "https://www.linkedin.com/company/remote-work-talent",
-    "organisationNumber": "223344556"
+    "organisationNumber": "223344556",
+    "matchedCandidates": []
   },
   {
     "name": "AI & Data Hire",
@@ -47,6 +51,7 @@
     "address": "Mannerheimintie 20, 00100 Helsinki, Finland",
     "phoneNumber": "+358 9 8765 4321",
     "linkedInUrl": "https://www.linkedin.com/company/ai-data-hire",
-    "organisationNumber": "334455667"
+    "organisationNumber": "334455667",
+    "matchedCandidates": []
   }
 ]
