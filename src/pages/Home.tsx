@@ -3,7 +3,11 @@ import CandidateSwipePreview from '../components/CandidateSwipePreview'
 import SiteHeader from '../components/SiteHeader'
 import './Home.css'
 
-const navItems = ['Search', 'Login', 'Register']
+const navItems = [
+  { href: '/search', label: 'Search' },
+  { href: '/login', label: 'Login' },
+  { href: '/register', label: 'Register' },
+]
 
 const previewCandidate = {
   initials: 'AM',
@@ -31,10 +35,10 @@ function Home() {
             <h1>Swipe IT</h1>
             <p>Connect candidates and recruiters with a focused swipe flow.</p>
             <div className="hero-actions">
-              <Button href="#">
+              <Button href="/register">
                 Get Started
               </Button>
-              <Button href="#" variant="secondary">
+              <Button href="/search" variant="secondary">
                 Search
               </Button>
             </div>

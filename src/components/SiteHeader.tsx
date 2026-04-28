@@ -1,5 +1,10 @@
+type NavItem = {
+  href: string
+  label: string
+}
+
 type SiteHeaderProps = {
-  navItems: string[]
+  navItems: NavItem[]
 }
 
 function SiteHeader({ navItems }: SiteHeaderProps) {
@@ -12,8 +17,8 @@ function SiteHeader({ navItems }: SiteHeaderProps) {
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         {navItems.map((item) => (
-          <a href="#" key={item}>
-            {item}
+          <a href={item.href} key={item.label}>
+            {item.label}
           </a>
         ))}
       </nav>

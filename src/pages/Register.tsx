@@ -1,0 +1,59 @@
+import { useState } from 'react'
+import CandidatePreferencesSetup from '../components/registration/CandidatePreferencesSetup'
+import RecruiterPreferencesSetup from '../components/registration/RecruiterPreferencesSetup'
+import RegisterWithRoleToggle from '../components/registration/RegisterWithRoleToggle'
+import type { RegisterFormData } from '../components/registration/types'
+import './Register.css'
+
+const initialFormData: RegisterFormData = {
+  email: '',
+  name: '',
+  password: '',
+  role: 'candidate',
+}
+
+function Register() {
+  const [formData, setFormData] = useState(initialFormData)
+  const [step, setStep] = useState<'register' | 'preferences'>('register')
+
+  if (step === 'preferences' && formData.role === 'candidate') {
+    return <CandidatePreferencesSetup onBack={() => setStep('register')} />
+  }
+
+  return (
+    <main className="register-page">
+      <a className="register-brand" href="/">
+        <span className="brand-mark">SI</span>
+        <span>Swipe IT</span>
+      </a>
+
+      <div className="register-shell">
+        <aside className="register-aside">
+          <p className="eyebrow">Step {step === 'register' ? '1' : '2'} of 2</p>
+          <h2>
+            {step === 'register'
+              ? 'Start with your role.'
+              : 'Tune your first matches.'}
+          </h2>
+          <p>
+            {step === 'register'
+              ? 'Candidates and recruiters follow different onboarding paths.'
+              : 'Preferences become the first filters for the swipe experience.'}
+          </p>
+        </aside>
+
+        {step === 'register' ? (
+          <RegisterWithRoleToggle
+            formData={formData}
+            onChange={setFormData}
+            onNext={() => setStep('preferences')}
+          />
+        ) : (
+          <RecruiterPreferencesSetup onBack={() => setStep('register')} />
+        )}
+      </div>
+    </main>
+  )
+}
+
+export default Register

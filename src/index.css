@@ -1,4 +1,14 @@
 :root {
+  --color-primary: #47607e;
+  --color-primary-dark: #243f5b;
+  --color-secondary: #ffb68f;
+  --color-surface: #fff8f4;
+  --color-surface-container: #f9ece1;
+  --color-surface-high: #f3e6db;
+  --color-text: #201b14;
+  --color-muted: #43474d;
+  --font-headline: 'Manrope', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   color: #111827;
   background: #ffffff;
@@ -35,4 +45,40 @@ body {
     'wght' 400,
     'GRAD' 0,
     'opsz' 24;
+}
+
+.brand-mark {
+  align-items: center;
+  background: var(--color-primary);
+  border-radius: 999px;
+  color: #ffffff;
+  display: flex;
+  font-size: 13px;
+  font-weight: 800;
+  height: 40px;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  width: 40px;
+}
+
+.button {
+  align-items: center;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 800;
+  padding: 14px 24px;
+  text-decoration: none;
+}
+
+.button-primary {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.button-secondary {
+  background: var(--color-secondary);
+  color: #331200;
 }
