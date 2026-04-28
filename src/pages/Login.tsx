@@ -7,7 +7,7 @@ function Login() {
   }
 
   return (
-    <main className="login-page">
+    <div className="login-page">
       <a className="login-brand" href="/">
         <span className="brand-mark">SI</span>
         <span>Swipe IT</span>
@@ -46,7 +46,7 @@ function Login() {
           <span className="material-symbols-outlined">arrow_forward</span>
         </button>
       </section>
-    </main>
+    </div>
   )
 }
 

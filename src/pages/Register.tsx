@@ -21,12 +21,7 @@ function Register() {
   }
 
   return (
-    <main className="register-page">
-      <a className="register-brand" href="/">
-        <span className="brand-mark">SI</span>
-        <span>Swipe IT</span>
-      </a>
-
+    <div className="register-page">
       <div className="register-shell">
         <aside className="register-aside">
           <p className="eyebrow">Step {step === 'register' ? '1' : '2'} of 2</p>
@@ -52,7 +47,7 @@ function Register() {
           <RecruiterPreferencesSetup onBack={() => setStep('register')} />
         )}
       </div>
-    </main>
+    </div>
   )
 }
 
