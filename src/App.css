@@ -1,10 +1,13 @@
 .content {
   display: flex;
   flex-direction: column;
+  min-height: 100dvh;
 }
 
 main {
   flex-grow: 1;
+  display: flex;
+  align-items: stretch;
 }
 
 footer {

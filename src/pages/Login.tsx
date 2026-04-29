@@ -8,11 +8,6 @@ function Login() {
 
   return (
     <div className="login-page">
-      <a className="login-brand" href="/">
-        <span className="brand-mark">SI</span>
-        <span>Swipe IT</span>
-      </a>
-
       <section className="login-card">
         <div className="login-icon material-symbols-outlined">login</div>
         <p className="eyebrow">Welcome back</p>

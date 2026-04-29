@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import Header from './components/Header'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <footer className="site-footer">
