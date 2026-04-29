@@ -7,7 +7,7 @@ function Login() {
   }
 
   return (
-    <div className="login-page">
+    <div className="login-page page">
       <section className="login-card">
         <div className="login-icon material-symbols-outlined">login</div>
         <p className="eyebrow">Welcome back</p>

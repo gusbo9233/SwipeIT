@@ -19,7 +19,7 @@ const previewCandidate = {
 
 function Home() {
   return (
-    <div className="home-page">
+    <div className="home-page page">
         <section className="hero-section">
           <div className="hero-copy">
             <h1>Swipe IT</h1>

@@ -8,8 +8,6 @@
   flex-direction: column;
   font-family: var(--font-body);
   justify-content: center;
-  padding: 32px 24px;
-  width: 100%;
 }
 
 .login-brand {
