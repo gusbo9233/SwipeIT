@@ -5,20 +5,6 @@
   font-family: var(--font-body);
 }
 
-.top-bar {
-  align-items: center;
-  backdrop-filter: blur(16px);
-  background: rgb(254 241 230 / 84%);
-  display: flex;
-  justify-content: space-between;
-  left: 0;
-  padding: 16px 24px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 10;
-}
-
 .brand,
 .desktop-nav,
 .hero-actions {

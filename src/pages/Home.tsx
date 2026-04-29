@@ -1,13 +1,6 @@
 import Button from '../components/Button'
 import CandidateSwipePreview from '../components/CandidateSwipePreview'
-import SiteHeader from '../components/SiteHeader'
 import './Home.css'
-
-const navItems = [
-  { href: '/search', label: 'Search' },
-  { href: '/login', label: 'Login' },
-  { href: '/register', label: 'Register' },
-]
 
 const previewCandidate = {
   initials: 'AM',
@@ -27,9 +20,6 @@ const previewCandidate = {
 function Home() {
   return (
     <div className="home-page">
-      <SiteHeader navItems={navItems} />
-
-      <main className="home-main">
         <section className="hero-section">
           <div className="hero-copy">
             <h1>Swipe IT</h1>
@@ -46,7 +36,6 @@ function Home() {
 
           <CandidateSwipePreview candidate={previewCandidate} />
         </section>
-      </main>
     </div>
   )
 }

@@ -41,13 +41,11 @@ function OnboardingLayout({
         </div>
       </header>
 
-      <main className="candidate-onboarding-main">
         <section className="candidate-onboarding-heading">
           <h1>{title}</h1>
           <p>{description}</p>
         </section>
         {children}
-      </main>
     </div>
   )
 }
