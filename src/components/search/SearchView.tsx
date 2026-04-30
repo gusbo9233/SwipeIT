@@ -1,17 +1,28 @@
+import Button from "../Button";
 import Chip from "../Chip";
+import { useSearchContext } from "../../context/SearchContext";
+import type { ExperienceKey, WorkEnv } from "../../types/searchfilter";
 
-type SearchProps = {
-    inputValue: string;
-    setInputValue: (value: string) => void;
-    handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    filteredSkills: string[];
-    addSkill: (value: string) => void;
-    removeSkill: (value: string) => void;
-    selectedSkills: string[];
+type SearchViewProps = {
+    onStartSwiping?: () => void;
 }
 
-function SearchView(props: SearchProps) {
-    const {inputValue, setInputValue, handleKeyDown, filteredSkills, addSkill, removeSkill, selectedSkills} = props;
+const EXPERIENCE_OPTIONS: { key: ExperienceKey; label: string; range: string }[] = [
+  { key: 'junior', label: 'Junior', range: '0-2 Years' },
+  { key: 'mid', label: 'Mid-Level', range: '3-5 Years' },
+  { key: 'senior', label: 'Senior', range: '6-10 Years' },
+  { key: 'expert', label: 'Expert / Lead', range: '10+ Years' },
+]
+
+const WORK_ENV_OPTIONS: { value: WorkEnv; icon: string; label: string }[] = [
+  { value: 'remote', icon: 'cloud', label: 'Remote' },
+  { value: 'hybrid', icon: 'corporate_fare', label: 'Hybrid' },
+  { value: 'onsite', icon: 'apartment', label: 'On-site' },
+]
+
+
+function SearchView({ onStartSwiping }: SearchViewProps) {
+    const {inputValue, setInputValue, handleKeyDown, filteredSkills, addSkill, removeSkill, selectedSkills, experienceLevels, toggleExperience, workEnv, setWorkEnv} = useSearchContext();
     return (
     <div className="search-page page">
         <header className="search-hero">
@@ -112,10 +123,10 @@ function SearchView(props: SearchProps) {
         </section>
 
       <div className="fixed-bottom">
-        <button className="start-swiping-btn" type="button">
+        <Button className="start-swiping-btn" type="button" onClick={onStartSwiping}>
           Start Swiping
           <span className="material-symbols-outlined">bolt</span>
-        </button>
+        </Button>
       </div>
     </div>
   )
