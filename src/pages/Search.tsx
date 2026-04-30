@@ -11,6 +11,8 @@ function Search() {
 
   return (
     <SearchProvider>
+      <div className="search-page page">
+
       <section>
         <SearchView {...searchProps}/>
       </section>
@@ -18,6 +20,7 @@ function Search() {
       <section className="swipe-candidates">
         
       </section>
+      </div>
     </SearchProvider>
   )
 }

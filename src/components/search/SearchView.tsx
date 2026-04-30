@@ -59,10 +59,10 @@ function SearchView({ onStartSwiping }: SearchViewProps) {
   }
 
     return (
-    <div className="search-page page">
+    <div className="">
         <header className="search-hero">
           <h1>Refine Search</h1>
-          <p>Define your ideal IT professional candidate.</p>
+          <p>Precision-engineered filtering for the modern technical recruiter. Find your ideal talent through layered parameters.</p>
         </header>
 
         <section className="search-section">
@@ -157,7 +157,7 @@ function SearchView({ onStartSwiping }: SearchViewProps) {
           </div>
         </section>
 
-      <div className="fixed-bottom">
+      <div className="">
         <Button className="start-swiping-btn" type="button" onClick={onStartSwiping}>
           Start Swiping
           <span className="material-symbols-outlined">bolt</span>
