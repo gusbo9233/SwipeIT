@@ -1,17 +1,24 @@
-import skills from '../data/Skills.json'
 import './Search.css'
 import SearchView from '../components/search/SearchView'
-import { SearchProvider } from '../context/SearchContext'
+import { SearchProvider } from '../context/SearchProvider';
 
 function Search() {
+  function onStartSwiping() {
+    // slide to secetion for SwipeCandidates.tsx
+  }
+
+  const searchProps = { onStartSwiping};
+
   return (
-    <div>
+    <SearchProvider>
       <section>
-        <SearchProvider skillsList={skills}>
-          <SearchView />
-        </SearchProvider>
+        <SearchView {...searchProps}/>
       </section>
-    </div>
+
+      <section className="swipe-candidates">
+        
+      </section>
+    </SearchProvider>
   )
 }
 

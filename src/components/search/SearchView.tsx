@@ -1,7 +1,9 @@
 import Button from "../Button";
 import Chip from "../Chip";
 import { useSearchContext } from "../../context/SearchContext";
-import type { ExperienceKey, WorkEnv } from "../../types/searchfilter";
+import type { ExperienceKey, WorkEnv } from "../../types/searchFilter";
+import { useMemo } from "react";
+import skillList from '../../data/Skills.json'
 
 type SearchViewProps = {
     onStartSwiping?: () => void;
@@ -22,7 +24,40 @@ const WORK_ENV_OPTIONS: { value: WorkEnv; icon: string; label: string }[] = [
 
 
 function SearchView({ onStartSwiping }: SearchViewProps) {
-    const {inputValue, setInputValue, handleKeyDown, filteredSkills, addSkill, removeSkill, selectedSkills, experienceLevels, toggleExperience, workEnv, setWorkEnv} = useSearchContext();
+    const {inputValue, setInputValue, selectedSkills, setSelectedSkills, experienceLevels, setExperienceLevels, workEnv, setWorkEnv} = useSearchContext();
+    
+    
+  const filteredSkills = useMemo(() => {
+    if (!inputValue.trim()) return []
+    const query = inputValue.toLowerCase()
+    return skillList.filter(
+      (skill) =>
+        skill.toLowerCase().includes(query) &&
+        !selectedSkills.some((s) => s.toLowerCase() === skill.toLowerCase())
+    )
+  }, [inputValue, selectedSkills])
+
+  function addSkill(skill: string) {
+    if (selectedSkills.some((s) => s.toLowerCase() === skill.toLowerCase())) return
+    setSelectedSkills((prev) => [...prev, skill])
+    setInputValue('')
+  }
+
+  function removeSkill(skill: string) {
+    setSelectedSkills((prev) => prev.filter((s) => s !== skill))
+  }
+
+  function toggleExperience(level: ExperienceKey) {
+    setExperienceLevels((prev) => ({ ...prev, [level]: !prev[level] }))
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && filteredSkills.length > 0) {
+      e.preventDefault()
+      addSkill(filteredSkills[0])
+    }
+  }
+
     return (
     <div className="search-page page">
         <header className="search-hero">
