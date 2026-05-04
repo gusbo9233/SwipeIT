@@ -1,60 +1,33 @@
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
+import './Button.css'
+import { NavLink } from 'react-router-dom'
+import type { ReactNode } from 'react'
 
 type ButtonVariant = 'primary' | 'secondary'
 
-type ButtonBaseProps = {
+type ButtonProps = {
   children: ReactNode
+  onClick?: () => void
   className?: string
   variant?: ButtonVariant
-}
-
-type ButtonLinkProps = ButtonBaseProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & {
-    href: string
-  }
-
-type ButtonActionProps = ButtonBaseProps &
-  ButtonHTMLAttributes<HTMLButtonElement> & {
-    href?: never
-  }
-
-type ButtonProps = ButtonLinkProps | ButtonActionProps
-
-function buttonClasses(variant: ButtonVariant, className = '') {
-  return ['button', `button-${variant}`, className].filter(Boolean).join(' ')
-}
-
-function isLinkButton(props: ButtonProps): props is ButtonLinkProps {
-  return 'href' in props && typeof props.href === 'string'
+  type?: 'button' | 'submit' | 'reset'
+  to?: string
 }
 
 function Button(props: ButtonProps) {
-  const { className = '', variant = 'primary' } = props
-  const classes = ['button', `button-${variant}`, className]
-    .filter(Boolean)
-    .join(' ')
+  const { to, onClick, className = '', variant = 'primary', children, type = 'button' } = props
+  const classes = `button button-${variant} ${className}`
 
-  if (isLinkButton(props)) {
-    const { children: linkChildren, className: _className, variant: _variant, ...linkProps } = props
-
+  if (to) {
     return (
-      <a className={buttonClasses(variant, className)} {...linkProps}>
-        {linkChildren}
-      </a>
+      <NavLink className={classes} to={to}>
+        {children}
+      </NavLink>
     )
   }
 
-  const {
-    children: buttonChildren,
-    className: _className,
-    variant: _variant,
-    type = 'button',
-    ...buttonProps
-  } = props
-
   return (
-    <button className={classes} type={type} {...buttonProps}>
-      {buttonChildren}
+    <button className={classes} type={type} onClick={onClick}>
+      {children}
     </button>
   )
 }

@@ -21,7 +21,7 @@ function Register() {
   }
 
   return (
-    <div className="register-page">
+    <div className="register-page page">
       <div className="register-shell">
         <aside className="register-aside">
           <p className="eyebrow">Step {step === 'register' ? '1' : '2'} of 2</p>

@@ -19,16 +19,16 @@ const previewCandidate = {
 
 function Home() {
   return (
-    <div className="home-page">
+    <div className="home-page page">
         <section className="hero-section">
           <div className="hero-copy">
             <h1>Swipe IT</h1>
             <p>Connect candidates and recruiters with a focused swipe flow.</p>
             <div className="hero-actions">
-              <Button href="/register">
+              <Button to="/register">
                 Get Started
               </Button>
-              <Button href="/search" variant="secondary">
+              <Button to="/search" variant="secondary">
                 Search
               </Button>
             </div>

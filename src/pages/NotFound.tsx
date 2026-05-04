@@ -1,3 +1,4 @@
+import Button from '../components/Button'
 import './NotFound.css'
 
 function NotFound() {
@@ -11,10 +12,10 @@ function NotFound() {
                     The page you are looking for does not exist or has been moved.
                 </p>
 
-                <a className="notfound-button" href="/">
+                <Button to="/">
                     <span>Go home</span>
                     <span className="material-symbols-outlined">arrow_forward</span>
-                </a>
+                </Button>
             </section>
         </div>
     )

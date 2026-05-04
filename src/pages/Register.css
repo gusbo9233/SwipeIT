@@ -1,13 +1,3 @@
-.register-page {
-  background:
-    radial-gradient(circle at top left, rgb(71 96 126 / 14%), transparent 34%),
-    var(--color-surface);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  min-height: 100dvh;
-  padding: 32px 24px;
-}
-
 .candidate-onboarding {
   background: var(--color-surface);
   color: var(--color-text);
@@ -343,7 +333,7 @@
     transform 180ms ease;
 }
 
-.work-preference input:checked + span {
+.work-preference input:checked+span {
   color: var(--color-primary);
   transform: scale(1.1);
 }
@@ -421,7 +411,7 @@
   border-color: #8b4f2c;
 }
 
-.recruiter-preference input:checked + span {
+.recruiter-preference input:checked+span {
   color: #8b4f2c;
 }
 
