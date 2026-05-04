@@ -65,10 +65,13 @@ function SwipeCard({ candidate, onLike, onDislike, onSuperLike }: SwipeCardProps
     dragStartRef.current = null;
     lastDeltaRef.current = { x: 0, y: 0 };
     isFlyingOutRef.current = false;
-    setOffset({ x: 0, y: 0 });
-    setIsDragging(false);
-    setFlyDirection(null);
-    setExitTransform(null);
+    
+    queueMicrotask(() => {
+      setOffset({ x: 0, y: 0 });
+      setIsDragging(false);
+      setFlyDirection(null);
+      setExitTransform(null);
+    });
   }, [candidate]);
 
   // Cleanup pending timeout on unmount.

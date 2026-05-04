@@ -1,3 +1,32 @@
+/* CONTAINER & DESIGN */
+.search-view-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FLOW WRAPPER */
+.view-wrapper {
+  width: 100%;
+  /* No absolute positioning! This allows height to adjust naturally */
+  display: flex;
+  flex-direction: column;
+}
+
+/* SEARCH HERO STYLES */
+.search-hero {
+  margin-bottom: 48px;
+}
+
+.search-hero h1 {
+  font-family: var(--font-headline);
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0 0 8px;
+}
+
 .search-page {
   background: var(--color-surface);
   color: var(--color-text);

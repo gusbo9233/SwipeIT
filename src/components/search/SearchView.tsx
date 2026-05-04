@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import skillList from '../../data/Skills.json'
 
 type SearchViewProps = {
-    onStartSwiping?: () => void;
+    onStart: () => void;
 }
 
 const EXPERIENCE_OPTIONS: { key: ExperienceKey; label: string; range: string }[] = [
@@ -23,8 +23,8 @@ const WORK_ENV_OPTIONS: { value: WorkEnv; icon: string; label: string }[] = [
 ]
 
 
-function SearchView({ onStartSwiping }: SearchViewProps) {
-    const {inputValue, setInputValue, selectedSkills, setSelectedSkills, experienceLevels, setExperienceLevels, workEnv, setWorkEnv} = useSearchContext();
+function SearchView({ onStart }: SearchViewProps) {
+  const {inputValue, setInputValue, selectedSkills, setSelectedSkills, experienceLevels, setExperienceLevels, workEnv, setWorkEnv} = useSearchContext();
     
     
   const filteredSkills = useMemo(() => {
@@ -158,7 +158,7 @@ function SearchView({ onStartSwiping }: SearchViewProps) {
         </section>
 
       <div className="">
-        <Button className="start-swiping-btn" type="button" onClick={onStartSwiping}>
+        <Button className="start-swiping-btn" type="button" onClick={onStart}>
           Start Swiping
           <span className="material-symbols-outlined">bolt</span>
         </Button>
