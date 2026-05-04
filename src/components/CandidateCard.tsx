@@ -6,35 +6,24 @@ interface CandidateCardProps {
   candidate: CandidatePreview;
   onLike: () => void;
   onDislike: () => void;
-  onSuperLike?: () => void;
+  onSuperLike?: () => void; // Optional prop
 }
 
 function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateCardProps) {
-  const [loading, setLoading] = useState(true);
   
-  // Handlers
-  const handleImageLoad = () => setLoading(false);
-  const handleImageError = () => setLoading(false);
-
-  // Determine the image source
-  // If no imageUrl, use the fallback service with the candidate ID as the query param
-  const imageSrc = candidate.imageUrl && candidate.imageUrl.length > 0
-    ? candidate.imageUrl
-    : `https://thispersondoesnotexist.com/image?id=${candidate.id}`;
+  const [loading, setLoading] = useState(true);
 
   return (
     <article className="candidate-card" aria-label={`Candidate: ${candidate.name}`}>
       <div className="candidate-card__image-wrapper">
-        <img
-          key={candidate.id} // Important: This resets the <img> state (and spinner) when candidate changes
-          src={imageSrc}
-          alt={`${candidate.name} profile photo`}
-          className="candidate-card__image"
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-          aria-busy={loading}
+        <img 
+          key={candidate.id} 
+          src={candidate.imageUrl}
+          alt={candidate.name} 
+          onLoad={() => setLoading(false)}
+          style={{ display: loading ? 'none' : 'block' }}
         />
-        
+        {/* Spinner when loading image */}
         {loading && (
           <div className="candidate-card__spinner" role="status" aria-label="Loading image">
             <span className="candidate-card__spinner-dot" />
@@ -51,12 +40,12 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
               </span>
             ))}
           </div>
-          
+          {/* View Full Resume button under skills */}
           <button
             className="candidate-card__view-resume"
             type="button"
             aria-label={`View full resume for ${candidate.name}`}
-            onClick={() => {/* Open modal */}}
+            onClick={() => {/* Open modal or navigate to resume */}}
           >
             <span>View Full Resume</span>
             <span className="material-symbols-outlined">arrow_forward</span>
