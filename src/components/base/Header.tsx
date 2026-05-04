@@ -15,6 +15,8 @@ function Header() {
 
         <nav className="desktop-nav" aria-label="Primary navigation">
           <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/search">Search</NavLink>
+          <NavLink to="/account">Account</NavLink>
           <NavLink to="/login">Login</NavLink>
           <NavLink to="/register">Register</NavLink>
         </nav>
@@ -32,6 +34,8 @@ function Header() {
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
         <NavLink to="/" end onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
+        <NavLink to="/search" onClick={() => setMobileMenuOpen(false)}>Search</NavLink>
+        <NavLink to="/account" onClick={() => setMobileMenuOpen(false)}>Account</NavLink>
         <NavLink to="/login" onClick={() => setMobileMenuOpen(false)}>Login</NavLink>
         <NavLink to="/register" onClick={() => setMobileMenuOpen(false)}>Register</NavLink>
       </nav>

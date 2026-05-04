@@ -1,80 +1,50 @@
-import type { FormEvent } from 'react'
-import IconInput from '../onboarding/IconInput'
-import OnboardingLayout from '../onboarding/OnboardingLayout'
-import OnboardingSection from '../onboarding/OnboardingSection'
-import OnboardingSubmit from '../onboarding/OnboardingSubmit'
-import PreferenceGrid from '../onboarding/PreferenceGrid'
-import SearchableChips from '../onboarding/SearchableChips'
+import { useState } from 'react'
+import {
+  defaultCandidateProfile,
+  saveStoredProfile,
+  buildProfileFromRegistration,
+} from '../../data/profileStorage'
+import CandidateProfileForm from '../profile/CandidateProfileForm'
+import ProfileLayout from '../profile/ProfileLayout'
+import type { CandidateProfileData, RegisterFormData } from './types'
 
 type CandidatePreferencesSetupProps = {
   onBack: () => void
+  onComplete: () => void
+  registration: RegisterFormData
 }
 
-const selectedSkills = ['React', 'Node.js', 'TypeScript']
-const suggestedSkills = ['Python', 'PostgreSQL']
+function CandidatePreferencesSetup({
+  onBack,
+  onComplete,
+  registration,
+}: CandidatePreferencesSetupProps) {
+  const [profile, setProfile] = useState<CandidateProfileData>({
+    ...defaultCandidateProfile,
+    fullName: registration.name,
+  })
 
-const workPreferences = [
-  { checked: true, icon: 'calendar_today', label: 'Full-time', value: 'full-time' },
-  { icon: 'chips', label: 'Part-time', value: 'part-time' },
-  {
-    icon: 'handshake',
-    label: 'Contract / Freelance',
-    value: 'contract',
-  },
-]
-
-function CandidatePreferencesSetup({ onBack }: CandidatePreferencesSetupProps) {
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  function handleSubmit() {
+    saveStoredProfile(buildProfileFromRegistration(registration, profile))
+    onComplete()
   }
 
   return (
-    <OnboardingLayout
+    <ProfileLayout
       avatarLabel="AR"
+      backLabel="Back to registration"
       description="Help us match you with the right engineering opportunities."
       onBack={onBack}
       title="Complete your profile"
     >
-      <form className="candidate-profile-form" onSubmit={handleSubmit}>
-        <OnboardingSection icon="person" title="Personal Information">
-          <div className="candidate-field-grid">
-            <label className="candidate-field">
-              Full Name
-              <input placeholder="Alex Rivera" type="text" />
-            </label>
-            <label className="candidate-field">
-              Phone Number
-              <input placeholder="+1 (555) 000-0000" type="tel" />
-            </label>
-          </div>
-        </OnboardingSection>
-
-        <OnboardingSection icon="link" title="Professional Links">
-          <div className="candidate-link-list">
-            <IconInput icon="share" placeholder="linkedin.com/in/username" />
-            <IconInput icon="code" placeholder="github.com/username" />
-          </div>
-        </OnboardingSection>
-
-        <OnboardingSection className="skills-section" icon="bolt" title="Technical Skills">
-          <div className="section-glow" />
-          <SearchableChips
-            placeholder="Search skills (e.g. React, Python, AWS)"
-            selected={selectedSkills}
-            suggested={suggestedSkills}
-          />
-        </OnboardingSection>
-
-        <OnboardingSection icon="work_history" title="Working Preferences">
-          <PreferenceGrid items={workPreferences} />
-        </OnboardingSection>
-
-        <OnboardingSubmit
-          helperText="By continuing, you agree to our Terms of Service"
-          label="Complete Profile"
-        />
-      </form>
-    </OnboardingLayout>
+      <CandidateProfileForm
+        helperText="By continuing, you agree to our Terms of Service"
+        onChange={setProfile}
+        onSubmit={handleSubmit}
+        profile={profile}
+        submitLabel="Complete Profile"
+      />
+    </ProfileLayout>
   )
 }
 

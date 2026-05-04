@@ -1,6 +1,7 @@
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Account from './pages/Account'
 import Header from './components/base/Header'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/search" element={<Search />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

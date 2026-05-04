@@ -2,14 +2,14 @@ import { useState, type KeyboardEvent } from 'react'
 
 type SearchableChipsProps = {
   accentClassName?: string
-  placeholder: string
+  onChange?: (items: string[]) => void
   selected: string[]
   suggested: string[]
 }
 
 function SearchableChips({
   accentClassName = '',
-  placeholder,
+  onChange,
   selected,
   suggested,
 }: SearchableChipsProps) {
@@ -32,15 +32,19 @@ function SearchableChips({
         return currentItems
       }
 
-      return [...currentItems, nextItem]
+      const nextItems = [...currentItems, nextItem]
+      onChange?.(nextItems)
+      return nextItems
     })
     setInputValue('')
   }
 
   function removeItem(item: string) {
-    setSelectedItems((currentItems) =>
-      currentItems.filter((currentItem) => !isSameItem(currentItem, item)),
-    )
+    setSelectedItems((currentItems) => {
+      const nextItems = currentItems.filter((currentItem) => !isSameItem(currentItem, item))
+      onChange?.(nextItems)
+      return nextItems
+    })
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -59,7 +63,6 @@ function SearchableChips({
         <input
           onChange={(event) => setInputValue(event.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={placeholder}
           type="text"
           value={inputValue}
         />
