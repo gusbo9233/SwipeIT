@@ -1,51 +1,40 @@
+import type { CandidatePreview } from '../types/Candidate';
 import './CandidateCard.css';
-import { useState, useEffect } from "react";
-
-interface Candidate {
-  id: string | number;
-  name: string;
-  imageUrl: string;
-  skills: string[];
-}
+import { useState } from "react";
 
 interface CandidateCardProps {
-  candidate: Candidate;
+  candidate: CandidatePreview;
   onLike: () => void;
   onDislike: () => void;
-  onSuperLike?: () => void; // Optional prop
+  onSuperLike?: () => void;
 }
 
 function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateCardProps) {
-  
   const [loading, setLoading] = useState(true);
+  
+  // Handlers
   const handleImageLoad = () => setLoading(false);
-  const handleImageError = () => {
-    setLoading(false);
-  };
+  const handleImageError = () => setLoading(false);
 
-  const [imgKey, setImgKey] = useState(0);
-  useEffect(() => {
-    setImgKey(k => k + 1);
-  }, [candidate]); // change later to [candidate.id]
-
+  // Determine the image source
+  // If no imageUrl, use the fallback service with the candidate ID as the query param
+  const imageSrc = candidate.imageUrl && candidate.imageUrl.length > 0
+    ? candidate.imageUrl
+    : `https://thispersondoesnotexist.com/image?id=${candidate.id}`;
 
   return (
     <article className="candidate-card" aria-label={`Candidate: ${candidate.name}`}>
       <div className="candidate-card__image-wrapper">
-        {/* Candidate's image or fetch AI-generated face using imgKey to force new */}
         <img
-          src={
-            candidate.imageUrl && candidate.imageUrl.length > 0
-              ? candidate.imageUrl
-              : `https://thispersondoesnotexist.com/image?${imgKey}`
-          }
+          key={candidate.id} // Important: This resets the <img> state (and spinner) when candidate changes
+          src={imageSrc}
           alt={`${candidate.name} profile photo`}
           className="candidate-card__image"
           onLoad={handleImageLoad}
           onError={handleImageError}
           aria-busy={loading}
         />
-        {/* Spinner when loading image */}
+        
         {loading && (
           <div className="candidate-card__spinner" role="status" aria-label="Loading image">
             <span className="candidate-card__spinner-dot" />
@@ -62,12 +51,12 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
               </span>
             ))}
           </div>
-          {/* View Full Resume button under skills */}
+          
           <button
             className="candidate-card__view-resume"
             type="button"
             aria-label={`View full resume for ${candidate.name}`}
-            onClick={() => {/* Open modal or navigate to resume */}}
+            onClick={() => {/* Open modal */}}
           >
             <span>View Full Resume</span>
             <span className="material-symbols-outlined">arrow_forward</span>
@@ -109,4 +98,4 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
 }
 
 export default CandidateCard;
-export type { Candidate, CandidateCardProps };
+export type { CandidateCardProps };
