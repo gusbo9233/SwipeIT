@@ -2,7 +2,7 @@
   {
     "id": "somethinguuidthingy1",
     "name": "Elin Bergström",
-    "avatarUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
     "email": "elin.bergstrom@example.com",
     "address": "Hammarby Kaj 5, 120 30 Stockholm, Sweden",
     "phoneNumber": "+46 70 111 22 33",
@@ -40,7 +40,7 @@
   {
     "id": "somethinguuidthingy2",
     "name": "Lukas Jensen",
-    "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
     "email": "lukas.jensen@example.com",
     "address": "Vesterbrogade 45, 1620 Copenhagen, Denmark",
     "phoneNumber": "+45 40 22 33 44",
@@ -73,7 +73,7 @@
   {
     "id": "somethinguuidtingy3",
     "name": "Mia Lund",
-    "avatarUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400",
     "email": "mia.lund@example.com",
     "address": "Fredrikinkatu 14, 00120 Helsinki, Finland",
     "phoneNumber": "+358 50 123 4567",
@@ -106,7 +106,7 @@
   {
     "id": "somethinguuidthingy4",
     "name": "Noah Özkan",
-    "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
     "email": "noah.ozkan@example.com",
     "address": "Landegodegata 11, 9008 Tromsø, Norway",
     "phoneNumber": "+47 98 76 54 32",
@@ -139,7 +139,7 @@
   {
     "id": "somethinguuidthing6",
     "name": "Sara Pettersen",
-    "avatarUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400",
     "email": "sara.pettersen@example.com",
     "address": "Sæterbakken 8, 0672 Oslo, Norway",
     "phoneNumber": "+47 45 67 89 01",
