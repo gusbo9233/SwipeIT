@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import CandidateCard, { type Candidate } from './CandidateCard';
+import CandidateCard from './CandidateCard';
+import type { CandidatePreview } from '../types/Candidate';
 import './SwipeCard.css';
 
 interface SwipeCardProps {
-  candidate: Candidate;
+  candidate: CandidatePreview;
   onLike: () => void;
   onDislike: () => void;
   onSuperLike?: () => void;
