@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import CandidateCard from './CandidateCard';
-import type { Candidate } from './CandidateCard';
+import CandidateCard, { type Candidate } from './CandidateCard';
 import './SwipeCard.css';
 
 interface SwipeCardProps {

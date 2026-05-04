@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Search.css';
-import SearchView from '../components/search/SearchView';
-import SwipeCandidates from '../components/search/SwipeView';
 import { SearchProvider } from '../context/SearchProvider';
+import SearchView from '../components/search/SearchView';
+import SwipeView from '../components/search/SwipeView';
 
 type ViewState = 'filter' | 'swiping';
 
@@ -49,7 +49,7 @@ const Search: React.FC = () => {
             transition={{ duration: 0.3 }}
             className="view-wrapper"
           >
-            <SwipeCandidates onBack={() => setView('filter')} />
+            <SwipeView onBack={() => setView('filter')} />
           </motion.div>
         )}
       </AnimatePresence>
