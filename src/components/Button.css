@@ -36,3 +36,13 @@
     /* For the icons */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
+
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+
+    .button:active {
+        transform: none;
+    }
+}
