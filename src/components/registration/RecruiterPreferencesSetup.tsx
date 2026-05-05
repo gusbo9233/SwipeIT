@@ -22,6 +22,8 @@ const hiringSignals = [
 function RecruiterPreferencesSetup({ onBack }: RecruiterPreferencesSetupProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    console.log("Profile submitted");
+    
   }
 
   return (
