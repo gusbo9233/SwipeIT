@@ -20,14 +20,19 @@ function Account() {
   const [snapshot, setSnapshot] = useState<UserProfile | null>(null)
   const [editing, setEditing] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState('')
   const [saveMessage, setSaveMessage] = useState('')
   const [saveError, setSaveError] = useState('')
 
   useEffect(() => {
-    getStoredProfile().then((stored) => {
-      setProfile(stored)
-      setLoading(false)
-    })
+    getStoredProfile()
+      .then((stored) => {
+        setProfile(stored)
+      })
+      .catch((error: unknown) => {
+        setLoadError(error instanceof Error ? error.message : 'Could not load your profile.')
+      })
+      .finally(() => setLoading(false))
   }, [])
 
   function updateProfile(nextProfile: UserProfile) {
@@ -66,6 +71,18 @@ function Account() {
   }
 
   if (loading) return null
+  if (loadError) {
+    return (
+      <ProfileLayout
+        avatarLabel="--"
+        description="We could not load your profile."
+        title="Account"
+      >
+        <p className="account-form-error">{loadError}</p>
+      </ProfileLayout>
+    )
+  }
+
   if (!profile) {
     return (
       <ProfileLayout

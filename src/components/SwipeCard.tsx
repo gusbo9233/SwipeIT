@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import CandidateCard from './CandidateCard';
-import type { Candidate } from './CandidateCard';
+import type { CandidatePreview } from '../types/Candidate';
 import './SwipeCard.css';
 
 interface SwipeCardProps {
-  candidate: Candidate;
+  candidate: CandidatePreview;
   onLike: () => void;
   onDislike: () => void;
   onSuperLike?: () => void;
@@ -65,10 +65,13 @@ function SwipeCard({ candidate, onLike, onDislike, onSuperLike }: SwipeCardProps
     dragStartRef.current = null;
     lastDeltaRef.current = { x: 0, y: 0 };
     isFlyingOutRef.current = false;
-    setOffset({ x: 0, y: 0 });
-    setIsDragging(false);
-    setFlyDirection(null);
-    setExitTransform(null);
+    
+    queueMicrotask(() => {
+      setOffset({ x: 0, y: 0 });
+      setIsDragging(false);
+      setFlyDirection(null);
+      setExitTransform(null);
+    });
   }, [candidate]);
 
   // Cleanup pending timeout on unmount.

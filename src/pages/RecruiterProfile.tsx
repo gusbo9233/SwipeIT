@@ -1,10 +1,22 @@
 import './Home.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
-// @ts-ignore
 import recruiterDataRaw from '../data/Recruiterprofile.json'
 
-const recruiterData = recruiterDataRaw as any;
+type RecruiterProfileData = {
+  firstName: string
+  lastName: string
+  company: string
+  role: string
+  email: string
+  location: string
+  bio: string
+  companyImage: string
+  logo: string
+  specialties: string[]
+}
+
+const recruiterData = recruiterDataRaw as RecruiterProfileData
 
 function RecruiterProfile() {
   return (
@@ -90,7 +102,7 @@ function RecruiterProfile() {
             </div>
 
             <div style={{ display: 'flex', gap: '15px' }}>
-              <Button variant="primary" className="large-button">Edit Profile</Button>
+              <Button variant="primary" to="/account" className="large-button">Edit Profile</Button>
               <Button variant="secondary" to="/search" className="large-button">Find Talent</Button>
             </div>
           </div>

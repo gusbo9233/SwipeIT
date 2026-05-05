@@ -61,7 +61,8 @@ export function buildRecruiterProfile(
 }
 
 export async function getStoredProfile(): Promise<UserProfile | null> {
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError) throw new Error(userError.message)
   if (!user) return null
 
   const { data, error } = await supabase
@@ -70,7 +71,12 @@ export async function getStoredProfile(): Promise<UserProfile | null> {
     .eq('id', user.id)
     .single()
 
-  if (error || !data) return null
+  if (error) {
+    if (error.code === 'PGRST116') return null
+    throw new Error(error.message)
+  }
+
+  if (!data) return null
 
   const base = { name: data.name ?? '', email: data.email ?? '' }
 
@@ -90,7 +96,8 @@ export async function getStoredProfile(): Promise<UserProfile | null> {
 }
 
 export async function saveStoredProfile(profile: UserProfile): Promise<void> {
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError) throw new Error(userError.message)
   if (!user) throw new Error('Not signed in.')
 
   const payload = {

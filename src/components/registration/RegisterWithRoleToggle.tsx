@@ -4,6 +4,7 @@ import type { RegisterFormData, RegistrationRole } from './types'
 
 type RegisterWithRoleToggleProps = {
   formData: RegisterFormData
+  isSubmitting?: boolean
   onChange: (formData: RegisterFormData) => void
   onNext: () => void | Promise<void>
 }
@@ -27,6 +28,7 @@ const roles: Array<{
 
 function RegisterWithRoleToggle({
   formData,
+  isSubmitting = false,
   onChange,
   onNext,
 }: RegisterWithRoleToggleProps) {
@@ -34,9 +36,10 @@ function RegisterWithRoleToggle({
     onChange({ ...formData, [field]: value })
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    onNext()
+    if (isSubmitting) return
+    await onNext()
   }
 
   return (
@@ -105,8 +108,8 @@ function RegisterWithRoleToggle({
         </label>
       </div>
 
-      <Button className="register-submit" type="submit">
-        Continue
+      <Button className="register-submit" disabled={isSubmitting} type="submit">
+        {isSubmitting ? 'Creating account...' : 'Continue'}
       </Button>
     </form>
   )

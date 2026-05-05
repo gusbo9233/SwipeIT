@@ -1,51 +1,38 @@
-import './CandidateCard.css';
-import { useState, useEffect } from "react";
-
-interface Candidate {
-  id: string | number;
-  name: string;
-  imageUrl: string;
-  skills: string[];
-}
+import { useState } from 'react'
+import type { CandidatePreview } from '../types/Candidate'
+import './CandidateCard.css'
 
 interface CandidateCardProps {
-  candidate: Candidate;
-  onLike: () => void;
-  onDislike: () => void;
-  onSuperLike?: () => void; // Optional prop
+  candidate: CandidatePreview
+  onLike: () => void
+  onDislike: () => void
+  onSuperLike?: () => void
 }
 
 function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateCardProps) {
-  
-  const [loading, setLoading] = useState(true);
-  const handleImageLoad = () => setLoading(false);
-  const handleImageError = () => {
-    setLoading(false);
-  };
-
-  const [imgKey, setImgKey] = useState(0);
-  useEffect(() => {
-    setImgKey(k => k + 1);
-  }, [candidate]); // change later to [candidate.id]
-
+  const [loading, setLoading] = useState(true)
+  const [imageError, setImageError] = useState(false)
 
   return (
     <article className="candidate-card" aria-label={`Candidate: ${candidate.name}`}>
       <div className="candidate-card__image-wrapper">
-        {/* Candidate's image or fetch AI-generated face using imgKey to force new */}
         <img
-          src={
-            candidate.imageUrl && candidate.imageUrl.length > 0
-              ? candidate.imageUrl
-              : `https://thispersondoesnotexist.com/image?${imgKey}`
-          }
-          alt={`${candidate.name} profile photo`}
+          key={candidate.id}
+          src={candidate.imageUrl}
+          alt={candidate.name}
           className="candidate-card__image"
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-          aria-busy={loading}
+          onError={() => {
+            setImageError(true)
+            setLoading(false)
+          }}
+          onLoad={() => setLoading(false)}
+          style={{ display: loading || imageError ? 'none' : 'block' }}
         />
-        {/* Spinner when loading image */}
+        {imageError && (
+          <div className="candidate-card__image-fallback" aria-hidden="true">
+            <span className="material-symbols-outlined">person</span>
+          </div>
+        )}
         {loading && (
           <div className="candidate-card__spinner" role="status" aria-label="Loading image">
             <span className="candidate-card__spinner-dot" />
@@ -62,12 +49,11 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
               </span>
             ))}
           </div>
-          {/* View Full Resume button under skills */}
           <button
             className="candidate-card__view-resume"
             type="button"
             aria-label={`View full resume for ${candidate.name}`}
-            onClick={() => {/* Open modal or navigate to resume */}}
+            onClick={() => {}}
           >
             <span>View Full Resume</span>
             <span className="material-symbols-outlined">arrow_forward</span>
@@ -105,8 +91,8 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
         </button>
       </div>
     </article>
-  );
+  )
 }
 
-export default CandidateCard;
-export type { Candidate, CandidateCardProps };
+export default CandidateCard
+export type { CandidateCardProps }

@@ -9,6 +9,7 @@
   display: flex;
   gap: 24px;
   padding: 12px 24px;
+  flex-wrap: wrap;
 }
 
 .brand {
@@ -22,7 +23,9 @@
 
 .desktop-nav {
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  justify-content: flex-end;
   margin-left: auto;
 }
 
@@ -68,7 +71,7 @@
 
 .top-bar.expanded .mobile-nav {
   display: flex;
-  max-height: 200px;
+  max-height: 420px;
   padding: 0 24px 16px;
 }
 

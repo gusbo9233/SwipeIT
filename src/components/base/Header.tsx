@@ -2,6 +2,18 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import './Header.css'
 
+const navLinks = [
+  { label: 'Home', to: '/', end: true },
+  { label: 'About', to: '/about' },
+  { label: 'Search', to: '/search' },
+  { label: 'Swipe', to: '/swipe' },
+  { label: 'Candidate', to: '/candidate-profile' },
+  { label: 'Recruiter', to: '/recruiter-profile' },
+  { label: 'Account', to: '/account' },
+  { label: 'Login', to: '/login' },
+  { label: 'Register', to: '/register' },
+]
+
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -14,11 +26,11 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/search">Search</NavLink>
-          <NavLink to="/account">Account</NavLink>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
+          {navLinks.map((link) => (
+            <NavLink key={link.to} to={link.to} end={link.end}>
+              {link.label}
+            </NavLink>
+          ))}
         </nav>
 
         <button
@@ -33,11 +45,16 @@ function Header() {
       </div>
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
-        <NavLink to="/" end onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
-        <NavLink to="/search" onClick={() => setMobileMenuOpen(false)}>Search</NavLink>
-        <NavLink to="/account" onClick={() => setMobileMenuOpen(false)}>Account</NavLink>
-        <NavLink to="/login" onClick={() => setMobileMenuOpen(false)}>Login</NavLink>
-        <NavLink to="/register" onClick={() => setMobileMenuOpen(false)}>Register</NavLink>
+        {navLinks.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            end={link.end}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {link.label}
+          </NavLink>
+        ))}
       </nav>
     </header>
   )

@@ -1,8 +1,22 @@
+/* CONTAINER & DESIGN */
+.search-view-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* FLOW WRAPPER */
+.view-wrapper {
+  width: 100%;
+  /* No absolute positioning! This allows height to adjust naturally */
+  display: flex;
+  flex-direction: column;
+}
+
 .search-page {
   background: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-body);
-  min-height: max(884px, 100dvh);
   padding-bottom: 120px;
   flex-direction: column;
 }
@@ -15,7 +29,7 @@
   font-family: var(--font-headline);
   font-size: 40px;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1.1;
   margin: 0 0 8px;
 }
@@ -235,33 +249,16 @@
   transform: scale(0.98);
 }
 
-/* Fixed bottom */
-.fixed-bottom {
-  bottom: 24px;
-  left: 0;
-  padding: 0 24px;
-  position: fixed;
-  width: 100%;
-  z-index: 40;
-  pointer-events: none;
-}
-
-.fixed-bottom>* {
-  pointer-events: auto;
-  margin-inline: auto;
-  max-width: 672px;
-}
-
 @media (max-width: 760px) {
   .search-experience-environment-wrapper {
     flex-direction: column;
   }
 
-  .experience-grid {
-    grid-template-columns: 1fr;
+  .search-experience-environment-wrapper>* {
+    padding: 1rem 0;
   }
 
-  .work-preference-grid {
+  .experience-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -273,5 +270,9 @@
 
   .search-hero h1 {
     font-size: 34px;
+  }
+
+  .work-preference-grid {
+    grid-template-columns: 1fr;
   }
 }

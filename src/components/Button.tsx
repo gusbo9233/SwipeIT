@@ -2,11 +2,12 @@ import './Button.css'
 import { NavLink } from 'react-router-dom'
 import type { ReactNode } from 'react'
 
-type ButtonVariant = 'primary' | 'secondary'
+type ButtonVariant = 'primary' | 'secondary' | 'transparent'
 
 type ButtonProps = {
   'aria-label'?: string
   children: ReactNode
+  disabled?: boolean
   onClick?: () => void
   className?: string
   variant?: ButtonVariant
@@ -22,6 +23,7 @@ function Button(props: ButtonProps) {
     className = '',
     variant = 'primary',
     children,
+    disabled = false,
     type = 'button',
   } = props
   const classes = `button button-${variant} ${className}`
@@ -35,7 +37,13 @@ function Button(props: ButtonProps) {
   }
 
   return (
-    <button aria-label={ariaLabel} className={classes} type={type} onClick={onClick}>
+    <button
+      aria-label={ariaLabel}
+      className={classes}
+      disabled={disabled}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   )

@@ -19,20 +19,29 @@ function Register() {
   const [formData, setFormData] = useState(initialFormData)
   const [step, setStep] = useState<'register' | 'preferences'>('register')
   const [error, setError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function handleNext() {
+    if (isSubmitting) return
+
     setError(null)
-    const { error } = await supabase.auth.signUp({
-      email: formData.email,
-      password: formData.password,
-      options: {
-        data: { name: formData.name, role: formData.role },
-      },
-    })
-    if (error) {
-      setError(error.message)
-    } else {
-      setStep('preferences')
+    setIsSubmitting(true)
+
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: { name: formData.name, role: formData.role },
+        },
+      })
+      if (error) {
+        setError(error.message)
+      } else {
+        setStep('preferences')
+      }
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -71,6 +80,7 @@ function Register() {
         {step === 'register' ? (
           <RegisterWithRoleToggle
             formData={formData}
+            isSubmitting={isSubmitting}
             onChange={setFormData}
             onNext={handleNext}
           />

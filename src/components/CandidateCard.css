@@ -30,10 +30,23 @@
 
 .candidate-card__image {
   width: 100%;
-  max-width: 120px; 
-  height: auto;
+  height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.candidate-card__image-fallback {
+  align-items: center;
+  background: var(--color-surface-container, #f1e8de);
+  color: var(--color-primary, #47607e);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.candidate-card__image-fallback .material-symbols-outlined {
+  font-size: 72px;
 }
 
 .candidate-card__gradient-overlay {
