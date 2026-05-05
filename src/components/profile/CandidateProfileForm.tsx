@@ -11,6 +11,7 @@ type CandidateProfileFormProps = {
   onChange: (profile: CandidateProfileData) => void
   onSubmit: () => void
   profile: CandidateProfileData
+  readOnly?: boolean
   submitLabel: string
 }
 
@@ -27,6 +28,7 @@ function CandidateProfileForm({
   onChange,
   onSubmit,
   profile,
+  readOnly = false,
   submitLabel,
 }: CandidateProfileFormProps) {
   function updateField<Key extends keyof CandidateProfileData>(
@@ -43,6 +45,7 @@ function CandidateProfileForm({
 
   return (
     <form className="candidate-profile-form" onSubmit={handleSubmit}>
+      <fieldset className="profile-fieldset" disabled={readOnly}>
       <ProfileSection icon="person" title="Personal Information">
         <div className="candidate-field-grid">
           <label className="candidate-field">
@@ -96,7 +99,8 @@ function CandidateProfileForm({
         />
       </ProfileSection>
 
-      <ProfileSubmit helperText={helperText} label={submitLabel} />
+      </fieldset>
+      {readOnly ? null : <ProfileSubmit helperText={helperText} label={submitLabel} />}
     </form>
   )
 }

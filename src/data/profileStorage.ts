@@ -1,11 +1,10 @@
+import { supabase } from '../lib/supabase'
 import type {
   CandidateProfileData,
   RecruiterProfileData,
   RegisterFormData,
   UserProfile,
-} from '../components/registration/types'
-
-const storageKey = 'swipeit:user-profile'
+} from '../types/profile'
 
 export const defaultCandidateProfile: CandidateProfileData = {
   fullName: '',
@@ -28,43 +27,82 @@ export const defaultRecruiterProfile: RecruiterProfileData = {
   website: '',
 }
 
-export function buildProfileFromRegistration(
+export function buildCandidateProfile(
   formData: RegisterFormData,
-  candidateProfile: CandidateProfileData = defaultCandidateProfile,
-  recruiterProfile: RecruiterProfileData = defaultRecruiterProfile,
+  candidateProfile?: Partial<CandidateProfileData>,
 ): UserProfile {
   return {
+    email: formData.email,
+    name: formData.name,
+    role: 'candidate',
     candidate: {
       ...defaultCandidateProfile,
       ...candidateProfile,
-      fullName: candidateProfile.fullName || formData.name,
+      fullName: candidateProfile?.fullName || formData.name,
     },
+  }
+}
+
+export function buildRecruiterProfile(
+  formData: RegisterFormData,
+  recruiterProfile?: Partial<RecruiterProfileData>,
+): UserProfile {
+  return {
     email: formData.email,
     name: formData.name,
+    role: 'recruiter',
     recruiter: {
       ...defaultRecruiterProfile,
       ...recruiterProfile,
-      companyName: recruiterProfile.companyName || formData.name,
-      email: recruiterProfile.email || formData.email,
+      companyName: recruiterProfile?.companyName || formData.name,
+      email: recruiterProfile?.email || formData.email,
     },
-    role: formData.role,
   }
 }
 
-export function getStoredProfile(): UserProfile | null {
-  const storedProfile = window.localStorage.getItem(storageKey)
+export async function getStoredProfile(): Promise<UserProfile | null> {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return null
 
-  if (!storedProfile) {
-    return null
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('name, email, role, candidate, recruiter')
+    .eq('id', user.id)
+    .single()
+
+  if (error || !data) return null
+
+  const base = { name: data.name ?? '', email: data.email ?? '' }
+
+  if (data.role === 'recruiter') {
+    return {
+      ...base,
+      role: 'recruiter',
+      recruiter: { ...defaultRecruiterProfile, ...(data.recruiter as RecruiterProfileData) },
+    }
   }
 
-  try {
-    return JSON.parse(storedProfile) as UserProfile
-  } catch {
-    return null
+  return {
+    ...base,
+    role: 'candidate',
+    candidate: { ...defaultCandidateProfile, ...(data.candidate as CandidateProfileData) },
   }
 }
 
-export function saveStoredProfile(profile: UserProfile) {
-  window.localStorage.setItem(storageKey, JSON.stringify(profile))
+export async function saveStoredProfile(profile: UserProfile): Promise<void> {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Not signed in.')
+
+  const payload = {
+    id: user.id,
+    name: profile.name,
+    email: profile.email,
+    role: profile.role,
+    candidate: profile.role === 'candidate' ? profile.candidate : {},
+    recruiter: profile.role === 'recruiter' ? profile.recruiter : {},
+    updated_at: new Date().toISOString(),
+  }
+
+  const { error } = await supabase.from('profiles').upsert(payload)
+  if (error) throw new Error(error.message)
 }

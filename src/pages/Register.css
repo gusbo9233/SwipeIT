@@ -47,8 +47,10 @@
 }
 
 .candidate-back {
+  border: 0;
   background: transparent;
   color: var(--color-primary);
+  padding: 8px;
   transition: transform 160ms ease;
 }
 

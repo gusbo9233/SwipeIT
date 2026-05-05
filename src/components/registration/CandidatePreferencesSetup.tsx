@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import {
+  buildCandidateProfile,
   defaultCandidateProfile,
   saveStoredProfile,
-  buildProfileFromRegistration,
 } from '../../data/profileStorage'
 import CandidateProfileForm from '../profile/CandidateProfileForm'
 import ProfileLayout from '../profile/ProfileLayout'
@@ -23,10 +23,22 @@ function CandidatePreferencesSetup({
     ...defaultCandidateProfile,
     fullName: registration.name,
   })
+  const [saveError, setSaveError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
 
-  function handleSubmit() {
-    saveStoredProfile(buildProfileFromRegistration(registration, profile))
-    onComplete()
+  async function handleSubmit() {
+    setSaveError(null)
+    setSaving(true)
+    try {
+      await saveStoredProfile(buildCandidateProfile(registration, profile))
+      onComplete()
+    } catch (error) {
+      setSaveError(
+        error instanceof Error ? error.message : 'Could not save your profile.',
+      )
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -37,12 +49,13 @@ function CandidatePreferencesSetup({
       onBack={onBack}
       title="Complete your profile"
     >
+      {saveError ? <p className="profile-save-error">{saveError}</p> : null}
       <CandidateProfileForm
         helperText="By continuing, you agree to our Terms of Service"
         onChange={setProfile}
         onSubmit={handleSubmit}
         profile={profile}
-        submitLabel="Complete Profile"
+        submitLabel={saving ? 'Saving…' : 'Complete Profile'}
       />
     </ProfileLayout>
   )

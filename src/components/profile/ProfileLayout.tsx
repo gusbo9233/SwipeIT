@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import Button from '../Button'
 
 type ProfileLayoutProps = {
   avatarLabel: string
@@ -27,14 +28,14 @@ function ProfileLayout({
         <header className="candidate-topbar">
           <div className="candidate-topbar-inner">
             <div className="candidate-brand-row">
-              <button
+              <Button
                 aria-label={backLabel}
                 className="candidate-back material-symbols-outlined"
                 onClick={onBack}
                 type="button"
               >
                 arrow_back
-              </button>
+              </Button>
               <span>Swipe IT</span>
             </div>
             <div
@@ -47,13 +48,13 @@ function ProfileLayout({
         </header>
       ) : null}
 
-      <main className="candidate-onboarding-main">
+      <div className="candidate-onboarding-main">
         <section className="candidate-onboarding-heading">
           <h1>{title}</h1>
           <p>{description}</p>
         </section>
         {children}
-      </main>
+      </div>
     </div>
   )
 }

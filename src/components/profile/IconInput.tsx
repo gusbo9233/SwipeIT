@@ -11,7 +11,7 @@ function IconInput({
   name,
   onChange,
   type = 'url',
-  value,
+  value = '',
 }: IconInputProps) {
   return (
     <label className="candidate-icon-input">

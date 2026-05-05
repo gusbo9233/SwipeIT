@@ -4,6 +4,7 @@ import CandidatePreferencesSetup from '../components/registration/CandidatePrefe
 import RecruiterPreferencesSetup from '../components/registration/RecruiterPreferencesSetup'
 import RegisterWithRoleToggle from '../components/registration/RegisterWithRoleToggle'
 import type { RegisterFormData } from '../components/registration/types'
+import { supabase } from '../lib/supabase'
 import './Register.css'
 
 const initialFormData: RegisterFormData = {
@@ -17,6 +18,23 @@ function Register() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState(initialFormData)
   const [step, setStep] = useState<'register' | 'preferences'>('register')
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleNext() {
+    setError(null)
+    const { error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+      options: {
+        data: { name: formData.name, role: formData.role },
+      },
+    })
+    if (error) {
+      setError(error.message)
+    } else {
+      setStep('preferences')
+    }
+  }
 
   function handleComplete() {
     navigate('/account')
@@ -47,13 +65,14 @@ function Register() {
               ? 'Candidates and recruiters follow different onboarding paths.'
               : 'Preferences become the first filters for the swipe experience.'}
           </p>
+          {error && <p className="register-error">{error}</p>}
         </aside>
 
         {step === 'register' ? (
           <RegisterWithRoleToggle
             formData={formData}
             onChange={setFormData}
-            onNext={() => setStep('preferences')}
+            onNext={handleNext}
           />
         ) : (
           <RecruiterPreferencesSetup

@@ -5,7 +5,7 @@ import type { RegisterFormData, RegistrationRole } from './types'
 type RegisterWithRoleToggleProps = {
   formData: RegisterFormData
   onChange: (formData: RegisterFormData) => void
-  onNext: () => void
+  onNext: () => void | Promise<void>
 }
 
 const roles: Array<{

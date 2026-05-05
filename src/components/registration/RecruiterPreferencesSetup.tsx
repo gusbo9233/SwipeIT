@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import {
-  buildProfileFromRegistration,
+  buildRecruiterProfile,
   defaultRecruiterProfile,
   saveStoredProfile,
 } from '../../data/profileStorage'
@@ -24,10 +24,22 @@ function RecruiterPreferencesSetup({
     companyName: registration.name,
     email: registration.email,
   })
+  const [saveError, setSaveError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
 
-  function handleSubmit() {
-    saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))
-    onComplete()
+  async function handleSubmit() {
+    setSaveError(null)
+    setSaving(true)
+    try {
+      await saveStoredProfile(buildRecruiterProfile(registration, profile))
+      onComplete()
+    } catch (error) {
+      setSaveError(
+        error instanceof Error ? error.message : 'Could not save your profile.',
+      )
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -39,12 +51,13 @@ function RecruiterPreferencesSetup({
       title="Set up hiring"
       tone="recruiter"
     >
+      {saveError ? <p className="profile-save-error">{saveError}</p> : null}
       <RecruiterProfileForm
         helperText="Candidate recommendations will use these settings first."
         onChange={setProfile}
         onSubmit={handleSubmit}
         profile={profile}
-        submitLabel="Complete Hiring Setup"
+        submitLabel={saving ? 'Saving…' : 'Complete Hiring Setup'}
       />
     </ProfileLayout>
   )

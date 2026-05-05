@@ -22,29 +22,19 @@ function SearchableChips({
 
   function addItem(item: string) {
     const nextItem = item.trim()
+    if (!nextItem) return
+    if (selectedItems.some((current) => isSameItem(current, nextItem))) return
 
-    if (!nextItem) {
-      return
-    }
-
-    setSelectedItems((currentItems) => {
-      if (currentItems.some((currentItem) => isSameItem(currentItem, nextItem))) {
-        return currentItems
-      }
-
-      const nextItems = [...currentItems, nextItem]
-      onChange?.(nextItems)
-      return nextItems
-    })
+    const nextItems = [...selectedItems, nextItem]
+    setSelectedItems(nextItems)
+    onChange?.(nextItems)
     setInputValue('')
   }
 
   function removeItem(item: string) {
-    setSelectedItems((currentItems) => {
-      const nextItems = currentItems.filter((currentItem) => !isSameItem(currentItem, item))
-      onChange?.(nextItems)
-      return nextItems
-    })
+    const nextItems = selectedItems.filter((current) => !isSameItem(current, item))
+    setSelectedItems(nextItems)
+    onChange?.(nextItems)
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
