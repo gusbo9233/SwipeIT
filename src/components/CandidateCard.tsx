@@ -1,52 +1,43 @@
+import type { CandidatePreview } from '../types/Candidate';
 import './CandidateCard.css';
-import { useState, useEffect } from "react";
-
-interface Candidate {
-  id: string | number;
-  name: string;
-  imageUrl: string;
-  skills: string[];
-}
+import { useState } from "react";
 
 interface CandidateCardProps {
-  candidate: Candidate;
+  candidate: CandidatePreview;
   onLike: () => void;
   onDislike: () => void;
-  onSuperLike?: () => void; // Optional prop
+  onSuperLike?: () => void;
+  onViewResume?: (candidateId: string | number) => void;
 }
 
-function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateCardProps) {
-  
-  const [loading, setLoading] = useState(true);
-  const handleImageLoad = () => setLoading(false);
-  const handleImageError = () => {
-    setLoading(false);
+function CandidateCard({ candidate, onLike, onDislike, onSuperLike, onViewResume }: CandidateCardProps) {
+  // 1. Use the candidate.id as part of the state key if needed, 
+  // or simply rely on the 'key' prop from the parent.
+  const [loadingId, setLoadingId] = useState<string | number | null>(null);
+
+  // 2. Logic: If the current candidate.id isn't the one we are "tracking", 
+  // it means we just got a new candidate.
+  const isImageLoading = loadingId !== candidate.id && Boolean(candidate.imageUrl);
+
+  const handleImageLoad = () => {
+    setLoadingId(candidate.id);
   };
-
-  const [imgKey, setImgKey] = useState(0);
-  useEffect(() => {
-    setImgKey(k => k + 1);
-  }, [candidate]); // change later to [candidate.id]
-
 
   return (
     <article className="candidate-card" aria-label={`Candidate: ${candidate.name}`}>
       <div className="candidate-card__image-wrapper">
-        {/* Candidate's image or fetch AI-generated face using imgKey to force new */}
-        <img
-          src={
-            candidate.imageUrl && candidate.imageUrl.length > 0
-              ? candidate.imageUrl
-              : `https://thispersondoesnotexist.com/image?${imgKey}`
-          }
-          alt={`${candidate.name} profile photo`}
-          className="candidate-card__image"
+        <img 
+          // Keeping the key here ensures the DOM element recreates
+          key={candidate.id} 
+          src={candidate.imageUrl}
+          alt={candidate.name} 
           onLoad={handleImageLoad}
-          onError={handleImageError}
-          aria-busy={loading}
+          onError={handleImageLoad} // Stop loading even on error
+          style={{ display: isImageLoading ? 'none' : 'block' }}
         />
-        {/* Spinner when loading image */}
-        {loading && (
+
+        {/* 3. Spinner logic based on the ID mismatch */}
+        {candidate.imageUrl && isImageLoading && (
           <div className="candidate-card__spinner" role="status" aria-label="Loading image">
             <span className="candidate-card__spinner-dot" />
           </div>
@@ -62,12 +53,13 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
               </span>
             ))}
           </div>
-          {/* View Full Resume button under skills */}
+          
           <button
             className="candidate-card__view-resume"
             type="button"
             aria-label={`View full resume for ${candidate.name}`}
-            onClick={() => {/* Open modal or navigate to resume */}}
+            onClick={() => onViewResume?.(candidate.id)}
+            disabled={!onViewResume}
           >
             <span>View Full Resume</span>
             <span className="material-symbols-outlined">arrow_forward</span>
@@ -109,4 +101,3 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
 }
 
 export default CandidateCard;
-export type { Candidate, CandidateCardProps };
