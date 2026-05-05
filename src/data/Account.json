@@ -1,0 +1,23 @@
+[
+    {
+        "id": "1",
+        "email": "admin@lexicon.se",
+        "password": "password123",
+        "role": "admin",
+        "name": "Admin User"
+    },
+    {
+        "id": "3",
+        "email": "candidate@lexicon.se",
+        "password": "password123",
+        "role": "admin",
+        "name": "Admin User"
+    },
+    {
+        "id": "2",
+        "email": "recruiter@lexicon.se",
+        "password": "password123",
+        "role": "recruiter",
+        "name": "Jane Doe"
+    }
+]
