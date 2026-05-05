@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { Candidate } from "../../types/Candidate";
+import type { Candidate, CandidatePreview } from "../../types/Candidate";
 import Button from "../Button";
-import SwipeCard from "../SwipeCard";
+import SwipeCard from "./SwipeCard";
 
 type SwipeDeckProps = {
     candidates: Candidate[]
@@ -23,15 +23,22 @@ const SwipeDeck = ({ candidates, onBack } : SwipeDeckProps) => {
     );
   }
 
-  return (
-    <SwipeCard
-      key={currentCandidate.id}
-      candidate={currentCandidate}
-      onLike={handleNext}
-      onDislike={handleNext}
-      onSuperLike={handleNext}
-    />
-  );
+    const previewData: CandidatePreview = {
+        id: currentCandidate.id,
+        name: currentCandidate.name,
+        imageUrl: currentCandidate.imageUrl,
+        skills: currentCandidate.skills
+    };
+
+    return (
+        <SwipeCard
+        key={previewData.id}
+        candidate={previewData}
+        onLike={handleNext}
+        onDislike={handleNext}
+        onSuperLike={handleNext}
+        />
+    );
 };
 
 export default SwipeDeck;

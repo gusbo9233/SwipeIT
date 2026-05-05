@@ -15,11 +15,10 @@ const SwipeView: React.FC<SwipeViewProps> = ({ onBack }) => {
   const candidates = candidateData as Candidate[];
 
   const filteredDeck = useMemo(() => {
+    // filtering by skills, add for experienceLevels later
     return candidates.filter(candidate => {
-      // 1. Skill Match
       const matchesSkills = selectedSkills.length === 0 || 
         candidate.skills.some(skill => selectedSkills.includes(skill));
-      
       return matchesSkills;
     });
   }, [selectedSkills, candidates]);

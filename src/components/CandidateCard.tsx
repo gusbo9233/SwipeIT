@@ -7,9 +7,10 @@ interface CandidateCardProps {
   onLike: () => void;
   onDislike: () => void;
   onSuperLike?: () => void;
+  onViewResume?: (candidateId: string | number) => void;
 }
 
-function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateCardProps) {
+function CandidateCard({ candidate, onLike, onDislike, onSuperLike, onViewResume }: CandidateCardProps) {
   // 1. Use the candidate.id as part of the state key if needed, 
   // or simply rely on the 'key' prop from the parent.
   const [loadingId, setLoadingId] = useState<string | number | null>(null);
@@ -57,7 +58,8 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
             className="candidate-card__view-resume"
             type="button"
             aria-label={`View full resume for ${candidate.name}`}
-            onClick={() => {}}
+            onClick={() => onViewResume?.(candidate.id)}
+            disabled={!onViewResume}
           >
             <span>View Full Resume</span>
             <span className="material-symbols-outlined">arrow_forward</span>
