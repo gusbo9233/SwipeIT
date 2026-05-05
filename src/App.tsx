@@ -14,11 +14,16 @@ function App() {
       <Header />
       <main className="site-main">
         <Routes>
+          {/* Public Routes */}
           <Route index element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Recruiter Only Routes */}
           <Route path="/search" element={<Search />} />
-          <Route path="/recruiterprofile" element={<RecruiterProfile/>} />      
+          <Route path="/recruiterprofile" element={<RecruiterProfile/>} />     
+
+          {/* Catch All */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
