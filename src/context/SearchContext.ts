@@ -10,6 +10,9 @@ export type SearchContextType = {
   setWorkEnv: React.Dispatch<React.SetStateAction<WorkEnv>>
   experienceLevels: Record<ExperienceKey, boolean>
   setExperienceLevels: React.Dispatch<React.SetStateAction<Record<ExperienceKey, boolean>>>
+  addSkill: (skill: string) => void
+  removeSkill: (skill: string) => void
+  toggleExperience: (experience: ExperienceKey) => void
 }
 
 export const SearchContext = createContext<SearchContextType | null>(null)

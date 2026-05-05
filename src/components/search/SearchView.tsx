@@ -24,7 +24,7 @@ const WORK_ENV_OPTIONS: { value: WorkEnv; icon: string; label: string }[] = [
 
 
 function SearchView({ onStart }: SearchViewProps) {
-  const {inputValue, setInputValue, selectedSkills, setSelectedSkills, experienceLevels, setExperienceLevels, workEnv, setWorkEnv} = useSearchContext();
+  const {inputValue, setInputValue, selectedSkills, experienceLevels, workEnv, setWorkEnv, addSkill, removeSkill, toggleExperience} = useSearchContext();
     
     
   const filteredSkills = useMemo(() => {
@@ -36,20 +36,6 @@ function SearchView({ onStart }: SearchViewProps) {
         !selectedSkills.some((s) => s.toLowerCase() === skill.toLowerCase())
     )
   }, [inputValue, selectedSkills])
-
-  function addSkill(skill: string) {
-    if (selectedSkills.some((s) => s.toLowerCase() === skill.toLowerCase())) return
-    setSelectedSkills((prev) => [...prev, skill])
-    setInputValue('')
-  }
-
-  function removeSkill(skill: string) {
-    setSelectedSkills((prev) => prev.filter((s) => s !== skill))
-  }
-
-  function toggleExperience(level: ExperienceKey) {
-    setExperienceLevels((prev) => ({ ...prev, [level]: !prev[level] }))
-  }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && filteredSkills.length > 0) {
@@ -79,13 +65,14 @@ function SearchView({ onStart }: SearchViewProps) {
                 />
             </div>
             {filteredSkills.length > 0 && (
-              <div className="skill-dropdown is-visible">
+              <div className="skill-dropdown is-visible" role="listbox" aria-label="Skill suggestions">
                 {filteredSkills.map((skill) => (
                   <button
                   key={skill}
                   className="skill-dropdown-item"
                   onClick={() => addSkill(skill)}
                   type="button"
+                  role="option"
                   >
                     {skill}
                   </button>
