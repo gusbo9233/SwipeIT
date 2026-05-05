@@ -43,7 +43,11 @@ function buildExitTransform(
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
-function SwipeCard({ candidate, onLike, onDislike, onSuperLike }: SwipeCardProps) {
+function SwipeCard(props: SwipeCardProps) {
+  return <SwipeCardContent key={props.candidate.id} {...props} />;
+}
+
+function SwipeCardContent({ candidate, onLike, onDislike, onSuperLike }: SwipeCardProps) {
   // Refs: mutable state that must not trigger re-renders.
   const dragStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
   const lastDeltaRef = useRef({ x: 0, y: 0 });
@@ -55,21 +59,6 @@ function SwipeCard({ candidate, onLike, onDislike, onSuperLike }: SwipeCardProps
   const [isDragging, setIsDragging] = useState(false);
   const [flyDirection, setFlyDirection] = useState<'left' | 'right' | null>(null);
   const [exitTransform, setExitTransform] = useState<string | null>(null);
-
-  // Reset state when candidate changes
-  useEffect(() => {
-    if (flyTimeoutRef.current) {
-        clearTimeout(flyTimeoutRef.current);
-        flyTimeoutRef.current = null;
-    }
-    dragStartRef.current = null;
-    lastDeltaRef.current = { x: 0, y: 0 };
-    isFlyingOutRef.current = false;
-    setOffset({ x: 0, y: 0 });
-    setIsDragging(false);
-    setFlyDirection(null);
-    setExitTransform(null);
-  }, [candidate]);
 
   // Cleanup pending timeout on unmount.
   useEffect(

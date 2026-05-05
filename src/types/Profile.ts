@@ -20,9 +20,7 @@ export type RecruiterProfileData = {
   companyName: string
   companySize: string
   email: string
-  hiringFocus: string[]
   hiringLocation: string
-  hiringSignals: string[]
   linkedIn: string
   rolePitch: string
   website: string

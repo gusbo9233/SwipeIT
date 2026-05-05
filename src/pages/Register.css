@@ -103,6 +103,21 @@
   gap: 40px;
 }
 
+.form-message {
+  background: rgb(71 96 126 / 8%);
+  border-radius: 18px;
+  color: var(--color-primary);
+  font-weight: 800;
+  margin: 0;
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.form-message-error {
+  background: rgb(178 66 54 / 10%);
+  color: #9b2f25;
+}
+
 .candidate-form-section {
   background: var(--color-surface-low, #fef1e6);
   border-radius: 24px;
@@ -402,24 +417,6 @@
 
 .recruiter-profile-dot {
   background: #8b4f2c;
-}
-
-.recruiter-glow {
-  background: rgb(139 79 44 / 8%);
-}
-
-.skill-chip.recruiter-chip {
-  background: #8b4f2c;
-  border-color: #8b4f2c;
-}
-
-.recruiter-preference input:checked+span {
-  color: #8b4f2c;
-}
-
-.recruiter-preference:has(input:checked) {
-  background: rgb(139 79 44 / 6%);
-  border-color: #8b4f2c;
 }
 
 .recruiter-note-section {

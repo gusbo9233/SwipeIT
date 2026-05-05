@@ -1,5 +1,5 @@
 import './CandidateCard.css';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface Candidate {
   id: string | number;
@@ -23,22 +23,18 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
     setLoading(false);
   };
 
-  const [imgKey, setImgKey] = useState(0);
-  useEffect(() => {
-    setImgKey(k => k + 1);
-  }, [candidate]); // change later to [candidate.id]
-
+  const imageSource =
+    candidate.imageUrl && candidate.imageUrl.length > 0
+      ? candidate.imageUrl
+      : `https://thispersondoesnotexist.com/image?${candidate.id}`;
 
   return (
     <article className="candidate-card" aria-label={`Candidate: ${candidate.name}`}>
       <div className="candidate-card__image-wrapper">
         {/* Candidate's image or fetch AI-generated face using imgKey to force new */}
         <img
-          src={
-            candidate.imageUrl && candidate.imageUrl.length > 0
-              ? candidate.imageUrl
-              : `https://thispersondoesnotexist.com/image?${imgKey}`
-          }
+          key={imageSource}
+          src={imageSource}
           alt={`${candidate.name} profile photo`}
           className="candidate-card__image"
           onLoad={handleImageLoad}

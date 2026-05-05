@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import CandidatePreferencesSetup from '../components/registration/CandidatePreferencesSetup'
 import RecruiterPreferencesSetup from '../components/registration/RecruiterPreferencesSetup'
 import RegisterWithRoleToggle from '../components/registration/RegisterWithRoleToggle'
-import type { RegisterFormData } from '../components/registration/types'
+import type { RegisterFormData } from '../types/Profile'
 import './Register.css'
 
 const initialFormData: RegisterFormData = {

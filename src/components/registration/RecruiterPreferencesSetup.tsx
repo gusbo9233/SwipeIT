@@ -6,7 +6,7 @@ import {
 } from '../../data/profileStorage'
 import ProfileLayout from '../profile/ProfileLayout'
 import RecruiterProfileForm from '../profile/RecruiterProfileForm'
-import type { RecruiterProfileData, RegisterFormData } from './types'
+import type { RecruiterProfileData, RegisterFormData } from '../../types/Profile'
 
 type RecruiterPreferencesSetupProps = {
   onBack: () => void
@@ -19,6 +19,7 @@ function RecruiterPreferencesSetup({
   onComplete,
   registration,
 }: RecruiterPreferencesSetupProps) {
+  const [saveError, setSaveError] = useState('')
   const [profile, setProfile] = useState<RecruiterProfileData>({
     ...defaultRecruiterProfile,
     companyName: registration.name,
@@ -26,8 +27,13 @@ function RecruiterPreferencesSetup({
   })
 
   function handleSubmit() {
-    saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))
-    onComplete()
+    try {
+      saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))
+      onComplete()
+    } catch (error) {
+      console.error('Failed to save recruiter profile', error)
+      setSaveError('We could not save your profile. Please try again.')
+    }
   }
 
   return (
@@ -39,6 +45,7 @@ function RecruiterPreferencesSetup({
       title="Set up hiring"
       tone="recruiter"
     >
+      {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
       <RecruiterProfileForm
         helperText="Candidate recommendations will use these settings first."
         onChange={setProfile}

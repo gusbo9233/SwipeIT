@@ -1,10 +1,30 @@
+import { useActionState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { authService } from '../service/authService'
 import './Login.css'
 
 function Login() {
-  function handleLogin() {
-    window.localStorage.setItem('swipeit:isLoggedIn', 'true')
-    window.location.href = '/'
+  const navigate = useNavigate()
+
+  async function loginAction(_previousError: string | null, formData: FormData) {
+    const email = String(formData.get('email') ?? '')
+    const password = String(formData.get('password') ?? '')
+
+    if (!email || !password) {
+      return 'Both email and password are required.'
+    }
+
+    const user = authService.login(email, password)
+
+    if (!user) {
+      return 'Invalid email or password.'
+    }
+
+    navigate(user.role === 'recruiter' ? '/recruiterprofile' : '/search')
+    return null
   }
+
+  const [error, formAction, isPending] = useActionState(loginAction, null)
 
   return (
     <div className="login-page page">
@@ -13,33 +33,44 @@ function Login() {
         <p className="eyebrow">Welcome back</p>
         <h1>Log in to Swipe IT</h1>
         <p>
-          Continue to your candidate and recruiter matching workspace. No
-          credentials are required yet.
+          Continue to your candidate and recruiter matching workspace.
         </p>
 
-        <div className="login-fields">
-          <label className="login-field">
-            Email
-            <input
-              autoComplete="email"
-              placeholder="you@example.com"
-              type="email"
-            />
-          </label>
-          <label className="login-field">
-            Password
-            <input
-              autoComplete="current-password"
-              placeholder="Enter your password"
-              type="password"
-            />
-          </label>
-        </div>
+        {error ? (
+          <div className="login-error-banner" role="alert">
+            {error}
+          </div>
+        ) : null}
 
-        <button className="login-button" onClick={handleLogin} type="button">
-          <span>Login</span>
-          <span className="material-symbols-outlined">arrow_forward</span>
-        </button>
+        <form action={formAction} className="login-form">
+          <div className="login-fields">
+            <label className="login-field">
+              Email
+              <input
+                autoComplete="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                type="email"
+              />
+            </label>
+            <label className="login-field">
+              Password
+              <input
+                autoComplete="current-password"
+                name="password"
+                placeholder="Enter your password"
+                required
+                type="password"
+              />
+            </label>
+          </div>
+
+          <button className="login-button" disabled={isPending} type="submit">
+            <span>{isPending ? 'Logging in...' : 'Login'}</span>
+            <span className="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </form>
       </section>
     </div>
   )

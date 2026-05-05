@@ -47,13 +47,13 @@ function ProfileLayout({
         </header>
       ) : null}
 
-      <main className="candidate-onboarding-main">
+      <section aria-label={title} className="candidate-onboarding-main">
         <section className="candidate-onboarding-heading">
           <h1>{title}</h1>
           <p>{description}</p>
         </section>
         {children}
-      </main>
+      </section>
     </div>
   )
 }

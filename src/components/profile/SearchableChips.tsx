@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 
 type SearchableChipsProps = {
   accentClassName?: string
@@ -15,6 +15,21 @@ function SearchableChips({
 }: SearchableChipsProps) {
   const [inputValue, setInputValue] = useState('')
   const [selectedItems, setSelectedItems] = useState(selected)
+  const didMountRef = useRef(false)
+  const onChangeRef = useRef(onChange)
+
+  useEffect(() => {
+    onChangeRef.current = onChange
+  }, [onChange])
+
+  useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true
+      return
+    }
+
+    onChangeRef.current?.(selectedItems)
+  }, [selectedItems])
 
   const availableSuggestions = suggested.filter(
     (item) => !selectedItems.some((selectedItem) => isSameItem(selectedItem, item)),
@@ -32,18 +47,14 @@ function SearchableChips({
         return currentItems
       }
 
-      const nextItems = [...currentItems, nextItem]
-      onChange?.(nextItems)
-      return nextItems
+      return [...currentItems, nextItem]
     })
     setInputValue('')
   }
 
   function removeItem(item: string) {
     setSelectedItems((currentItems) => {
-      const nextItems = currentItems.filter((currentItem) => !isSameItem(currentItem, item))
-      onChange?.(nextItems)
-      return nextItems
+      return currentItems.filter((currentItem) => !isSameItem(currentItem, item))
     })
   }
 

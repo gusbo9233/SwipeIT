@@ -1,5 +1,5 @@
 import type { FormEvent } from 'react'
-import type { CandidateProfileData } from '../registration/types'
+import type { CandidateProfileData } from '../../types/Profile'
 import IconInput from './IconInput'
 import PreferenceGrid from './PreferenceGrid'
 import ProfileSection from './ProfileSection'

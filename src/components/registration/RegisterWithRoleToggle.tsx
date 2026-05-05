@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react'
 import Button from '../Button'
-import type { RegisterFormData, RegistrationRole } from './types'
+import type { RegisterFormData, RegistrationRole } from '../../types/Profile'
 
 type RegisterWithRoleToggleProps = {
   formData: RegisterFormData
@@ -77,6 +77,7 @@ function RegisterWithRoleToggle({
           <input
             autoComplete="name"
             onChange={(event) => updateField('name', event.target.value)}
+            placeholder="Your name"
             required
             type="text"
             value={formData.name}
@@ -87,6 +88,7 @@ function RegisterWithRoleToggle({
           <input
             autoComplete="email"
             onChange={(event) => updateField('email', event.target.value)}
+            placeholder="you@example.com"
             required
             type="email"
             value={formData.email}
@@ -98,6 +100,7 @@ function RegisterWithRoleToggle({
             autoComplete="new-password"
             minLength={8}
             onChange={(event) => updateField('password', event.target.value)}
+            placeholder="At least 8 characters"
             required
             type="password"
             value={formData.password}

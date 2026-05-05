@@ -3,7 +3,7 @@ import CandidateProfileForm from '../components/profile/CandidateProfileForm'
 import ProfileLayout from '../components/profile/ProfileLayout'
 import ProfileSection from '../components/profile/ProfileSection'
 import RecruiterProfileForm from '../components/profile/RecruiterProfileForm'
-import type { RegistrationRole, UserProfile } from '../components/registration/types'
+import type { UserProfile } from '../types/Profile'
 import {
   buildProfileFromRegistration,
   getStoredProfile,
@@ -19,37 +19,29 @@ const guestProfile = buildProfileFromRegistration({
   role: 'candidate',
 })
 
-const roleOptions: Array<{
-  description: string
-  label: string
-  value: RegistrationRole
-}> = [
-  {
-    description: 'Edit your candidate profile and matching preferences.',
-    label: 'Candidate',
-    value: 'candidate',
-  },
-  {
-    description: 'Edit your company profile and hiring preferences.',
-    label: 'Recruiter',
-    value: 'recruiter',
-  },
-]
-
 function Account() {
   const [profile, setProfile] = useState<UserProfile>(() => getStoredProfile() ?? guestProfile)
   const [saveMessage, setSaveMessage] = useState('')
+  const [saveError, setSaveError] = useState('')
   const activeTone = profile.role
 
   function updateProfile(nextProfile: UserProfile) {
     setProfile(nextProfile)
     setSaveMessage('')
+    setSaveError('')
   }
 
   function saveProfile(nextProfile = profile) {
-    saveStoredProfile(nextProfile)
-    setProfile(nextProfile)
-    setSaveMessage('Account changes saved.')
+    try {
+      saveStoredProfile(nextProfile)
+      setProfile(nextProfile)
+      setSaveError('')
+      setSaveMessage('Account changes saved.')
+    } catch (error) {
+      console.error('Failed to save account profile', error)
+      setSaveMessage('')
+      setSaveError('We could not save your changes. Please try again.')
+    }
   }
 
   return (
@@ -84,32 +76,13 @@ function Account() {
             </label>
           </div>
 
-          <fieldset className="role-toggle account-role-toggle">
-            <legend>Account type</legend>
-            {roleOptions.map((role) => (
-              <label
-                className={`role-option ${
-                  profile.role === role.value ? 'is-selected' : ''
-                }`}
-                key={role.value}
-              >
-                <input
-                  checked={profile.role === role.value}
-                  name="role"
-                  onChange={() => updateProfile({ ...profile, role: role.value })}
-                  type="radio"
-                  value={role.value}
-                />
-                <span>
-                  <strong>{role.label}</strong>
-                  <small>{role.description}</small>
-                </span>
-              </label>
-            ))}
-          </fieldset>
+          <p className="account-role-summary">
+            Account type: <strong>{profile.role === 'candidate' ? 'Candidate' : 'Recruiter'}</strong>
+          </p>
         </ProfileSection>
 
-        {saveMessage ? <p className="account-form-message">{saveMessage}</p> : null}
+        {saveMessage ? <p className="form-message">{saveMessage}</p> : null}
+        {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
 
         {profile.role === 'candidate' ? (
           <CandidateProfileForm

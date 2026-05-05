@@ -6,7 +6,7 @@ import {
 } from '../../data/profileStorage'
 import CandidateProfileForm from '../profile/CandidateProfileForm'
 import ProfileLayout from '../profile/ProfileLayout'
-import type { CandidateProfileData, RegisterFormData } from './types'
+import type { CandidateProfileData, RegisterFormData } from '../../types/Profile'
 
 type CandidatePreferencesSetupProps = {
   onBack: () => void
@@ -19,14 +19,20 @@ function CandidatePreferencesSetup({
   onComplete,
   registration,
 }: CandidatePreferencesSetupProps) {
+  const [saveError, setSaveError] = useState('')
   const [profile, setProfile] = useState<CandidateProfileData>({
     ...defaultCandidateProfile,
     fullName: registration.name,
   })
 
   function handleSubmit() {
-    saveStoredProfile(buildProfileFromRegistration(registration, profile))
-    onComplete()
+    try {
+      saveStoredProfile(buildProfileFromRegistration(registration, profile))
+      onComplete()
+    } catch (error) {
+      console.error('Failed to save candidate profile', error)
+      setSaveError('We could not save your profile. Please try again.')
+    }
   }
 
   return (
@@ -37,6 +43,7 @@ function CandidatePreferencesSetup({
       onBack={onBack}
       title="Complete your profile"
     >
+      {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
       <CandidateProfileForm
         helperText="By continuing, you agree to our Terms of Service"
         onChange={setProfile}
