@@ -24,10 +24,15 @@ function RecruiterPreferencesSetup({
     companyName: registration.name,
     email: registration.email,
   })
+  const [saveError, setSaveError] = useState('')
 
   function handleSubmit() {
-    saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))
-    onComplete()
+    const saved = saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))
+    if (saved) {
+      onComplete()
+    } else {
+      setSaveError('Failed to save your profile. Storage may be full or unavailable.')
+    }
   }
 
   return (
@@ -39,9 +44,10 @@ function RecruiterPreferencesSetup({
       title="Set up hiring"
       tone="recruiter"
     >
+      {saveError ? <p className="account-form-message">{saveError}</p> : null}
       <RecruiterProfileForm
         helperText="Candidate recommendations will use these settings first."
-        onChange={setProfile}
+        onChange={(next) => { setProfile(next); setSaveError('') }}
         onSubmit={handleSubmit}
         profile={profile}
         submitLabel="Complete Hiring Setup"

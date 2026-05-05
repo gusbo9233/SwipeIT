@@ -47,9 +47,13 @@ function Account() {
   }
 
   function saveProfile(nextProfile = profile) {
-    saveStoredProfile(nextProfile)
-    setProfile(nextProfile)
-    setSaveMessage('Account changes saved.')
+    const saved = saveStoredProfile(nextProfile)
+    if (saved) {
+      setProfile(nextProfile)
+      setSaveMessage('Account changes saved.')
+    } else {
+      setSaveMessage('Failed to save changes. Storage may be full or unavailable.')
+    }
   }
 
   return (

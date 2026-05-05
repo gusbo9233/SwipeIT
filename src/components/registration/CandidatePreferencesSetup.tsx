@@ -23,10 +23,15 @@ function CandidatePreferencesSetup({
     ...defaultCandidateProfile,
     fullName: registration.name,
   })
+  const [saveError, setSaveError] = useState('')
 
   function handleSubmit() {
-    saveStoredProfile(buildProfileFromRegistration(registration, profile))
-    onComplete()
+    const saved = saveStoredProfile(buildProfileFromRegistration(registration, profile))
+    if (saved) {
+      onComplete()
+    } else {
+      setSaveError('Failed to save your profile. Storage may be full or unavailable.')
+    }
   }
 
   return (
@@ -37,9 +42,10 @@ function CandidatePreferencesSetup({
       onBack={onBack}
       title="Complete your profile"
     >
+      {saveError ? <p className="account-form-message">{saveError}</p> : null}
       <CandidateProfileForm
         helperText="By continuing, you agree to our Terms of Service"
-        onChange={setProfile}
+        onChange={(next) => { setProfile(next); setSaveError('') }}
         onSubmit={handleSubmit}
         profile={profile}
         submitLabel="Complete Profile"

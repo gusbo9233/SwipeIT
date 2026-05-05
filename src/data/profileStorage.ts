@@ -65,6 +65,11 @@ export function getStoredProfile(): UserProfile | null {
   }
 }
 
-export function saveStoredProfile(profile: UserProfile) {
-  window.localStorage.setItem(storageKey, JSON.stringify(profile))
+export function saveStoredProfile(profile: UserProfile): boolean {
+  try {
+    window.localStorage.setItem(storageKey, JSON.stringify(profile))
+    return true
+  } catch {
+    return false
+  }
 }
