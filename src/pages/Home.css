@@ -48,6 +48,10 @@ button {
   padding: 96px 24px 48px;
 }
 
+.home-about-promo {
+  text-align: center;
+}
+
 .hero-section {
   align-items: center;
   display: grid;

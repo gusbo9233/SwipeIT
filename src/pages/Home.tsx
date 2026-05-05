@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import CandidateSwipePreview from '../components/CandidateSwipePreview'
 import './Home.css'
@@ -35,6 +36,11 @@ function Home() {
           </div>
 
           <CandidateSwipePreview candidate={previewCandidate} />
+        </section>
+        <section className="home-about-promo">
+          <p>Want to learn how the recruiter-first swipe model works?</p>
+          <p>Discover our approach to talent discovery and IT hiring on the About page.</p>
+          <Link className="button button-secondary" to="/about">About Swipe IT</Link>
         </section>
     </div>
   )

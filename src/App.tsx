@@ -7,6 +7,7 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import NotFound from './pages/NotFound'
 import Search from './pages/Search'
+import About from './pages/About'
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/recruiterprofile" element={<RecruiterProfile/>} />      
+          <Route path="/recruiterprofile" element={<RecruiterProfile />} />
+          <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
