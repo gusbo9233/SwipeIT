@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
 import RecruiterProfile from './pages/RecruiterProfile'
+import ProtectedRoute from './pages/ProtectedRoute'
 import NotFound from './pages/NotFound'
 import Search from './pages/Search'
 import About from './pages/About'
@@ -21,10 +22,17 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/recruiterprofile" element={<RecruiterProfile />} />
             <Route path="/about" element={<About />} />
+
+            <Route element={<ProtectedRoute allowedRoles={['candidate', 'recruiter']} />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
+              <Route path="/search" element={<Search />} />
+              <Route path="/recruiterprofile" element={<RecruiterProfile />} />
+            </Route>
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
