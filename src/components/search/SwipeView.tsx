@@ -10,33 +10,20 @@ interface SwipeViewProps {
 }
 
 const SwipeView: React.FC<SwipeViewProps> = ({ onBack }) => {
-  const { selectedSkills, experienceLevels } = useSearchContext();
+  const { selectedSkills } = useSearchContext();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const candidates = candidateData as Candidate[];
 
   const filteredDeck = useMemo(() => {
-    // Get array of active levels (e.g., ["Junior", "Senior"])
-    const activeLevels = Object.entries(experienceLevels)
-      .filter(([, isActive]) => isActive)
-      .map(([level]) => level);
-
     return candidates.filter(candidate => {
       // 1. Skill Match
       const matchesSkills = selectedSkills.length === 0 || 
         candidate.skills.some(skill => selectedSkills.includes(skill));
       
-      // 2. Experience Match Logic
-      const latestYear = Math.max(...candidate.education.map(e => e.year));
-      const yearsSinceGrad = 2026 - latestYear;
-      const candidateLevel = yearsSinceGrad >= 5 ? 'Senior' : 'Junior';
-      
-      const matchesExperience = activeLevels.length === 0 || 
-        activeLevels.includes(candidateLevel);
-
-      return matchesSkills && matchesExperience;
+      return matchesSkills;
     });
-  }, [selectedSkills, experienceLevels, candidates]);
+  }, [selectedSkills, candidates]);
 
   const currentCandidate = filteredDeck[currentIndex];
 
