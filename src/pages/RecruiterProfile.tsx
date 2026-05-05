@@ -3,7 +3,42 @@ import Chip from '../components/Chip'
 import Button from '../components/Button'
 import recruiterData from '../data/Recruiterprofile.json'
 
+type RecruiterDisplayProfile = {
+  bio: string
+  company: string
+  companyImage: string
+  firstName?: string
+  lastName?: string
+  location: string
+  logo: string
+  name?: string
+  role: string
+  specialties: string[]
+}
+
+const fallbackProfile: RecruiterDisplayProfile = recruiterData
+
+function getActiveProfile(): RecruiterDisplayProfile {
+  try {
+    const storedProfile = window.localStorage.getItem('activeProfile')
+
+    if (!storedProfile) {
+      return fallbackProfile
+    }
+
+    return {
+      ...fallbackProfile,
+      ...(JSON.parse(storedProfile) as Partial<RecruiterDisplayProfile>),
+    }
+  } catch {
+    return fallbackProfile
+  }
+}
+
 function RecruiterProfile() {
+  const data = getActiveProfile()
+  const displayName = data.name || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim()
+
   return (
     <div className="home-page page">
       <div style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '40px 20px' }}>
@@ -22,7 +57,7 @@ function RecruiterProfile() {
           <div style={{ flex: '1 1 450px', minHeight: '400px', position: 'relative' }}>
             <img
               alt="Office"
-              src={recruiterData.companyImage}
+              src={data.companyImage}
               style={{ height: '100%', objectFit: 'cover', width: '100%' }}
             />
             <div
@@ -38,7 +73,7 @@ function RecruiterProfile() {
                 position: 'absolute',
               }}
             >
-              {recruiterData.location}
+              {data.location}
             </div>
           </div>
 
@@ -62,16 +97,16 @@ function RecruiterProfile() {
             >
               <div>
                 <h1 style={{ color: '#1a1a1a', fontSize: '2.8rem', lineHeight: '1.1', margin: 0 }}>
-                  {recruiterData.firstName} {recruiterData.lastName}
+                  {displayName}
                 </h1>
                 <h2 style={{ color: '#555', fontSize: '1.3rem', fontWeight: '400', margin: '10px 0 0 0' }}>
-                  {recruiterData.role} at{' '}
-                  <span style={{ color: '#000', fontWeight: '600' }}>{recruiterData.company}</span>
+                  {data.role} at{' '}
+                  <span style={{ color: '#000', fontWeight: '600' }}>{data.company}</span>
                 </h2>
               </div>
               <img
                 alt="Logo"
-                src={recruiterData.logo}
+                src={data.logo}
                 style={{ height: '60px', objectFit: 'contain', width: '60px' }}
               />
             </div>
@@ -89,7 +124,7 @@ function RecruiterProfile() {
                 About
               </h3>
               <p style={{ color: '#333', fontSize: '1.1rem', lineHeight: '1.7' }}>
-                {recruiterData.bio}
+                {data.bio}
               </p>
             </div>
 
@@ -106,7 +141,7 @@ function RecruiterProfile() {
                 Recruitment Expertise
               </h3>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                {recruiterData.specialties.map((skill) => (
+                {data.specialties.map((skill) => (
                   <Chip key={skill}>{skill}</Chip>
                 ))}
               </div>

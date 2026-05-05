@@ -22,6 +22,11 @@ function Register() {
     navigate('/account')
   }
 
+  function handleNext() {
+    window.localStorage.setItem('temp_reg_data', JSON.stringify(formData))
+    setStep('preferences')
+  }
+
   if (step === 'preferences' && formData.role === 'candidate') {
     return (
       <CandidatePreferencesSetup
@@ -53,7 +58,7 @@ function Register() {
           <RegisterWithRoleToggle
             formData={formData}
             onChange={setFormData}
-            onNext={() => setStep('preferences')}
+            onNext={handleNext}
           />
         ) : (
           <RecruiterPreferencesSetup

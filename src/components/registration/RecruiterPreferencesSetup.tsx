@@ -14,6 +14,10 @@ type RecruiterPreferencesSetupProps = {
   registration: RegisterFormData
 }
 
+const defaultCompanyImage =
+  'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200'
+const defaultLogo = 'https://cdn-icons-png.flaticon.com/512/281/281764.png'
+
 function RecruiterPreferencesSetup({
   onBack,
   onComplete,
@@ -28,7 +32,24 @@ function RecruiterPreferencesSetup({
 
   function handleSubmit() {
     try {
-      saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))
+      const userProfile = buildProfileFromRegistration(registration, undefined, profile)
+      saveStoredProfile(userProfile)
+      window.localStorage.setItem(
+        'activeProfile',
+        JSON.stringify({
+          bio:
+            profile.rolePitch ||
+            `Lead recruiter at ${userProfile.recruiter.companyName}. We are looking for amazing developers to join our mission.`,
+          company: userProfile.recruiter.companyName,
+          companyImage: defaultCompanyImage,
+          email: userProfile.recruiter.email,
+          location: userProfile.recruiter.hiringLocation,
+          logo: defaultLogo,
+          name: userProfile.name,
+          role: 'Recruiter',
+          specialties: ['Recruiting', 'Hiring', 'Employer Branding'],
+        }),
+      )
       onComplete()
     } catch (error) {
       console.error('Failed to save recruiter profile', error)
@@ -47,7 +68,7 @@ function RecruiterPreferencesSetup({
     >
       {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
       <RecruiterProfileForm
-        helperText="Candidate recommendations will use these settings first."
+        helperText="Your profile will be generated based on these details."
         onChange={setProfile}
         onSubmit={handleSubmit}
         profile={profile}
