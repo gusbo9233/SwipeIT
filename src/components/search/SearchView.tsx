@@ -1,8 +1,9 @@
+import { useMemo } from "react";
+import type { KeyboardEvent } from "react";
 import Button from "../Button";
 import Chip from "../Chip";
 import { useSearchContext } from "../../context/SearchContext";
 import type { ExperienceKey, WorkEnv } from "../../types/searchFilter";
-import { useMemo } from "react";
 import skillList from '../../data/Skills.json'
 
 type SearchViewProps = {
@@ -37,7 +38,7 @@ function SearchView({ onStart }: SearchViewProps) {
     )
   }, [inputValue, selectedSkills])
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && filteredSkills.length > 0) {
       e.preventDefault()
       addSkill(filteredSkills[0])
