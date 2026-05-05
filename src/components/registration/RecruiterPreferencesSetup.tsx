@@ -1,29 +1,37 @@
 import type { FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import IconInput from '../onboarding/IconInput'
 import OnboardingLayout from '../onboarding/OnboardingLayout'
 import OnboardingSection from '../onboarding/OnboardingSection'
 import OnboardingSubmit from '../onboarding/OnboardingSubmit'
-import PreferenceGrid from '../onboarding/PreferenceGrid'
-import SearchableChips from '../onboarding/SearchableChips'
 
 type RecruiterPreferencesSetupProps = {
   onBack: () => void
 }
 
-const hiringFocus = ['Frontend', 'Backend', 'Full-stack']
-const suggestedFocus = ['DevOps', 'Data']
-
-const hiringSignals = [
-  { checked: true, icon: 'groups', label: 'Permanent roles', value: 'permanent' },
-  { icon: 'public', label: 'Remote hiring', value: 'remote' },
-  { icon: 'bolt', label: 'Fast availability', value: 'availability' },
-]
-
 function RecruiterPreferencesSetup({ onBack }: RecruiterPreferencesSetupProps) {
+  const navigate = useNavigate()
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    console.log("Profile submitted");
     
+    const formData = new FormData(event.currentTarget)
+    const tempStorage = JSON.parse(localStorage.getItem('temp_reg_data') || '{}')
+    
+    const finalProfile = {
+      name: tempStorage.name,
+      email: tempStorage.email,
+      role: 'Recruiter',
+      company: formData.get('companyName'),
+      location: formData.get('location'),
+      companyImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
+      logo: 'https://cdn-icons-png.flaticon.com/512/281/281764.png',
+      bio: `Lead recruiter at ${formData.get('companyName')}. We are looking for amazing developers to join our mission.`,
+      specialties: ['Frontend', 'Backend', 'Full-stack']
+    }
+
+    localStorage.setItem('activeProfile', JSON.stringify(finalProfile))
+    navigate('/login')
   }
 
   return (
@@ -39,18 +47,16 @@ function RecruiterPreferencesSetup({ onBack }: RecruiterPreferencesSetupProps) {
           <div className="candidate-field-grid">
             <label className="candidate-field">
               Company Name
-              <input placeholder="Acme Studio" type="text" />
+              <input name="companyName" placeholder="Acme Studio" type="text" required />
             </label>
             <label className="candidate-field">
               Company Website
-              <input placeholder="https://company.com" type="url" />
+              <input name="website" placeholder="https://company.com" type="url" />
             </label>
             <label className="candidate-field">
               Company Size
-              <select defaultValue="">
-                <option disabled value="">
-                  Select size
-                </option>
+              <select name="size" defaultValue="">
+                <option disabled value="">Select size</option>
                 <option>1-10</option>
                 <option>11-50</option>
                 <option>51-200</option>
@@ -59,45 +65,20 @@ function RecruiterPreferencesSetup({ onBack }: RecruiterPreferencesSetupProps) {
             </label>
             <label className="candidate-field">
               Hiring Location
-              <input placeholder="Stockholm / Remote" type="text" />
+              <input name="location" placeholder="Stockholm / Remote" type="text" required />
             </label>
           </div>
         </OnboardingSection>
 
         <OnboardingSection icon="badge" title="Recruiter Contact">
           <div className="candidate-link-list">
-            <IconInput icon="mail" placeholder="recruiting@company.com" type="email" />
-            <IconInput icon="link" placeholder="linkedin.com/company/company-name" />
+            <IconInput icon="mail" name="contactEmail" placeholder="recruiting@company.com" type="email" />
+            <IconInput icon="link" name="linkedin" placeholder="linkedin.com/company/company-name" />
           </div>
         </OnboardingSection>
 
-        <OnboardingSection className="skills-section" icon="manage_search" title="Hiring Focus">
-          <div className="section-glow recruiter-glow" />
-          <SearchableChips
-            accentClassName="recruiter-chip"
-            placeholder="Search roles or skills (e.g. React, DevOps)"
-            selected={hiringFocus}
-            suggested={suggestedFocus}
-          />
-        </OnboardingSection>
-
-        <OnboardingSection icon="tune" title="Candidate Preferences">
-          <PreferenceGrid itemClassName="recruiter-preference" items={hiringSignals} />
-        </OnboardingSection>
-
-        <OnboardingSection
-          className="recruiter-note-section"
-          icon="description"
-          title="Role Pitch"
-        >
-          <label className="candidate-field">
-            What should candidates know?
-            <textarea placeholder="Describe your team, hiring needs, and what makes the role compelling." />
-          </label>
-        </OnboardingSection>
-
         <OnboardingSubmit
-          helperText="Candidate recommendations will use these settings first."
+          helperText="Your profile will be generated based on these details."
           label="Complete Hiring Setup"
           tone="recruiter"
         />

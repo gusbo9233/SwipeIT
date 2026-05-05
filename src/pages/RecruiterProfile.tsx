@@ -1,36 +1,52 @@
+import { useEffect, useState } from 'react'
 import './Home.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
 // @ts-ignore
 import recruiterDataRaw from '../data/Recruiterprofile.json'
 
-const recruiterData = recruiterDataRaw as any;
-
 function RecruiterProfile() {
+  // 1. Skapa en state för att hålla profilens data
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    // 2. Kolla om det finns data sparad i localStorage (från Register-sidan)
+    const savedProfile = localStorage.getItem('activeProfile');
+
+    if (savedProfile) {
+      // Om den finns, använd den!
+      setData(JSON.parse(savedProfile));
+    } else {
+      // Annars, använd din JSON-fil som backup (default)
+      setData(recruiterDataRaw);
+    }
+  }, []);
+
+  // 3. Om data inte hunnit laddas än (viktigt för att undvika krasch)
+  if (!data) return null;
+
   return (
     <div className="home-page page">
-      {/* Vi ökar maxWidth till 1200px så den täcker mer av skärmen */}
       <div style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '40px 20px' }}>
-
         <div style={{
           display: 'flex',
-          flexWrap: 'wrap', // Gör att den bryter rad på mobilen
+          flexWrap: 'wrap',
           backgroundColor: 'white',
           borderRadius: '32px',
           overflow: 'hidden',
           color: '#1a1a1a',
           boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
-          minHeight: '600px' // Ger kortet lite rejälare höjd
+          minHeight: '600px'
         }}>
 
-          {/* Left Column: Image - Nu med dynamisk bredd */}
+          {/* Left Column: Image */}
           <div style={{
-            flex: '1 1 450px', // Tar minst 450px, men växer om det behövs
+            flex: '1 1 450px',
             position: 'relative',
             minHeight: '400px'
           }}>
             <img
-              src={recruiterData.companyImage}
+              src={data.companyImage || recruiterDataRaw.companyImage} // Använd bild från JSON om ingen ny finns
               alt="Office"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
@@ -45,35 +61,36 @@ function RecruiterProfile() {
               fontSize: '0.9rem',
               boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
             }}>
-              📍 {recruiterData.location}
+              📍 {data.location || 'Location missing'}
             </div>
           </div>
 
-          {/* Right Column: Info - Nu med mer luft (padding) */}
+          {/* Right Column: Info */}
           <div style={{
             flex: '1 1 500px',
             padding: '60px',
             textAlign: 'left',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center' // Centrerar innehållet vertikalt
+            justifyContent: 'center'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '30px' }}>
               <div>
                 <h1 style={{ margin: 0, fontSize: '2.8rem', lineHeight: '1.1', color: '#1a1a1a' }}>
-                  {recruiterData.firstName} {recruiterData.lastName}
+                  {/* Här kollar vi om namnet kommer från Register (data.name) eller JSON (data.firstName) */}
+                  {data.name || `${data.firstName} ${data.lastName}`}
                 </h1>
                 <h2 style={{ margin: '10px 0 0 0', fontSize: '1.3rem', color: '#555', fontWeight: '400' }}>
-                  {recruiterData.role} at <span style={{ fontWeight: '600', color: '#000' }}>{recruiterData.company}</span>
+                  {data.role} at <span style={{ fontWeight: '600', color: '#000' }}>{data.company || 'Swipe IT'}</span>
                 </h2>
               </div>
-              <img src={recruiterData.logo} alt="Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
+              <img src={data.logo || recruiterDataRaw.logo} alt="Logo" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
             </div>
 
             <div style={{ marginBottom: '40px' }}>
               <h3 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', color: '#aaa', marginBottom: '15px' }}>About</h3>
               <p style={{ fontSize: '1.1rem', lineHeight: '1.7', color: '#333' }}>
-                {recruiterData.bio}
+                {data.bio || 'No bio provided yet.'}
               </p>
             </div>
 
@@ -82,8 +99,8 @@ function RecruiterProfile() {
                 Recruitment Expertise
               </h3>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                {/* Kontrollera att det står .specialties här så det matchar JSON-filen */}
-                {recruiterData.specialties?.map((skill: string) => (
+                {/* Vi mappar antingen specialties från JSON eller expertise från Register */}
+                {(data.specialties || data.expertise || []).map((skill: string) => (
                   <Chip key={skill}>{skill}</Chip>
                 ))}
               </div>
