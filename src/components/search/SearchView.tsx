@@ -126,6 +126,7 @@ function SearchView({ onStart }: SearchViewProps) {
           <div className="work-preference-grid">
             {WORK_ENV_OPTIONS.map(({ value, icon, label }) => (
               <button
+                aria-pressed={workEnv === value}
                 className={`work-preference${workEnv === value ? ' is-selected' : ''}`}
                 key={value}
                 onClick={() => setWorkEnv(value)}
