@@ -70,6 +70,7 @@ function SearchView({ onStart }: SearchViewProps) {
             <div className="skill-search">
               <span className="material-symbols-outlined">search</span>
               <input
+                aria-label="Search by skill"
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Search by skill..."
