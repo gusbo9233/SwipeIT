@@ -27,7 +27,7 @@ function RecruiterPreferencesSetup({ onBack }: RecruiterPreferencesSetupProps) {
       companyImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
       logo: 'https://cdn-icons-png.flaticon.com/512/281/281764.png',
       bio: `Lead recruiter at ${formData.get('companyName')}. We are looking for amazing developers to join our mission.`,
-      specialties: ['Frontend', 'Backend', 'Full-stack']
+      specialties: ['Talent acquisition', 'HR-manager', 'Employer branding']
     }
 
     localStorage.setItem('activeProfile', JSON.stringify(finalProfile))

@@ -1,73 +1,172 @@
 [
   {
+    "id": "somethinguuidthingy1",
     "name": "Elin Bergström",
+    "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
     "email": "elin.bergstrom@example.com",
     "address": "Hammarby Kaj 5, 120 30 Stockholm, Sweden",
     "phoneNumber": "+46 70 111 22 33",
     "linkedInUrl": "https://www.linkedin.com/in/elinbergstrom",
     "githubUrl": "https://github.com/elinb",
-    "skills": ["React", "TypeScript", "Node.js", "GraphQL"],
-    "education": [
-      {"institution": "KTH Royal Institute of Technology", "degree": "MSc Computer Science", "year": 2022},
-      {"institution": "Stockholm University", "degree": "BSc Software Engineering", "year": 2020}
+    "skills": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "GraphQL"
     ],
-    "competences": ["UI development", "API design", "test automation", "team collaboration"],
-    "references": ["Linnea Nord, CTO at Digital Health AB", "Marcus Åkesson, Product Manager at FinTech Labs"]
+    "education": [
+      {
+        "institution": "KTH Royal Institute of Technology",
+        "degree": "MSc Computer Science",
+        "year": 2022
+      },
+      {
+        "institution": "Stockholm University",
+        "degree": "BSc Software Engineering",
+        "year": 2020
+      }
+    ],
+    "competences": [
+      "UI development",
+      "API design",
+      "test automation",
+      "team collaboration"
+    ],
+    "references": [
+      "Linnea Nord, CTO at Digital Health AB",
+      "Marcus Åkesson, Product Manager at FinTech Labs"
+    ]
   },
   {
+    "id": "somethinguuidthingy2",
     "name": "Lukas Jensen",
+    "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
     "email": "lukas.jensen@example.com",
     "address": "Vesterbrogade 45, 1620 Copenhagen, Denmark",
     "phoneNumber": "+45 40 22 33 44",
     "linkedInUrl": "https://www.linkedin.com/in/lukasjensen",
     "githubUrl": "https://github.com/lukasjensen",
-    "skills": ["Python", "Django", "Docker", "AWS"],
-    "education": [
-      {"institution": "University of Copenhagen", "degree": "BSc Computer Science", "year": 2019}
+    "skills": [
+      "Python",
+      "Django",
+      "Docker",
+      "AWS"
     ],
-    "competences": ["backend architecture", "cloud deployment", "data processing", "mentoring"],
-    "references": ["Sofia Madsen, Engineering Lead at Nordic Data", "Jonas Petersen, CEO at CleverTech"]
+    "education": [
+      {
+        "institution": "University of Copenhagen",
+        "degree": "BSc Computer Science",
+        "year": 2019
+      }
+    ],
+    "competences": [
+      "backend architecture",
+      "cloud deployment",
+      "data processing",
+      "mentoring"
+    ],
+    "references": [
+      "Sofia Madsen, Engineering Lead at Nordic Data",
+      "Jonas Petersen, CEO at CleverTech"
+    ]
   },
   {
+    "id": "somethinguuidtingy3",
     "name": "Mia Lund",
+    "imageUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400",
     "email": "mia.lund@example.com",
     "address": "Fredrikinkatu 14, 00120 Helsinki, Finland",
     "phoneNumber": "+358 50 123 4567",
     "linkedInUrl": "https://www.linkedin.com/in/mialund",
     "githubUrl": "https://github.com/mialund",
-    "skills": ["Java", "Spring Boot", "Kubernetes", "SQL"],
-    "education": [
-      {"institution": "Aalto University", "degree": "MSc Software Engineering", "year": 2021}
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "Kubernetes",
+      "SQL"
     ],
-    "competences": ["system design", "microservices", "database tuning", "DevOps"],
-    "references": ["Antti Virtanen, Tech Lead at SmartGrowth", "Nina Laine, Project Manager at CloudCore"]
+    "education": [
+      {
+        "institution": "Aalto University",
+        "degree": "MSc Software Engineering",
+        "year": 2021
+      }
+    ],
+    "competences": [
+      "system design",
+      "microservices",
+      "database tuning",
+      "DevOps"
+    ],
+    "references": [
+      "Antti Virtanen, Tech Lead at SmartGrowth",
+      "Nina Laine, Project Manager at CloudCore"
+    ]
   },
   {
+    "id": "somethinguuidthingy4",
     "name": "Noah Özkan",
+    "imageUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
     "email": "noah.ozkan@example.com",
     "address": "Landegodegata 11, 9008 Tromsø, Norway",
     "phoneNumber": "+47 98 76 54 32",
     "linkedInUrl": "https://www.linkedin.com/in/noahozkan",
     "githubUrl": "https://github.com/noahozkan",
-    "skills": ["Angular", "RxJS", "Sass", "Accessibility"],
-    "education": [
-      {"institution": "University of Bergen", "degree": "BSc Interaction Design", "year": 2020}
+    "skills": [
+      "Angular",
+      "RxJS",
+      "Sass",
+      "Accessibility"
     ],
-    "competences": ["frontend performance", "mobile-first design", "user research", "cross-team communication"],
-    "references": ["Tove Hansen, UX Director at DesignLab", "Emil Karlsen, Senior Developer at Nordic Apps"]
+    "education": [
+      {
+        "institution": "University of Bergen",
+        "degree": "BSc Interaction Design",
+        "year": 2020
+      }
+    ],
+    "competences": [
+      "frontend performance",
+      "mobile-first design",
+      "user research",
+      "cross-team communication"
+    ],
+    "references": [
+      "Tove Hansen, UX Director at DesignLab",
+      "Emil Karlsen, Senior Developer at Nordic Apps"
+    ]
   },
   {
+    "id": "somethinguuidthing6",
     "name": "Sara Pettersen",
+    "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400",
     "email": "sara.pettersen@example.com",
     "address": "Sæterbakken 8, 0672 Oslo, Norway",
     "phoneNumber": "+47 45 67 89 01",
     "linkedInUrl": "https://www.linkedin.com/in/sarapp",
     "githubUrl": "https://github.com/sarapp",
-    "skills": ["UX Research", "Figma", "HTML", "CSS"],
-    "education": [
-      {"institution": "Norwegian University of Science and Technology", "degree": "BSc Design", "year": 2018}
+    "skills": [
+      "UX Research",
+      "Figma",
+      "HTML",
+      "CSS"
     ],
-    "competences": ["user testing", "design systems", "prototyping", "visual design"],
-    "references": ["Karoline Evensen, Product Owner at RetailTech", "Henrik Dahl, UX Lead at Travelify"]
+    "education": [
+      {
+        "institution": "Norwegian University of Science and Technology",
+        "degree": "BSc Design",
+        "year": 2018
+      }
+    ],
+    "competences": [
+      "user testing",
+      "design systems",
+      "prototyping",
+      "visual design"
+    ],
+    "references": [
+      "Karoline Evensen, Product Owner at RetailTech",
+      "Henrik Dahl, UX Lead at Travelify"
+    ]
   }
 ]
