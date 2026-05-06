@@ -1,29 +1,29 @@
-import accountsData from '../data/Account.json';
+import accountCredentials from '../data/AccountCredentials.json';
 import { hashPassword } from '../helper/authHelper';
-import type { RawAccount, User } from '../types/Account';
+import type { RawUser, User } from '../types/User';
 
 const USER_KEY = 'swipeit_user';
-const accounts = accountsData as RawAccount[];
+const accounts = accountCredentials as RawUser[];
 
 export const authService = {
   // New secure login method
   login: async (email: string, password: string): Promise<User | null> => {
-    const account = accounts.find(
+    const user = accounts.find(
       (acc) => acc.email.toLowerCase() === email.toLowerCase()
     );
     
-    if (!account) return null;
+    if (!user) return null;
 
     // Hash the entered password to compare with the "hashed" password in DB
     const inputHash = await hashPassword(password);
 
-    // In a real app, your Account.json would already contain SHA-256 strings
-    if (inputHash === account.password) {
+    // In a real app, your userCredentials.json would already contain SHA-256 strings
+    if (inputHash === user.password) {
       const userSansPassword: User = {
-        id: account.id,
-        email: account.email,
-        role: account.role,
-        name: account.name
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        name: user.name
       };
 
       localStorage.setItem(USER_KEY, JSON.stringify(userSansPassword));

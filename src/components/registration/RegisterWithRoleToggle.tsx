@@ -42,13 +42,13 @@ function RegisterWithRoleToggle({
   return (
     <form className="register-card" onSubmit={handleSubmit}>
       <div className="register-card-header">
-        <p className="eyebrow">Create account</p>
+        <p className="eyebrow">Create profile</p>
         <h1>Register</h1>
         <p>Choose how you want to use Swipe IT.</p>
       </div>
 
       <fieldset className="role-toggle">
-        <legend>Account type</legend>
+        <legend>User type</legend>
         {roles.map((role) => (
           <label
             className={`role-option ${
