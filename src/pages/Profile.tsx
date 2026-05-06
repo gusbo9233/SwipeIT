@@ -3,9 +3,11 @@ import CandidateProfileForm from '../components/profile/CandidateProfileForm'
 import ProfileLayout from '../components/profile/ProfileLayout'
 import ProfileSection from '../components/profile/ProfileSection'
 import RecruiterProfileForm from '../components/profile/RecruiterProfileForm'
+import { useAuth } from '../context/AuthProvider'
 import type { UserProfile } from '../types/Profile'
 import {
   buildProfileFromRegistration,
+  getProfileForUser,
   getStoredProfile,
   saveStoredProfile,
 } from '../data/profileStorage'
@@ -20,7 +22,14 @@ const guestProfile = buildProfileFromRegistration({
 })
 
 function Profile() {
-  const [profile, setProfile] = useState<UserProfile>(() => getStoredProfile() ?? guestProfile)
+  const { updateUser, user } = useAuth()
+  const [profile, setProfile] = useState<UserProfile>(() => {
+    if (!user) {
+      return getStoredProfile() ?? guestProfile
+    }
+
+    return getStoredProfile(user) ?? getProfileForUser(user)
+  })
   const [saveMessage, setSaveMessage] = useState('')
   const [saveError, setSaveError] = useState('')
   const activeTone = profile.role
@@ -34,6 +43,14 @@ function Profile() {
   function saveProfile(nextProfile = profile) {
     try {
       saveStoredProfile(nextProfile)
+      if (user) {
+        updateUser({
+          email: nextProfile.email,
+          id: user.id,
+          name: nextProfile.name,
+          role: nextProfile.role,
+        })
+      }
       setProfile(nextProfile)
       setSaveError('')
       setSaveMessage('Profile changes saved.')

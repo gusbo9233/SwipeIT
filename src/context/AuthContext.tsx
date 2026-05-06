@@ -21,8 +21,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null)
   }
 
+  function updateUser(user: User) {
+    authService.updateCurrentUser(user)
+    setUser(user)
+  }
+
   return (
-    <AuthContextProvider.Provider value={{ login, logout, user }}>
+    <AuthContextProvider.Provider value={{ login, logout, updateUser, user }}>
       {children}
     </AuthContextProvider.Provider>
   )

@@ -1,5 +1,6 @@
 [
   {
+    "id": "recruiter-1",
     "name": "Nordic Talent Partners",
     "website": "https://www.nordictalent.com",
     "companySize": 150,
@@ -11,6 +12,7 @@
     "matchedCandidates": []
   },
   {
+    "id": "recruiter-2",
     "name": "Scandinavian Startups",
     "website": "https://www.scandi-startups.io",
     "companySize": 45,
@@ -22,6 +24,7 @@
     "matchedCandidates": []
   },
   {
+    "id": "recruiter-3",
     "name": "GreenTech Recruiters",
     "website": "https://www.greentechrec.com",
     "companySize": 320,
@@ -33,6 +36,7 @@
     "matchedCandidates": []
   },
   {
+    "id": "recruiter-4",
     "name": "Remote Work Talent",
     "website": "https://remote-work-talent.co",
     "companySize": 75,
@@ -44,6 +48,7 @@
     "matchedCandidates": []
   },
   {
+    "id": "recruiter-5",
     "name": "AI & Data Hire",
     "website": "https://www.ai-datahire.com",
     "companySize": 210,

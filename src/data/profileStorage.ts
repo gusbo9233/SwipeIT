@@ -4,8 +4,18 @@ import type {
   RegisterFormData,
   UserProfile,
 } from '../types/Profile'
+import accountsData from './Account.json'
+import candidatesData from './Candidates.json'
+import recruitersData from './Recruiters.json'
+import type { RawAccount, User } from '../types/Account'
+import type { Candidate } from '../types/Candidate'
+import type { Recruiter } from '../types/Recruiter'
 
 const storageKey = 'swipeit:user-profile'
+const activeRecruiterProfileKey = 'activeProfile'
+const accounts = accountsData as RawAccount[]
+const candidates = candidatesData as Candidate[]
+const recruiters = recruitersData as Recruiter[]
 
 export const defaultCandidateProfile: CandidateProfileData = {
   fullName: '',
@@ -49,7 +59,42 @@ export function buildProfileFromRegistration(
   }
 }
 
-export function getStoredProfile(): UserProfile | null {
+export function buildProfileFromAccount(account: RawAccount): UserProfile {
+  const candidate = candidates.find((candidateProfile) => candidateProfile.id === account.candidateId)
+  const recruiter = recruiters.find((recruiterProfile) => recruiterProfile.id === account.recruiterId)
+
+  return buildProfileFromRegistration(
+    {
+      email: account.email,
+      name: account.name,
+      password: '',
+      role: account.role,
+    },
+    candidate ? mapCandidateToProfile(candidate) : undefined,
+    recruiter ? mapRecruiterToProfile(recruiter) : undefined,
+  )
+}
+
+export function getProfileForUser(user: User): UserProfile {
+  const account = accounts.find(
+    (candidateAccount) =>
+      candidateAccount.id === user.id ||
+      candidateAccount.email.toLowerCase() === user.email.toLowerCase(),
+  )
+
+  if (account) {
+    return buildProfileFromAccount(account)
+  }
+
+  return buildProfileFromRegistration({
+    email: user.email,
+    name: user.name,
+    password: '',
+    role: user.role,
+  })
+}
+
+export function getStoredProfile(user?: User | null): UserProfile | null {
   const storedProfile = window.localStorage.getItem(storageKey)
 
   if (!storedProfile) {
@@ -60,6 +105,14 @@ export function getStoredProfile(): UserProfile | null {
     const parsedProfile: unknown = JSON.parse(storedProfile)
 
     if (isUserProfile(parsedProfile)) {
+      if (
+        user &&
+        (parsedProfile.email.toLowerCase() !== user.email.toLowerCase() ||
+          parsedProfile.role !== user.role)
+      ) {
+        return null
+      }
+
       return parsedProfile
     }
 
@@ -71,6 +124,74 @@ export function getStoredProfile(): UserProfile | null {
 
 export function saveStoredProfile(profile: UserProfile) {
   window.localStorage.setItem(storageKey, JSON.stringify(profile))
+  syncActiveRecruiterProfile(profile)
+}
+
+function mapCandidateToProfile(candidate: Candidate): CandidateProfileData {
+  return {
+    fullName: candidate.name,
+    github: candidate.githubUrl ?? '',
+    linkedIn: candidate.linkedInUrl ?? '',
+    phoneNumber: candidate.phoneNumber,
+    skills: candidate.skills,
+    workPreferences: ['full-time'],
+  }
+}
+
+function mapRecruiterToProfile(recruiter: Recruiter): RecruiterProfileData {
+  return {
+    companyName: recruiter.name,
+    companySize: getCompanySizeOption(recruiter.companySize),
+    email: recruiter.email,
+    hiringLocation: recruiter.address,
+    linkedIn: recruiter.linkedInUrl,
+    rolePitch: `Hiring technology talent for ${recruiter.name}.`,
+    website: recruiter.website,
+  }
+}
+
+function syncActiveRecruiterProfile(profile: UserProfile) {
+  if (profile.role !== 'recruiter') {
+    return
+  }
+
+  const [firstName = profile.name, ...lastNameParts] = profile.name.trim().split(' ')
+
+  window.localStorage.setItem(
+    activeRecruiterProfileKey,
+    JSON.stringify({
+      bio:
+        profile.recruiter.rolePitch ||
+        `Lead recruiter at ${profile.recruiter.companyName}. We are looking for amazing developers to join our mission.`,
+      company: profile.recruiter.companyName,
+      companyImage:
+        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200',
+      email: profile.recruiter.email || profile.email,
+      firstName,
+      lastName: lastNameParts.join(' '),
+      location: profile.recruiter.hiringLocation,
+      logo: 'https://cdn-icons-png.flaticon.com/512/281/281764.png',
+      name: profile.name,
+      role: 'Recruiter',
+      specialties: ['Recruiting', 'Hiring', 'Employer Branding'],
+    }),
+  )
+}
+
+function getCompanySizeOption(companySize: number) {
+  if (companySize <= 10) {
+    return '1-10'
+  }
+
+  if (companySize <= 50) {
+    return '11-50'
+  }
+
+  if (companySize <= 200) {
+    return '51-200'
+  }
+
+  return '201+'
 }
 
 function isUserProfile(profile: unknown): profile is UserProfile {

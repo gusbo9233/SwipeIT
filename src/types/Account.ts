@@ -8,5 +8,7 @@ export type User = {
 }
 
 export type RawAccount = User & {
+  candidateId?: string
   password: string
+  recruiterId?: string
 }

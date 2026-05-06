@@ -1,4 +1,5 @@
 import accountsData from '../data/Account.json'
+import { buildProfileFromAccount, saveStoredProfile } from '../data/profileStorage'
 import { hashPassword } from '../helper/authHelper'
 import type { RawAccount, User } from '../types/Account'
 
@@ -13,6 +14,14 @@ export const authService = {
     } catch (error) {
       console.error('Failed to parse user from storage', error)
       return null
+    }
+  },
+
+  updateCurrentUser(user: User) {
+    try {
+      window.localStorage.setItem(userKey, JSON.stringify(user))
+    } catch (error) {
+      console.error('Failed to update user in storage', error)
     }
   },
 
@@ -40,6 +49,7 @@ export const authService = {
 
     try {
       window.localStorage.setItem(userKey, JSON.stringify(user))
+      saveStoredProfile(buildProfileFromAccount(account))
     } catch (error) {
       console.error('Failed to save user to storage', error)
     }
