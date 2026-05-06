@@ -1,0 +1,67 @@
+/* ==========================================================================
+   SwipeCard
+   Wraps CandidateCard with Pointer-Event-based swipe gesture logic.
+   ========================================================================== */
+
+.swipe-card {
+  position: relative;
+  /* Snap-back easing when the card is released without swiping. */
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+  /* Prevent browser from hijacking pointer events for scrolling/zooming. */
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* While actively dragging: kill the transition so the card tracks the pointer
+   without any lag, and swap to a grabbing cursor. */
+.swipe-card--dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+/* While flying off-screen: use a longer ease that matches FLY_OUT_MS (600 ms).
+   Disable pointer events so nothing can interrupt the animation. */
+.swipe-card--flying {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ── Swipe direction indicators ─────────────────────────────────────────── */
+
+.swipe-card__indicator {
+  position: absolute;
+  top: 1.75rem;
+  z-index: 20;
+  padding: 0.3rem 0.9rem;
+  border-radius: 0.5rem;
+  font-family: Manrope, sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Transition handled via inline opacity driven by JavaScript so the
+     indicator fades in/out smoothly as the card is dragged. */
+  transition: opacity 0.05s linear;
+}
+
+/* "LIKE" stamp – left side of card, green, tilted counter-clockwise */
+.swipe-card__indicator--like {
+  left: 1.25rem;
+  color: #22c55e;
+  border: 3px solid #22c55e;
+  transform: rotate(-12deg);
+}
+
+/* "NOPE" stamp – right side of card, red, tilted clockwise */
+.swipe-card__indicator--nope {
+  right: 1.25rem;
+  color: #ef4444;
+  border: 3px solid #ef4444;
+  transform: rotate(12deg);
+}

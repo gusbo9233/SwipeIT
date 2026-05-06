@@ -13,14 +13,7 @@
   flex-direction: column;
 }
 
-.search-page {
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-family: var(--font-body);
-  padding-bottom: 120px;
-  flex-direction: column;
-}
-
+/* SEARCH HERO STYLES */
 .search-hero {
   margin-bottom: 48px;
 }
@@ -29,9 +22,17 @@
   font-family: var(--font-headline);
   font-size: 40px;
   font-weight: 800;
-  letter-spacing: 0;
+  letter-spacing: -0.03em;
   line-height: 1.1;
   margin: 0 0 8px;
+}
+
+.search-page {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  padding-bottom: 120px;
+  flex-direction: column;
 }
 
 .search-hero p {

@@ -1,42 +1,37 @@
 import Home from './pages/Home'
-import About from './pages/About'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Account from './pages/Account'
-import CandidateProfile from './pages/CandidateProfile'
+import Profile from './pages/Profile'
 import Header from './components/base/Header'
 import RequireAuth from './components/RequireAuth'
 import RecruiterProfile from './pages/RecruiterProfile'
+import AppProvider from './context/AppProvider'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import NotFound from './pages/NotFound'
 import Search from './pages/Search'
-import SwipeCandidate from './pages/SwipeCandidate'
 
 function App() {
   return (
-    <div className="content">
-      <Header />
-      <main className="site-main">
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/account" element={<RequireAuth><Account /></RequireAuth>} />
-          <Route path="/candidate-profile" element={<RequireAuth><CandidateProfile /></RequireAuth>} />
-          <Route path="/search" element={<RequireAuth><Search /></RequireAuth>} />
-          <Route path="/swipe" element={<RequireAuth><SwipeCandidate /></RequireAuth>} />
-          <Route path="/swipe-candidate" element={<RequireAuth><SwipeCandidate /></RequireAuth>} />
-          <Route path="/recruiter-profile" element={<RequireAuth><RecruiterProfile /></RequireAuth>} />
-          <Route path="/recruiterprofile" element={<RequireAuth><RecruiterProfile /></RequireAuth>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-      <footer className="site-footer">
-        <p>&copy; {new Date().getFullYear()} SwipeIT. All rights reserved.</p>
-      </footer>
-    </div>
+    <AppProvider>
+      <div className="content">
+        <Header />
+        <main className="site-main">
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+            <Route path="/search" element={<RequireAuth><Search /></RequireAuth>} />
+            <Route path="/recruiterprofile" element={<RequireAuth><RecruiterProfile /></RequireAuth>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <footer className="site-footer">
+          <p>&copy; {new Date().getFullYear()} SwipeIT. All rights reserved.</p>
+        </footer>
+      </div>
+    </AppProvider>
   )
 }
 

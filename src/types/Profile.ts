@@ -20,9 +20,7 @@ export type RecruiterProfileData = {
   companyName: string
   companySize: string
   email: string
-  hiringFocus: string[]
   hiringLocation: string
-  hiringSignals: string[]
   linkedIn: string
   rolePitch: string
   website: string
@@ -34,13 +32,13 @@ type UserProfileBase = {
 }
 
 export type CandidateUserProfile = UserProfileBase & {
-  role: 'candidate'
   candidate: CandidateProfileData
+  role: 'candidate'
 }
 
 export type RecruiterUserProfile = UserProfileBase & {
-  role: 'recruiter'
   recruiter: RecruiterProfileData
+  role: 'recruiter'
 }
 
 export type UserProfile = CandidateUserProfile | RecruiterUserProfile

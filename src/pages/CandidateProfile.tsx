@@ -1,7 +1,7 @@
-import Account from './Account'
+import Profile from './Profile'
 
 function CandidateProfile() {
-  return <Account />
+  return <Profile />
 }
 
 export default CandidateProfile

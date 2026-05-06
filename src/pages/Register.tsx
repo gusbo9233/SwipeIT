@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import CandidatePreferencesSetup from '../components/registration/CandidatePreferencesSetup'
 import RecruiterPreferencesSetup from '../components/registration/RecruiterPreferencesSetup'
 import RegisterWithRoleToggle from '../components/registration/RegisterWithRoleToggle'
-import type { RegisterFormData } from '../components/registration/types'
+import type { RegisterFormData } from '../types/Profile'
 import { supabase } from '../lib/supabase'
 import './Register.css'
 
@@ -21,8 +21,14 @@ function Register() {
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  function handleComplete() {
+    navigate(formData.role === 'recruiter' ? '/recruiterprofile' : '/profile')
+  }
+
   async function handleNext() {
-    if (isSubmitting) return
+    if (isSubmitting) {
+      return
+    }
 
     setError(null)
     setIsSubmitting(true)
@@ -35,18 +41,17 @@ function Register() {
           data: { name: formData.name, role: formData.role },
         },
       })
+
       if (error) {
         setError(error.message)
-      } else {
-        setStep('preferences')
+        return
       }
+
+      window.localStorage.setItem('temp_reg_data', JSON.stringify(formData))
+      setStep('preferences')
     } finally {
       setIsSubmitting(false)
     }
-  }
-
-  function handleComplete() {
-    navigate('/account')
   }
 
   if (step === 'preferences' && formData.role === 'candidate') {
@@ -74,7 +79,7 @@ function Register() {
               ? 'Candidates and recruiters follow different onboarding paths.'
               : 'Preferences become the first filters for the swipe experience.'}
           </p>
-          {error && <p className="register-error">{error}</p>}
+          {error ? <p className="register-error">{error}</p> : null}
         </aside>
 
         {step === 'register' ? (

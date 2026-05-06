@@ -1,10 +1,8 @@
 import type { FormEvent } from 'react'
-import type { RecruiterProfileData } from '../registration/types'
+import type { RecruiterProfileData } from '../../types/Profile'
 import IconInput from './IconInput'
-import PreferenceGrid from './PreferenceGrid'
 import ProfileSection from './ProfileSection'
 import ProfileSubmit from './ProfileSubmit'
-import SearchableChips from './SearchableChips'
 
 type RecruiterProfileFormProps = {
   helperText: string
@@ -15,14 +13,7 @@ type RecruiterProfileFormProps = {
   submitLabel: string
 }
 
-const suggestedFocus = ['DevOps', 'Data']
 const companySizeOptions = ['1-10', '11-50', '51-200', '201+']
-
-const hiringSignals = [
-  { icon: 'groups', label: 'Permanent roles', value: 'permanent' },
-  { icon: 'public', label: 'Remote hiring', value: 'remote' },
-  { icon: 'bolt', label: 'Fast availability', value: 'availability' },
-]
 
 function RecruiterProfileForm({
   helperText,
@@ -104,25 +95,6 @@ function RecruiterProfileForm({
             value={profile.linkedIn}
           />
         </div>
-      </ProfileSection>
-
-      <ProfileSection className="skills-section" icon="manage_search" title="Hiring Focus">
-        <div className="section-glow recruiter-glow" />
-        <SearchableChips
-          accentClassName="recruiter-chip"
-          onChange={(hiringFocus) => updateField('hiringFocus', hiringFocus)}
-          selected={profile.hiringFocus}
-          suggested={suggestedFocus}
-        />
-      </ProfileSection>
-
-      <ProfileSection icon="tune" title="Candidate Preferences">
-        <PreferenceGrid
-          itemClassName="recruiter-preference"
-          items={hiringSignals}
-          onChange={(values) => updateField('hiringSignals', values)}
-          selectedValues={profile.hiringSignals}
-        />
       </ProfileSection>
 
       <ProfileSection className="recruiter-note-section" icon="description" title="Role Pitch">

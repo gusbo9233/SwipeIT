@@ -10,12 +10,12 @@ import type {
   RecruiterProfileData,
   RecruiterUserProfile,
   UserProfile,
-} from '../types/profile'
+} from '../types/Profile'
 import { getStoredProfile, saveStoredProfile } from '../data/profileStorage'
 import './Register.css'
-import './Account.css'
+import './Profile.css'
 
-function Account() {
+function Profile() {
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [snapshot, setSnapshot] = useState<UserProfile | null>(null)
   const [editing, setEditing] = useState(false)
@@ -26,9 +26,7 @@ function Account() {
 
   useEffect(() => {
     getStoredProfile()
-      .then((stored) => {
-        setProfile(stored)
-      })
+      .then((storedProfile) => setProfile(storedProfile))
       .catch((error: unknown) => {
         setLoadError(error instanceof Error ? error.message : 'Could not load your profile.')
       })
@@ -37,10 +35,15 @@ function Account() {
 
   function updateProfile(nextProfile: UserProfile) {
     setProfile(nextProfile)
+    setSaveMessage('')
+    setSaveError('')
   }
 
   function startEditing() {
-    if (!profile) return
+    if (!profile) {
+      return
+    }
+
     setSnapshot(profile)
     setEditing(true)
     setSaveMessage('')
@@ -48,7 +51,10 @@ function Account() {
   }
 
   function cancelEditing() {
-    if (snapshot) setProfile(snapshot)
+    if (snapshot) {
+      setProfile(snapshot)
+    }
+
     setSnapshot(null)
     setEditing(false)
     setSaveMessage('')
@@ -57,118 +63,105 @@ function Account() {
 
   async function saveProfile(nextProfile: UserProfile) {
     setSaveError('')
+
     try {
       await saveStoredProfile(nextProfile)
       setProfile(nextProfile)
       setSnapshot(null)
       setEditing(false)
-      setSaveMessage('Account changes saved.')
+      setSaveMessage('Profile changes saved.')
     } catch (error) {
-      setSaveError(
-        error instanceof Error ? error.message : 'Could not save your profile.',
-      )
+      setSaveError(error instanceof Error ? error.message : 'Could not save your profile.')
     }
   }
 
-  if (loading) return null
-  if (loadError) {
-    return (
-      <ProfileLayout
-        avatarLabel="--"
-        description="We could not load your profile."
-        title="Account"
-      >
-        <p className="account-form-error">{loadError}</p>
-      </ProfileLayout>
-    )
+  if (loading) {
+    return null
   }
 
-  if (!profile) {
+  if (loadError || !profile) {
     return (
       <ProfileLayout
         avatarLabel="--"
         description="We could not load your profile."
-        title="Account"
+        title="Profile"
       >
-        <p>Profile unavailable. Try refreshing the page.</p>
+        <p className="form-message form-message-error">
+          {loadError || 'Profile unavailable. Try refreshing the page.'}
+        </p>
       </ProfileLayout>
     )
   }
 
   const tone = profile.role
-  const accountDetails = (
-    <ProfileSection icon="manage_accounts" title="Account Details">
-      <div className="candidate-field-grid">
-        <label className="candidate-field">
-          Name
-          {editing ? (
-            <input
-              onChange={(event) =>
-                updateProfile({ ...profile, name: event.target.value })
-              }
-              type="text"
-              value={profile.name}
-            />
-          ) : (
-            <span className="account-readonly-value">{profile.name || '—'}</span>
-          )}
-        </label>
-        <label className="candidate-field">
-          Email
-          {editing ? (
-            <input
-              onChange={(event) =>
-                updateProfile({ ...profile, email: event.target.value })
-              }
-              type="email"
-              value={profile.email}
-            />
-          ) : (
-            <span className="account-readonly-value">{profile.email || '—'}</span>
-          )}
-        </label>
-      </div>
-      <p className="account-role-display">
-        Account type: <strong>{tone === 'candidate' ? 'Candidate' : 'Recruiter'}</strong>
-      </p>
-    </ProfileSection>
-  )
-
-  const actionBar = (
-    <div className="account-actions">
-      {editing ? (
-        <Button onClick={cancelEditing} type="button" variant="secondary">
-          Cancel
-        </Button>
-      ) : (
-        <Button onClick={startEditing} type="button">
-          <span className="material-symbols-outlined">edit</span>
-          <span>Edit Profile</span>
-        </Button>
-      )}
-    </div>
-  )
 
   return (
     <ProfileLayout
       avatarLabel={tone === 'candidate' ? 'ME' : 'HR'}
       description="Review the details used for your profile and matching experience."
-      title="Account"
+      title="Profile"
       tone={tone}
     >
-      <div className="account-page-forms">
-        {actionBar}
-        {accountDetails}
+      <div className="profile-page-forms">
+        <div className="profile-actions">
+          {editing ? (
+            <Button onClick={cancelEditing} type="button" variant="secondary">
+              Cancel
+            </Button>
+          ) : (
+            <Button onClick={startEditing} type="button">
+              <span className="material-symbols-outlined">edit</span>
+              <span>Edit Profile</span>
+            </Button>
+          )}
+        </div>
 
-        {saveMessage ? <p className="account-form-message">{saveMessage}</p> : null}
-        {saveError ? <p className="account-form-error">{saveError}</p> : null}
+        <ProfileSection icon="manage_accounts" title="Profile Details">
+          <div className="candidate-field-grid">
+            <label className="candidate-field">
+              Name
+              {editing ? (
+                <input
+                  onChange={(event) =>
+                    updateProfile({ ...profile, name: event.target.value })
+                  }
+                  type="text"
+                  value={profile.name}
+                />
+              ) : (
+                <span className="profile-readonly-value">{profile.name || '-'}</span>
+              )}
+            </label>
+            <label className="candidate-field">
+              Email
+              {editing ? (
+                <input
+                  onChange={(event) =>
+                    updateProfile({ ...profile, email: event.target.value })
+                  }
+                  type="email"
+                  value={profile.email}
+                />
+              ) : (
+                <span className="profile-readonly-value">{profile.email || '-'}</span>
+              )}
+            </label>
+          </div>
+
+          <p className="profile-role-summary">
+            Profile type: <strong>{tone === 'candidate' ? 'Candidate' : 'Recruiter'}</strong>
+          </p>
+        </ProfileSection>
+
+        {saveMessage ? <p className="form-message">{saveMessage}</p> : null}
+        {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
 
         {profile.role === 'candidate' ? (
           <CandidateProfileForm
             helperText="Saved details update your candidate profile."
             onChange={(candidate: CandidateProfileData) => {
-              const next: CandidateUserProfile = { ...profile, candidate }
-              updateProfile(next)
+              const nextProfile: CandidateUserProfile = { ...profile, candidate }
+              updateProfile(nextProfile)
             }}
             onSubmit={() => saveProfile(profile)}
             profile={profile.candidate}
@@ -179,8 +172,8 @@ function Account() {
           <RecruiterProfileForm
             helperText="Saved details update your recruiter profile."
             onChange={(recruiter: RecruiterProfileData) => {
-              const next: RecruiterUserProfile = { ...profile, recruiter }
-              updateProfile(next)
+              const nextProfile: RecruiterUserProfile = { ...profile, recruiter }
+              updateProfile(nextProfile)
             }}
             onSubmit={() => saveProfile(profile)}
             profile={profile.recruiter}
@@ -193,4 +186,4 @@ function Account() {
   )
 }
 
-export default Account
+export default Profile

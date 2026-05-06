@@ -1,13 +1,13 @@
-import { useMemo } from 'react'
-import type { KeyboardEvent } from 'react'
-import Button from '../Button'
-import Chip from '../Chip'
-import { useSearchContext } from '../../context/SearchContext'
-import type { ExperienceKey, WorkEnv } from '../../types/searchFilter'
+import { useMemo } from "react";
+import type { KeyboardEvent } from "react";
+import Button from "../Button";
+import Chip from "../Chip";
+import { useSearchContext } from "../../context/SearchContext";
+import type { ExperienceKey, WorkEnv } from "../../types/searchFilter";
 import skillList from '../../data/Skills.json'
 
 type SearchViewProps = {
-  onStart: () => void
+    onStart: () => void;
 }
 
 const EXPERIENCE_OPTIONS: { key: ExperienceKey; label: string; range: string }[] = [
@@ -23,18 +23,11 @@ const WORK_ENV_OPTIONS: { value: WorkEnv; icon: string; label: string }[] = [
   { value: 'onsite', icon: 'apartment', label: 'On-site' },
 ]
 
-function SearchView({ onStart }: SearchViewProps) {
-  const {
-    inputValue,
-    setInputValue,
-    selectedSkills,
-    setSelectedSkills,
-    experienceLevels,
-    setExperienceLevels,
-    workEnv,
-    setWorkEnv,
-  } = useSearchContext()
 
+function SearchView({ onStart }: SearchViewProps) {
+  const {inputValue, setInputValue, selectedSkills, experienceLevels, workEnv, setWorkEnv, addSkill, removeSkill, toggleExperience} = useSearchContext();
+    
+    
   const filteredSkills = useMemo(() => {
     if (!inputValue.trim()) return []
     const query = inputValue.toLowerCase()
@@ -45,20 +38,6 @@ function SearchView({ onStart }: SearchViewProps) {
     )
   }, [inputValue, selectedSkills])
 
-  function addSkill(skill: string) {
-    if (selectedSkills.some((s) => s.toLowerCase() === skill.toLowerCase())) return
-    setSelectedSkills((prev) => [...prev, skill])
-    setInputValue('')
-  }
-
-  function removeSkill(skill: string) {
-    setSelectedSkills((prev) => prev.filter((s) => s !== skill))
-  }
-
-  function toggleExperience(level: ExperienceKey) {
-    setExperienceLevels((prev) => ({ ...prev, [level]: !prev[level] }))
-  }
-
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && filteredSkills.length > 0) {
       e.preventDefault()
@@ -66,109 +45,109 @@ function SearchView({ onStart }: SearchViewProps) {
     }
   }
 
-  return (
-    <div>
-      <header className="search-hero">
-        <h1>Refine Search</h1>
-        <p>
-          Precision-engineered filtering for the modern technical recruiter. Find your ideal
-          talent through layered parameters.
-        </p>
-      </header>
+    return (
+    <div className="">
+        <header className="search-hero">
+          <h1>Refine Search</h1>
+          <p>Precision-engineered filtering for the modern technical recruiter. Find your ideal talent through layered parameters.</p>
+        </header>
 
-      <section className="search-section">
-        <div className="skill-search-wrapper">
-          <div className="skill-search">
-            <span className="material-symbols-outlined">search</span>
-            <input
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Search by skill..."
-              type="text"
-              value={inputValue}
-            />
-          </div>
-          {filteredSkills.length > 0 && (
-            <div className="skill-dropdown is-visible">
-              {filteredSkills.map((skill) => (
-                <button
+        <section className="search-section">
+          <div className="skill-search-wrapper">
+            <div className="skill-search">
+              <span className="material-symbols-outlined">search</span>
+              <input
+                aria-label="Search by skill"
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Search by skill..."
+                type="text"
+                value={inputValue}
+                />
+            </div>
+            {filteredSkills.length > 0 && (
+              <div className="skill-dropdown is-visible" role="listbox" aria-label="Skill suggestions">
+                {filteredSkills.map((skill) => (
+                  <button
                   key={skill}
                   className="skill-dropdown-item"
                   onClick={() => addSkill(skill)}
                   type="button"
-                >
+                  role="option"
+                  >
+                    {skill}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          {selectedSkills.length > 0 && (
+            <div className="selected-chips candidate-chip-list">
+              {selectedSkills.map((skill) => (
+                <Chip key={skill} onClick={() => removeSkill(skill)}>
                   {skill}
-                </button>
+                </Chip>
               ))}
             </div>
           )}
-        </div>
-        {selectedSkills.length > 0 && (
-          <div className="selected-chips candidate-chip-list">
-            {selectedSkills.map((skill) => (
-              <Chip key={skill} onClick={() => removeSkill(skill)}>
-                {skill}
-              </Chip>
+        </section>
+
+        <section className="search-section">
+          <div className="search-experience-environment-wrapper">
+            <div className="search-experience">
+          <div className="search-section-title">
+            <span className="material-symbols-outlined">analytics</span>
+            <h2>Experience Level</h2>
+          </div>
+          <div className="experience-grid">
+            {EXPERIENCE_OPTIONS.map(({ key, label, range }) => (
+              <label
+                className={`experience-option${experienceLevels[key] ? ' is-selected' : ''}`}
+                key={key}
+              >
+                <input
+                  checked={experienceLevels[key]}
+                  onChange={() => toggleExperience(key)}
+                  type="checkbox"
+                />
+                <span>
+                  <strong>{label}</strong>
+                  <small>{range}</small>
+                </span>
+              </label>
             ))}
           </div>
-        )}
-      </section>
-
-      <section className="search-section">
-        <div className="search-experience-environment-wrapper">
-          <div className="search-experience">
-            <div className="search-section-title">
-              <span className="material-symbols-outlined">analytics</span>
-              <h2>Experience Level</h2>
-            </div>
-            <div className="experience-grid">
-              {EXPERIENCE_OPTIONS.map(({ key, label, range }) => (
-                <label
-                  className={`experience-option${experienceLevels[key] ? ' is-selected' : ''}`}
-                  key={key}
-                >
-                  <input
-                    checked={experienceLevels[key]}
-                    onChange={() => toggleExperience(key)}
-                    type="checkbox"
-                  />
-                  <span>
-                    <strong>{label}</strong>
-                    <small>{range}</small>
-                  </span>
-                </label>
-              ))}
-            </div>
           </div>
 
           <div className="search-environment">
-            <div className="search-section-title">
-              <span className="material-symbols-outlined">distance</span>
-              <h2>Work Environment</h2>
-            </div>
-            <div className="work-preference-grid">
-              {WORK_ENV_OPTIONS.map(({ value, icon, label }) => (
-                <button
-                  className={`work-preference${workEnv === value ? ' is-selected' : ''}`}
-                  key={value}
-                  onClick={() => setWorkEnv(value)}
-                  type="button"
-                >
-                  <span
-                    className="material-symbols-outlined"
-                    style={{ fontVariationSettings: workEnv === value ? "'FILL' 1" : undefined }}
-                  >
-                    {icon}
-                  </span>
-                  <strong>{label}</strong>
-                </button>
-              ))}
-            </div>
+          <div className="search-section-title">
+            <span className="material-symbols-outlined">distance</span>
+            <h2>Work Environment</h2>
           </div>
-        </div>
-      </section>
+          <div className="work-preference-grid">
+            {WORK_ENV_OPTIONS.map(({ value, icon, label }) => (
+              <button
+                aria-pressed={workEnv === value}
+                className={`work-preference${workEnv === value ? ' is-selected' : ''}`}
+                key={value}
+                onClick={() => setWorkEnv(value)}
+                type="button"
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontVariationSettings: workEnv === value ? "'FILL' 1" : undefined }}
+                >
+                  {icon}
+                </span>
+                <strong>{label}</strong>
+              </button>
+            ))}
+          </div>
+          </div>
+          </div>
+        </section>
 
-      <div>
+      <div className="">
         <Button className="start-swiping-btn" type="button" onClick={onStart}>
           Start Swiping
           <span className="material-symbols-outlined">bolt</span>
@@ -178,4 +157,4 @@ function SearchView({ onStart }: SearchViewProps) {
   )
 }
 
-export default SearchView
+export default SearchView;

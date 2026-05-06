@@ -6,7 +6,7 @@ import {
 } from '../../data/profileStorage'
 import CandidateProfileForm from '../profile/CandidateProfileForm'
 import ProfileLayout from '../profile/ProfileLayout'
-import type { CandidateProfileData, RegisterFormData } from './types'
+import type { CandidateProfileData, RegisterFormData } from '../../types/Profile'
 
 type CandidatePreferencesSetupProps = {
   onBack: () => void
@@ -19,23 +19,22 @@ function CandidatePreferencesSetup({
   onComplete,
   registration,
 }: CandidatePreferencesSetupProps) {
+  const [saveError, setSaveError] = useState('')
+  const [saving, setSaving] = useState(false)
   const [profile, setProfile] = useState<CandidateProfileData>({
     ...defaultCandidateProfile,
     fullName: registration.name,
   })
-  const [saveError, setSaveError] = useState<string | null>(null)
-  const [saving, setSaving] = useState(false)
 
   async function handleSubmit() {
-    setSaveError(null)
+    setSaveError('')
     setSaving(true)
     try {
       await saveStoredProfile(buildCandidateProfile(registration, profile))
       onComplete()
     } catch (error) {
-      setSaveError(
-        error instanceof Error ? error.message : 'Could not save your profile.',
-      )
+      console.error('Failed to save candidate profile', error)
+      setSaveError(error instanceof Error ? error.message : 'We could not save your profile. Please try again.')
     } finally {
       setSaving(false)
     }
@@ -49,13 +48,13 @@ function CandidatePreferencesSetup({
       onBack={onBack}
       title="Complete your profile"
     >
-      {saveError ? <p className="profile-save-error">{saveError}</p> : null}
+      {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
       <CandidateProfileForm
         helperText="By continuing, you agree to our Terms of Service"
         onChange={setProfile}
         onSubmit={handleSubmit}
         profile={profile}
-        submitLabel={saving ? 'Saving…' : 'Complete Profile'}
+        submitLabel={saving ? 'Saving...' : 'Complete Profile'}
       />
     </ProfileLayout>
   )

@@ -1,21 +1,20 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../context/AuthProvider'
 import './Header.css'
-
-const navLinks = [
-  { label: 'Home', to: '/', end: true },
-  { label: 'About', to: '/about' },
-  { label: 'Search', to: '/search' },
-  { label: 'Swipe', to: '/swipe' },
-  { label: 'Candidate', to: '/candidate-profile' },
-  { label: 'Recruiter', to: '/recruiter-profile' },
-  { label: 'Account', to: '/account' },
-  { label: 'Login', to: '/login' },
-  { label: 'Register', to: '/register' },
-]
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { logout, user } = useAuth()
+
+  function closeMobileMenu() {
+    setMobileMenuOpen(false)
+  }
+
+  function handleLogout() {
+    closeMobileMenu()
+    logout()
+  }
 
   return (
     <header className={`top-bar ${mobileMenuOpen ? 'expanded' : ''}`}>
@@ -26,11 +25,21 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {navLinks.map((link) => (
-            <NavLink key={link.to} to={link.to} end={link.end}>
-              {link.label}
-            </NavLink>
-          ))}
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/search">Search</NavLink>
+          <NavLink to={user?.role === 'recruiter' ? '/recruiterprofile' : '/profile'}>
+            Profile
+          </NavLink>
+          {user ? (
+            <button className="nav-button" onClick={handleLogout} type="button">
+              Logout ({user.name})
+            </button>
+          ) : (
+            <>
+              <NavLink to="/login">Login</NavLink>
+              <NavLink to="/register">Register</NavLink>
+            </>
+          )}
         </nav>
 
         <button
@@ -45,16 +54,24 @@ function Header() {
       </div>
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
-        {navLinks.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            end={link.end}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {link.label}
-          </NavLink>
-        ))}
+        <NavLink to="/" end onClick={closeMobileMenu}>Home</NavLink>
+        <NavLink to="/search" onClick={closeMobileMenu}>Search</NavLink>
+        <NavLink
+          to={user?.role === 'recruiter' ? '/recruiterprofile' : '/profile'}
+          onClick={closeMobileMenu}
+        >
+          Profile
+        </NavLink>
+        {user ? (
+          <button className="nav-button mobile-nav-button" onClick={handleLogout} type="button">
+            Logout ({user.name})
+          </button>
+        ) : (
+          <>
+            <NavLink to="/login" onClick={closeMobileMenu}>Login</NavLink>
+            <NavLink to="/register" onClick={closeMobileMenu}>Register</NavLink>
+          </>
+        )}
       </nav>
     </header>
   )

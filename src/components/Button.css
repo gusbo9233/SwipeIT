@@ -15,12 +15,6 @@
     transform: scale(0.98);
 }
 
-.button:disabled {
-    cursor: not-allowed;
-    opacity: 0.65;
-    transform: none;
-}
-
 .button-primary {
     background: var(--color-primary);
     color: #ffffff;
@@ -31,6 +25,7 @@
     color: #331200;
 }
 
+/* Matching your specific style */
 .button-transparent {
     background: #fff;
     color: #47607e;
@@ -38,5 +33,16 @@
     border-radius: 30px;
     font-size: 11px;
     gap: 8px;
+    /* For the icons */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+
+    .button:active {
+        transform: none;
+    }
 }
