@@ -5,7 +5,7 @@ export interface User {
     name: string
 }
 
-export interface RawAccount extends User {
+export interface RawUser extends User {
   password?: string; // Included here because it exists in the JSON
 }
 
