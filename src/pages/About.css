@@ -6,10 +6,7 @@
   max-width: 1080px;
   padding: 40px 24px 80px;
   color: var(--color-text);
-}
-
-.page {
-    background: none;
+  background: none;
 }
 
 .page-hero {
