@@ -29,11 +29,10 @@ function RecruiterPreferencesSetup({ onBack }: RecruiterPreferencesSetupProps) {
       bio: `Lead recruiter at ${formData.get('companyName')}. We are looking for amazing developers to join our mission.`,
       specialties: ['Talent acquisition', 'HR-manager', 'Employer branding']
     }
-
+    
     localStorage.setItem('activeProfile', JSON.stringify(finalProfile))
     navigate('/login')
   }
-
   return (
     <OnboardingLayout
       avatarLabel="HR"
