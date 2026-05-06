@@ -15,24 +15,24 @@ function Header() {
     logout();
   }
 
-  const NavContent = () => {
+  const NavContent = (onItemClick?: () => void) => {
     return           <>
     {/* Navigation for all users */}
-          <Button variant="link" to="/">Home</Button>
+          <Button variant="link" to="/" onClick={onItemClick}>Home</Button>
 
           {/* Navigation for Recruiters */}
           {user?.role === 'recruiter' && (
             <>
-              <Button variant="link" to="/search">Search</Button>
-              <Button variant="link" to="/swipe">Swipe IT</Button>
+              <Button variant="link" to="/search" onClick={onItemClick}>Search</Button>
+              <Button variant="link" to="/swipe" onClick={onItemClick}>Swipe IT</Button>
             </>
           )}
 
           {/* Conditional Auth Links */}
           {!user ? (
             <>
-              <Button variant="link" to="/login">Login</Button>
-              <Button variant="link" to="/register">Register</Button>
+              <Button variant="link" to="/login" onClick={onItemClick}>Login</Button>
+              <Button variant="link" to="/register" onClick={onItemClick}>Register</Button>
             </>
           ) : (
             <Button variant="link" onClick={handleLogout}>Logout</Button>
@@ -49,7 +49,7 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {NavContent()}
+          {NavContent(closeMobileMenu)}
         </nav>
 
         <button
@@ -64,7 +64,7 @@ function Header() {
       </div>
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
-        {NavContent()}
+        {NavContent(closeMobileMenu)}
       </nav>
     </header>
   )
