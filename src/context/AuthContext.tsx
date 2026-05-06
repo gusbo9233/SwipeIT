@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import { authService } from '../service/authService'
+import type { RegisterFormData } from '../types/Profile'
 import type { User } from '../types/User'
 import { AuthContext as AuthContextProvider } from './AuthProvider'
 
@@ -21,13 +22,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null)
   }
 
+  async function register(formData: RegisterFormData) {
+    const registeredUser = await authService.register(formData)
+    setUser(registeredUser)
+    return registeredUser
+  }
+
   function updateUser(user: User) {
     authService.updateCurrentUser(user)
     setUser(user)
   }
 
   return (
-    <AuthContextProvider.Provider value={{ login, logout, updateUser, user }}>
+    <AuthContextProvider.Provider value={{ login, logout, register, updateUser, user }}>
       {children}
     </AuthContextProvider.Provider>
   )

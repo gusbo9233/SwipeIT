@@ -6,6 +6,7 @@ import {
 } from '../../data/profileStorage'
 import CandidateProfileForm from '../profile/CandidateProfileForm'
 import ProfileLayout from '../profile/ProfileLayout'
+import { useAuth } from '../../context/AuthProvider'
 import type { CandidateProfileData, RegisterFormData } from '../../types/Profile'
 
 type CandidatePreferencesSetupProps = {
@@ -19,19 +20,21 @@ function CandidatePreferencesSetup({
   onComplete,
   registration,
 }: CandidatePreferencesSetupProps) {
+  const { register } = useAuth()
   const [saveError, setSaveError] = useState('')
   const [profile, setProfile] = useState<CandidateProfileData>({
     ...defaultCandidateProfile,
     fullName: registration.name,
   })
 
-  function handleSubmit() {
+  async function handleSubmit() {
     try {
+      await register(registration)
       saveStoredProfile(buildProfileFromRegistration(registration, profile))
       onComplete()
     } catch (error) {
-      console.error('Failed to save candidate profile', error)
-      setSaveError('We could not save your profile. Please try again.')
+      console.error('Failed to save candidate account', error)
+      setSaveError(getRegistrationError(error))
     }
   }
 
@@ -53,6 +56,14 @@ function CandidatePreferencesSetup({
       />
     </ProfileLayout>
   )
+}
+
+function getRegistrationError(error: unknown) {
+  if (error instanceof Error && error.message === 'account-exists') {
+    return 'An account with this email already exists. Please log in instead.'
+  }
+
+  return 'We could not save your account. Please try again.'
 }
 
 export default CandidatePreferencesSetup
