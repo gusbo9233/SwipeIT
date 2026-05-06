@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import type { UserRole } from '../types/Account';
 import { useAuth } from '../context/AuthProvider';
+import type { UserRole } from '../types/User';
 
 interface ProtectedRouteProps {
     allowedRoles: UserRole[];
@@ -14,7 +14,7 @@ const ProtectedRoute = ({ allowedRoles }: ProtectedRouteProps) => {
     }
 
     if (!allowedRoles.includes(user.role)) {
-        return <Navigate to="*" replace />;
+        return <Navigate to="/notfound" replace />;
     }
     return <Outlet />;
 };
