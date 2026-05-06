@@ -1,4 +1,4 @@
-.account-page-forms {
+.profile-page-forms {
   display: grid;
   gap: 32px;
   margin-inline: auto;
@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.account-role-summary {
+.profile-role-summary {
   color: var(--color-muted);
   font-weight: 800;
   margin: 24px 0 0;

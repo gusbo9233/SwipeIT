@@ -1,7 +1,8 @@
 import accountsData from '../data/Account.json'
+import { hashPassword } from '../helper/authHelper'
 import type { RawAccount, User } from '../types/Account'
 
-const userKey = 'swipeit:user'
+const userKey = 'swipeit_user'
 const accounts = accountsData as RawAccount[]
 
 export const authService = {
@@ -15,14 +16,18 @@ export const authService = {
     }
   },
 
-  login(email: string, password: string): User | null {
+  async login(email: string, password: string): Promise<User | null> {
     const account = accounts.find(
-      (candidateAccount) =>
-        candidateAccount.email.toLowerCase() === email.toLowerCase() &&
-        candidateAccount.password === password,
+      (candidateAccount) => candidateAccount.email.toLowerCase() === email.toLowerCase(),
     )
 
     if (!account) {
+      return null
+    }
+
+    const inputHash = await hashPassword(password)
+
+    if (inputHash !== account.password) {
       return null
     }
 
@@ -35,7 +40,6 @@ export const authService = {
 
     try {
       window.localStorage.setItem(userKey, JSON.stringify(user))
-      window.localStorage.setItem('swipeit:isLoggedIn', 'true')
     } catch (error) {
       console.error('Failed to save user to storage', error)
     }
@@ -45,7 +49,6 @@ export const authService = {
 
   logout() {
     window.localStorage.removeItem(userKey)
-    window.localStorage.removeItem('swipeit:isLoggedIn')
     window.location.href = '/login'
   },
 }

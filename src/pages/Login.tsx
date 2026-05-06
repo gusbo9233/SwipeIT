@@ -1,10 +1,11 @@
 import { useActionState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { authService } from '../service/authService'
+import { useAuth } from '../context/AuthProvider'
 import './Login.css'
 
 function Login() {
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   async function loginAction(_previousError: string | null, formData: FormData) {
     const email = String(formData.get('email') ?? '')
@@ -14,7 +15,7 @@ function Login() {
       return 'Both email and password are required.'
     }
 
-    const user = authService.login(email, password)
+    const user = await login(email, password)
 
     if (!user) {
       return 'Invalid email or password.'

@@ -1,16 +1,23 @@
 [
   {
     "id": "1",
-    "email": "candidate@lexicon.se",
-    "password": "password123",
+    "email": "admin@lexicon.se",
+    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     "role": "candidate",
-    "name": "Candidate User"
+    "name": "Admin User"
   },
   {
     "id": "2",
     "email": "recruiter@lexicon.se",
-    "password": "password123",
+    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     "role": "recruiter",
     "name": "Jane Doe"
+  },
+  {
+    "id": "3",
+    "email": "candidate@lexicon.se",
+    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+    "role": "candidate",
+    "name": "Candidate User"
   }
 ]

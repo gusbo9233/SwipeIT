@@ -48,7 +48,7 @@ function RegisterWithRoleToggle({
       </div>
 
       <fieldset className="role-toggle">
-        <legend>Account type</legend>
+        <legend>Profile type</legend>
         {roles.map((role) => (
           <label
             className={`role-option ${

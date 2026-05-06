@@ -19,7 +19,7 @@ function Register() {
   const [step, setStep] = useState<'register' | 'preferences'>('register')
 
   function handleComplete() {
-    navigate('/account')
+    navigate(formData.role === 'recruiter' ? '/recruiterprofile' : '/profile')
   }
 
   function handleNext() {

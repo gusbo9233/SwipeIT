@@ -148,7 +148,7 @@ function RecruiterProfile() {
             </div>
 
             <div style={{ display: 'flex', gap: '15px' }}>
-              <Button className="large-button" variant="primary">
+              <Button className="large-button" to="/profile" variant="primary">
                 Edit Profile
               </Button>
               <Button className="large-button" to="/search" variant="secondary">

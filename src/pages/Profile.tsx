@@ -10,7 +10,7 @@ import {
   saveStoredProfile,
 } from '../data/profileStorage'
 import './Register.css'
-import './Account.css'
+import './Profile.css'
 
 const guestProfile = buildProfileFromRegistration({
   email: '',
@@ -19,7 +19,7 @@ const guestProfile = buildProfileFromRegistration({
   role: 'candidate',
 })
 
-function Account() {
+function Profile() {
   const [profile, setProfile] = useState<UserProfile>(() => getStoredProfile() ?? guestProfile)
   const [saveMessage, setSaveMessage] = useState('')
   const [saveError, setSaveError] = useState('')
@@ -36,9 +36,9 @@ function Account() {
       saveStoredProfile(nextProfile)
       setProfile(nextProfile)
       setSaveError('')
-      setSaveMessage('Account changes saved.')
+      setSaveMessage('Profile changes saved.')
     } catch (error) {
-      console.error('Failed to save account profile', error)
+      console.error('Failed to save profile', error)
       setSaveMessage('')
       setSaveError('We could not save your changes. Please try again.')
     }
@@ -48,11 +48,11 @@ function Account() {
     <ProfileLayout
       avatarLabel={activeTone === 'candidate' ? 'ME' : 'HR'}
       description="Review the details used for your profile and matching experience."
-      title="Account"
+      title="Profile"
       tone={activeTone}
     >
-      <div className="account-page-forms">
-        <ProfileSection icon="manage_accounts" title="Account Details">
+      <div className="profile-page-forms">
+        <ProfileSection icon="manage_accounts" title="Profile Details">
           <div className="candidate-field-grid">
             <label className="candidate-field">
               Name
@@ -76,8 +76,8 @@ function Account() {
             </label>
           </div>
 
-          <p className="account-role-summary">
-            Account type: <strong>{profile.role === 'candidate' ? 'Candidate' : 'Recruiter'}</strong>
+          <p className="profile-role-summary">
+            Profile type: <strong>{profile.role === 'candidate' ? 'Candidate' : 'Recruiter'}</strong>
           </p>
         </ProfileSection>
 
@@ -106,4 +106,4 @@ function Account() {
   )
 }
 
-export default Account
+export default Profile
