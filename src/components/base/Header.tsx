@@ -25,7 +25,7 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <Button to="/" end>Home</Button>
+          <Button to="/">Home</Button>
           <Button to="/login">Login</Button>
           <Button to="/register">Register</Button>
           <Button variant="link" onClick={handleLogout}>Logout</Button>
