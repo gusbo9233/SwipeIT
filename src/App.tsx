@@ -9,6 +9,7 @@ import RecruiterProfile from './pages/RecruiterProfile'
 import NotFound from './pages/NotFound'
 import Search from './pages/Search'
 import About from './pages/About'
+import ProtectedRoute from './pages/ProtectedRoute'
 
 function App() {
   return (
@@ -17,12 +18,23 @@ function App() {
         <Header />
         <main className="site-main">
           <Routes>
+            {/* Public Routes */}
             <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/recruiterprofile" element={<RecruiterProfile />} />
-            <Route path="/about" element={<About />} />
+
+            {/* Recruiter Only Routes */}
+            <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
+              <Route path="/search" element={<Search />} />
+              <Route path="/recruiterprofile" element={<RecruiterProfile/>} />     
+            </Route>
+            
+            {/* Candidate Only Routes */}
+            <Route element={<ProtectedRoute allowedRoles={['candidate']} />}>
+            </Route>
+
+            {/* Catch All */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

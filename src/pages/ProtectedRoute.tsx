@@ -1,13 +1,13 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { authService } from '../service/authService';
+import type { UserRole } from '../types/Account';
+import { useAuth } from '../context/AuthProvider';
 
 interface ProtectedRouteProps {
-  userRole: string;
-  allowedRoles: string[];
+    allowedRoles: UserRole[];
 }
 
 const ProtectedRoute = ({ allowedRoles }: ProtectedRouteProps) => {
-    const user = authService.getCurrentUser();
+    const { user } = useAuth();
 
     if (!user) {
         return <Navigate to="/login" replace />;
