@@ -37,6 +37,29 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
+.button-link {
+    background: transparent;
+    color: inherit;
+    /* Takes color from nav or parent */
+    padding: 0;
+    border-radius: 0;
+    font-weight: 500;
+    /* Usually nav links are a bit lighter than action buttons */
+    transition: color 200ms ease;
+}
+
+/* Matching the hover state typically found in NavLinks */
+.button-link:hover {
+    color: var(--color-primary);
+    background: transparent;
+}
+
+/* If using React Router's active class via NavLink */
+.button-link.active {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .button {
         transition: none;

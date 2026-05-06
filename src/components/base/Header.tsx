@@ -1,9 +1,20 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import './Header.css'
+import Button from '../Button'
+import { authService } from '../../service/authService'
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  }
+
+  const handleLogout = () => {
+    closeMobileMenu();
+    authService.logout();
+  }
 
   return (
     <header className={`top-bar ${mobileMenuOpen ? 'expanded' : ''}`}>
@@ -14,9 +25,10 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
+          <Button to="/" end>Home</Button>
+          <Button to="/login">Login</Button>
+          <Button to="/register">Register</Button>
+          <Button variant="link" onClick={handleLogout}>Logout</Button>
         </nav>
 
         <button
@@ -31,9 +43,10 @@ function Header() {
       </div>
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
-        <NavLink to="/" end onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
-        <NavLink to="/login" onClick={() => setMobileMenuOpen(false)}>Login</NavLink>
-        <NavLink to="/register" onClick={() => setMobileMenuOpen(false)}>Register</NavLink>
+        <Button to="/" onClick={closeMobileMenu}>Home</Button>
+        <Button to="/login" onClick={closeMobileMenu}>Login</Button>
+        <Button to="/register" onClick={closeMobileMenu}>Register</Button>
+        <Button variant="link" onClick={handleLogout}>Logout</Button>
       </nav>
     </header>
   )
