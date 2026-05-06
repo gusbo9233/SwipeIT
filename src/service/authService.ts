@@ -1,10 +1,10 @@
-import accountsData from '../data/Account.json'
+import accountCredentials from '../data/AccountCredentials.json'
 import { buildProfileFromAccount, saveStoredProfile } from '../data/profileStorage'
 import { hashPassword } from '../helper/authHelper'
-import type { RawAccount, User } from '../types/Account'
+import type { RawUser, User } from '../types/User'
 
 const userKey = 'swipeit_user'
-const accounts = accountsData as RawAccount[]
+const accounts = accountCredentials as RawUser[]
 
 export const authService = {
   getCurrentUser(): User | null {

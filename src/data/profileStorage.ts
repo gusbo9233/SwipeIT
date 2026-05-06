@@ -4,16 +4,16 @@ import type {
   RegisterFormData,
   UserProfile,
 } from '../types/Profile'
-import accountsData from './Account.json'
+import accountCredentials from './AccountCredentials.json'
 import candidatesData from './Candidates.json'
 import recruitersData from './Recruiters.json'
-import type { RawAccount, User } from '../types/Account'
+import type { RawUser, User } from '../types/User'
 import type { Candidate } from '../types/Candidate'
 import type { Recruiter } from '../types/Recruiter'
 
 const storageKey = 'swipeit:user-profile'
 const activeRecruiterProfileKey = 'activeProfile'
-const accounts = accountsData as RawAccount[]
+const accounts = accountCredentials as RawUser[]
 const candidates = candidatesData as Candidate[]
 const recruiters = recruitersData as Recruiter[]
 
@@ -59,7 +59,7 @@ export function buildProfileFromRegistration(
   }
 }
 
-export function buildProfileFromAccount(account: RawAccount): UserProfile {
+export function buildProfileFromAccount(account: RawUser): UserProfile {
   const candidate = candidates.find((candidateProfile) => candidateProfile.id === account.candidateId)
   const recruiter = recruiters.find((recruiterProfile) => recruiterProfile.id === account.recruiterId)
 

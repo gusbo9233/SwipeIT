@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import type { User } from '../types/Account'
+import type { User } from '../types/User'
 
 export type AuthContextValue = {
   login: (email: string, password: string) => Promise<User | null>

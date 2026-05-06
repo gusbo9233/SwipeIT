@@ -7,7 +7,7 @@ export type User = {
   role: UserRole
 }
 
-export type RawAccount = User & {
+export type RawUser = User & {
   candidateId?: string
   password?: string
   recruiterId?: string
