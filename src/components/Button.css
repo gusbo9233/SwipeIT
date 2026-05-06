@@ -48,15 +48,8 @@
     transition: color 200ms ease;
 }
 
-/* Matching the hover state typically found in NavLinks */
-.button-link:hover {
-    color: var(--color-primary);
-    background: transparent;
-}
-
 /* If using React Router's active class via NavLink */
 .button-link.active {
-    color: var(--color-primary);
     font-weight: 700;
 }
 
