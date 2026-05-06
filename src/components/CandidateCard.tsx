@@ -1,52 +1,51 @@
-import './CandidateCard.css';
-import { useState } from "react";
+import { useState } from 'react'
+import type { CandidatePreview } from '../types/Candidate'
+import './CandidateCard.css'
 
-interface Candidate {
-  id: string | number;
-  name: string;
-  imageUrl: string;
-  skills: string[];
+type CandidateCardProps = {
+  candidate: CandidatePreview
+  onDislike: () => void
+  onLike: () => void
+  onSuperLike?: () => void
+  onViewResume?: (candidateId: string | number) => void
 }
 
-interface CandidateCardProps {
-  candidate: Candidate;
-  onLike: () => void;
-  onDislike: () => void;
-  onSuperLike?: () => void; // Optional prop
-}
-
-function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateCardProps) {
-  
-  const [loading, setLoading] = useState(true);
-  const handleImageLoad = () => setLoading(false);
-  const handleImageError = () => {
-    setLoading(false);
-  };
-
+function CandidateCard({
+  candidate,
+  onDislike,
+  onLike,
+  onSuperLike,
+  onViewResume,
+}: CandidateCardProps) {
+  const [loadedImageId, setLoadedImageId] = useState<string | number | null>(null)
   const imageSource =
     candidate.imageUrl && candidate.imageUrl.length > 0
       ? candidate.imageUrl
-      : `https://thispersondoesnotexist.com/image?${candidate.id}`;
+      : `https://thispersondoesnotexist.com/image?${candidate.id}`
+  const isImageLoading = loadedImageId !== candidate.id
+
+  function handleImageDone() {
+    setLoadedImageId(candidate.id)
+  }
 
   return (
     <article className="candidate-card" aria-label={`Candidate: ${candidate.name}`}>
       <div className="candidate-card__image-wrapper">
-        {/* Candidate's image or fetch AI-generated face using imgKey to force new */}
         <img
-          key={imageSource}
-          src={imageSource}
           alt={`${candidate.name} profile photo`}
           className="candidate-card__image"
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-          aria-busy={loading}
+          key={imageSource}
+          onError={handleImageDone}
+          onLoad={handleImageDone}
+          src={imageSource}
+          style={{ display: isImageLoading ? 'none' : 'block' }}
         />
-        {/* Spinner when loading image */}
-        {loading && (
+
+        {isImageLoading ? (
           <div className="candidate-card__spinner" role="status" aria-label="Loading image">
             <span className="candidate-card__spinner-dot" />
           </div>
-        )}
+        ) : null}
 
         <div className="candidate-card__gradient-overlay" aria-hidden="true" />
         <div className="candidate-card__overlay-content">
@@ -58,12 +57,13 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
               </span>
             ))}
           </div>
-          {/* View Full Resume button under skills */}
+
           <button
-            className="candidate-card__view-resume"
-            type="button"
             aria-label={`View full resume for ${candidate.name}`}
-            onClick={() => {/* Open modal or navigate to resume */}}
+            className="candidate-card__view-resume"
+            disabled={!onViewResume}
+            onClick={() => onViewResume?.(candidate.id)}
+            type="button"
           >
             <span>View Full Resume</span>
             <span className="material-symbols-outlined">arrow_forward</span>
@@ -73,36 +73,36 @@ function CandidateCard({ candidate, onLike, onDislike, onSuperLike }: CandidateC
 
       <div className="candidate-card__actions" role="group" aria-label="Candidate actions">
         <button
+          aria-label="Dislike candidate"
           className="candidate-card__action candidate-card__action--dislike"
           onClick={onDislike}
           type="button"
-          aria-label="Dislike candidate"
         >
           <span className="material-symbols-outlined">close</span>
         </button>
 
         <button
+          aria-label="Save candidate"
           className="candidate-card__action candidate-card__action--superlike"
+          disabled={!onSuperLike}
           onClick={onSuperLike}
           type="button"
-          aria-label="Save candidate"
-          disabled={!onSuperLike}
         >
           <span className="material-symbols-outlined">star_border</span>
         </button>
 
         <button
+          aria-label="Like candidate"
           className="candidate-card__action candidate-card__action--like"
           onClick={onLike}
           type="button"
-          aria-label="Like candidate"
         >
           <span className="material-symbols-outlined">favorite</span>
         </button>
       </div>
     </article>
-  );
+  )
 }
 
-export default CandidateCard;
-export type { Candidate, CandidateCardProps };
+export default CandidateCard
+export type { CandidateCardProps }
