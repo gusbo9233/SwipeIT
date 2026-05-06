@@ -2,7 +2,7 @@ import './About.css'
 
 function About() {
   return (
-    <main className="about-page page">
+    <div className="about-page page">
       <section className="page-hero">
         <h1>About Swipe IT</h1>
         <p>
@@ -61,7 +61,7 @@ function About() {
           and technical hiring managers.
         </p>
       </section>
-    </main>
+    </div>
   )
 }
 
