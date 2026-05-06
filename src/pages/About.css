@@ -8,6 +8,10 @@
   color: var(--color-text);
 }
 
+.page {
+    background: none;
+}
+
 .page-hero {
   background: radial-gradient(circle at top left, rgb(99 144 255 / 12%), transparent 45%),
     var(--color-surface);
