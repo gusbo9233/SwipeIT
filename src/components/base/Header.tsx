@@ -2,18 +2,17 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import './Header.css'
 import Button from '../Button'
-import { authService } from '../../service/authService'
+import { useAuth } from '../../context/AuthProvider'
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user, logout } = useAuth();
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  }
+  const closeMobileMenu = () => setMobileMenuOpen(false);
 
   const handleLogout = () => {
     closeMobileMenu();
-    authService.logout();
+    logout();
   }
 
   return (
@@ -25,10 +24,26 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <Button to="/">Home</Button>
-          <Button to="/login">Login</Button>
-          <Button to="/register">Register</Button>
-          <Button variant="link" onClick={handleLogout}>Logout</Button>
+          {/* Navigation for all users */}
+          <Button variant="link" to="/">Home</Button>
+
+          {/* Navigation for Recruiters */}
+          {user?.role === 'recruiter' && (
+            <>
+              <Button variant="link" to="/search">Search</Button>
+              <Button variant="link" to="/swipe">Swipe IT</Button>
+            </>
+          )}
+
+          {/* Conditional Auth Links */}
+          {!user ? (
+            <>
+              <Button variant="link" to="/login">Login</Button>
+              <Button variant="link" to="/register">Register</Button>
+            </>
+          ) : (
+            <Button variant="link" onClick={handleLogout}>Logout ({user.name})</Button>
+          )}
         </nav>
 
         <button

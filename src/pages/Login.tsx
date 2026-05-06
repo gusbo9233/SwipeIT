@@ -1,10 +1,11 @@
 import { useActionState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
-import { authService } from '../service/authService';
+import { useAuth } from '../context/AuthProvider';
 
 function Login() {
   const navigate = useNavigate();
+  const {login} = useAuth();
 
   // The 'action' function receives the previous state and the FormData object
   async function loginAction(prevState: string | null, formData: FormData) {
@@ -15,7 +16,7 @@ function Login() {
       return "Both email and password are required.";
     }
 
-    const user = await authService.login(email, password);
+    const user = await login(email, password);
     
     if (user) {
       navigate('/');
