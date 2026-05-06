@@ -36,7 +36,6 @@ const SwipeDeck = ({ candidates, onBack } : SwipeDeckProps) => {
         candidate={previewData}
         onLike={handleNext}
         onDislike={handleNext}
-        onSuperLike={handleNext}
         />
     );
 };

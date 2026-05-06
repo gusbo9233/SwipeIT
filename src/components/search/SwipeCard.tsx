@@ -1,13 +1,12 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import './SwipeCard.css';
 import type { CandidatePreview } from '../../types/Candidate';
-import CandidateCard from '../CandidateCard';
+import CandidateCard from './CandidateCard';
 
 interface SwipeCardProps {
   candidate: CandidatePreview;
   onLike: () => void;
   onDislike: () => void;
-  onSuperLike?: () => void;
 }
 
 /** Minimum horizontal drag (px) to confirm a swipe. */
@@ -43,7 +42,7 @@ function buildExitTransform(
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
-function SwipeCard({ candidate, onLike, onDislike, onSuperLike }: SwipeCardProps) {
+function SwipeCard({ candidate, onLike, onDislike }: SwipeCardProps) {
   // Refs: mutable state that must not trigger re-renders.
   const dragStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
   const lastDeltaRef = useRef({ x: 0, y: 0 });
@@ -198,7 +197,6 @@ function SwipeCard({ candidate, onLike, onDislike, onSuperLike }: SwipeCardProps
         candidate={candidate as CandidatePreview}
         onLike={() => flyOut('right', onLike)}
         onDislike={() => flyOut('left', onDislike)}
-        onSuperLike={onSuperLike}
       />
     </div>
   );

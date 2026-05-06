@@ -4,6 +4,7 @@ import type { Candidate } from '../../types/Candidate';
 import { useSearchContext } from '../../context/SearchContext';
 import Button from '../Button';
 import SwipeDeck from './SwipeDeck';
+import './SwipeView.css'
 
 interface SwipeViewProps {
   onBack: () => void;
