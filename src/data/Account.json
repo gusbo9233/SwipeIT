@@ -8,6 +8,14 @@
     "candidateId": "somethinguuidthingy2"
   },
   {
+    "id": "3",
+    "email": "candidate@lexicon.se",
+    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+    "role": "candidate",
+    "name": "Candidate User",
+    "candidateId": "somethinguuidthingy1"
+  },
+  {
     "id": "2",
     "email": "recruiter@lexicon.se",
     "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
@@ -16,11 +24,11 @@
     "recruiterId": "recruiter-1"
   },
   {
-    "id": "3",
-    "email": "candidate@lexicon.se",
-    "password": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
-    "role": "candidate",
-    "name": "Candidate User",
-    "candidateId": "somethinguuidthingy1"
+    "id": "randomuuidiguess",
+    "email": "recruite1r@lexicon.se",
+    "password": "just want to show that all the test users above has password123",
+    "role": "recruiter",
+    "name": "Jane Doe",
+    "recruiterId": "recruiter-2"
   }
 ]

@@ -30,7 +30,7 @@ export const authService = {
       (candidateAccount) => candidateAccount.email.toLowerCase() === email.toLowerCase(),
     )
 
-    if (!account) {
+    if (!account || !account.password) {
       return null
     }
 

@@ -21,7 +21,7 @@ function Login() {
       return 'Invalid email or password.'
     }
 
-    navigate(user.role === 'recruiter' ? '/recruiterprofile' : '/search')
+    navigate(user.role === 'recruiter' ? '/recruiterprofile' : '/profile')
     return null
   }
 
@@ -30,8 +30,6 @@ function Login() {
   return (
     <div className="login-page page">
       <section className="login-card">
-        <div className="login-icon material-symbols-outlined">login</div>
-        <p className="eyebrow">Welcome back</p>
         <h1>Log in to Swipe IT</h1>
         <p>
           Continue to your candidate and recruiter matching workspace.

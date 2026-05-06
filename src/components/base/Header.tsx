@@ -30,6 +30,7 @@ function Header() {
           <NavLink to={user?.role === 'recruiter' ? '/recruiterprofile' : '/profile'}>
             Profile
           </NavLink>
+          <NavLink to="/about">About</NavLink>
           {user ? (
             <button className="nav-button" onClick={handleLogout} type="button">
               Logout ({user.name})
@@ -62,6 +63,7 @@ function Header() {
         >
           Profile
         </NavLink>
+        <NavLink to="/about" onClick={closeMobileMenu}>About</NavLink>
         {user ? (
           <button className="nav-button mobile-nav-button" onClick={handleLogout} type="button">
             Logout ({user.name})

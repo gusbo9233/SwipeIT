@@ -1,4 +1,5 @@
 import './Home.css'
+import './RecruiterProfile.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
 import recruiterData from '../data/Recruiterprofile.json'
@@ -41,119 +42,51 @@ function RecruiterProfile() {
 
   return (
     <div className="home-page page">
-      <div style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '40px 20px' }}>
-        <div
-          style={{
-            backgroundColor: 'white',
-            borderRadius: '32px',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.15)',
-            color: '#1a1a1a',
-            display: 'flex',
-            flexWrap: 'wrap',
-            minHeight: '600px',
-            overflow: 'hidden',
-          }}
-        >
-          <div style={{ flex: '1 1 450px', minHeight: '400px', position: 'relative' }}>
+      <div className="profile-container">
+        <div className="profile-card">
+          <div className="profile-image-section">
             <img
-              alt="Office"
               src={data.companyImage}
-              style={{ height: '100%', objectFit: 'cover', width: '100%' }}
+              alt="Office"
+              className="profile-main-image"
             />
-            <div
-              style={{
-                backgroundColor: 'rgba(255,255,255,0.95)',
-                borderRadius: '50px',
-                bottom: '30px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                left: '30px',
-                padding: '10px 20px',
-                position: 'absolute',
-              }}
-            >
-              {data.location}
+            <div className="profile-location-badge">
+              {data.location || 'Location missing'}
             </div>
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              flex: '1 1 500px',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              padding: '60px',
-              textAlign: 'left',
-            }}
-          >
-            <div
-              style={{
-                alignItems: 'flex-start',
-                display: 'flex',
-                justifyContent: 'space-between',
-                marginBottom: '30px',
-              }}
-            >
+          <div className="profile-info-section">
+            <div className="profile-header">
               <div>
-                <h1 style={{ color: '#1a1a1a', fontSize: '2.8rem', lineHeight: '1.1', margin: 0 }}>
+                <h1 className="profile-name">
                   {displayName}
                 </h1>
-                <h2 style={{ color: '#555', fontSize: '1.3rem', fontWeight: '400', margin: '10px 0 0 0' }}>
-                  {data.role} at{' '}
-                  <span style={{ color: '#000', fontWeight: '600' }}>{data.company}</span>
+                <h2 className="profile-role">
+                  {data.role} at <span className="profile-company">{data.company || 'Swipe IT'}</span>
                 </h2>
               </div>
-              <img
-                alt="Logo"
-                src={data.logo}
-                style={{ height: '60px', objectFit: 'contain', width: '60px' }}
-              />
+              <img src={data.logo} alt="Logo" className="profile-logo" />
             </div>
 
-            <div style={{ marginBottom: '40px' }}>
-              <h3
-                style={{
-                  color: '#aaa',
-                  fontSize: '0.8rem',
-                  letterSpacing: '2px',
-                  marginBottom: '15px',
-                  textTransform: 'uppercase',
-                }}
-              >
-                About
-              </h3>
-              <p style={{ color: '#333', fontSize: '1.1rem', lineHeight: '1.7' }}>
-                {data.bio}
+            <div className="profile-section">
+              <h3 className="profile-section-title">About</h3>
+              <p className="profile-bio">
+                {data.bio || 'No bio provided yet.'}
               </p>
             </div>
 
-            <div style={{ marginBottom: '40px' }}>
-              <h3
-                style={{
-                  color: '#aaa',
-                  fontSize: '0.8rem',
-                  letterSpacing: '2px',
-                  marginBottom: '15px',
-                  textTransform: 'uppercase',
-                }}
-              >
-                Recruitment Expertise
-              </h3>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <div className="profile-section">
+              <h3 className="profile-section-title">Recruitment Expertise</h3>
+              <div className="profile-chips">
                 {data.specialties.map((skill) => (
                   <Chip key={skill}>{skill}</Chip>
                 ))}
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '15px' }}>
-              <Button className="large-button" to="/profile" variant="primary">
-                Edit Profile
-              </Button>
-              <Button className="large-button" to="/search" variant="secondary">
-                Find Talent
-              </Button>
+            <div className="profile-actions">
+              <Button variant="primary" to="/profile" className="large-button">Edit Profile</Button>
+              <Button variant="secondary" to="/search" className="large-button">Find Talent</Button>
             </div>
           </div>
         </div>
