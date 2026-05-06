@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Search.css';
-import { SearchProvider } from '../context/SearchProvider';
 import SearchView from '../components/search/SearchView';
 import SwipeView from '../components/search/SwipeView';
 
@@ -23,7 +22,6 @@ const Search: React.FC = () => {
   }, [view]);
 
   return (
-    <SearchProvider>
     <div className="search-view-container page">
       {/* "wait" mode ensures views don't jump or overlap */}
       <AnimatePresence mode="wait">
@@ -54,7 +52,6 @@ const Search: React.FC = () => {
         )}
       </AnimatePresence>
     </div>
-    </SearchProvider>
   );
 };
 
