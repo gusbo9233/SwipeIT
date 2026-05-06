@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import CandidatePreferencesSetup from '../components/registration/CandidatePreferencesSetup'
 import RecruiterPreferencesSetup from '../components/registration/RecruiterPreferencesSetup'
 import RegisterWithRoleToggle from '../components/registration/RegisterWithRoleToggle'
@@ -15,6 +16,7 @@ const initialFormData: RegisterFormData = {
 function Register() {
   const [formData, setFormData] = useState(initialFormData)
   const [step, setStep] = useState<'register' | 'preferences'>('register')
+  const navigate = useNavigate()
 
   if (step === 'preferences' && formData.role === 'candidate') {
     return <CandidatePreferencesSetup onBack={() => setStep('register')} />
@@ -41,7 +43,10 @@ function Register() {
           <RegisterWithRoleToggle
             formData={formData}
             onChange={setFormData}
-            onNext={() => setStep('preferences')}
+            onNext={() => {
+              localStorage.setItem('temp_reg_data', JSON.stringify(formData))
+              setStep('preferences')
+            }}
           />
         ) : (
           <RecruiterPreferencesSetup onBack={() => setStep('register')} />

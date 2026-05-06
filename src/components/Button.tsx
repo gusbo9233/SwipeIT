@@ -2,7 +2,8 @@ import './Button.css'
 import { NavLink } from 'react-router-dom'
 import type { ReactNode } from 'react'
 
-type ButtonVariant = 'primary' | 'secondary'
+// 1. Added 'link' to the variant type
+type ButtonVariant = 'primary' | 'secondary' | 'transparent' | 'link'
 
 type ButtonProps = {
   children: ReactNode
@@ -15,11 +16,13 @@ type ButtonProps = {
 
 function Button(props: ButtonProps) {
   const { to, onClick, className = '', variant = 'primary', children, type = 'button' } = props
+  
+  // The class 'button-link' will handle the NavLink look
   const classes = `button button-${variant} ${className}`
 
   if (to) {
     return (
-      <NavLink className={classes} to={to}>
+      <NavLink className={classes} to={to} end>
         {children}
       </NavLink>
     )

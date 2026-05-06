@@ -1,48 +1,70 @@
-import './Login.css'
+import { useActionState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
+import { useAuth } from '../context/AuthProvider';
 
 function Login() {
-  function handleLogin() {
-    window.localStorage.setItem('swipeit:isLoggedIn', 'true')
-    window.location.href = '/'
+  const navigate = useNavigate();
+  const {login} = useAuth();
+
+  // The 'action' function receives the previous state and the FormData object
+  async function loginAction(prevState: string | null, formData: FormData) {
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    if (!email || !password) {
+      return "Both email and password are required.";
+    }
+
+    const user = await login(email, password);
+    
+    if (user) {
+      navigate('/');
+      return null;
+    } else {
+      return "Invalid email or password.";
+    }
   }
+
+  // error is the return value of loginAction; isPending tracks the loading state
+  const [error, formAction, isPending] = useActionState(loginAction, null);
 
   return (
     <div className="login-page page">
       <section className="login-card">
-        <div className="login-icon material-symbols-outlined">login</div>
-        <p className="eyebrow">Welcome back</p>
         <h1>Log in to Swipe IT</h1>
-        <p>
-          Continue to your candidate and recruiter matching workspace. No
-          credentials are required yet.
-        </p>
+        
+        {error && (
+          <div className="login-error-banner" role="alert">
+            {error}
+          </div>
+        )}
 
-        <div className="login-fields">
-          <label className="login-field">
-            Email
-            <input
-              autoComplete="email"
-              placeholder="you@example.com"
-              type="email"
-            />
-          </label>
-          <label className="login-field">
-            Password
-            <input
-              autoComplete="current-password"
-              placeholder="Enter your password"
-              type="password"
-            />
-          </label>
-        </div>
+        {/* Use 'action' prop instead of 'onSubmit' */}
+        <form action={formAction} className="login-form">
+          <div className="login-fields">
+            <label className="login-field">
+              Email
+              <input name="email" type="email" required />
+            </label>
+            <label className="login-field">
+              Password
+              <input name="password" type="password" required />
+            </label>
+          </div>
 
-        <button className="login-button" onClick={handleLogin} type="button">
-          <span>Login</span>
-          <span className="material-symbols-outlined">arrow_forward</span>
-        </button>
+          <button 
+            className="login-button" 
+            type="submit" 
+            disabled={isPending}
+          >
+            <span>{isPending ? 'Logging in...' : 'Login'}</span>
+            <span className="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </form>
       </section>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

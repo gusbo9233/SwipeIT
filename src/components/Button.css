@@ -8,6 +8,11 @@
     font-weight: 800;
     padding: 14px 24px;
     text-decoration: none;
+    transition: transform 0.1s ease;
+}
+
+.button:active {
+    transform: scale(0.98);
 }
 
 .button-primary {
@@ -18,4 +23,42 @@
 .button-secondary {
     background: var(--color-secondary);
     color: #331200;
+}
+
+/* Matching your specific style */
+.button-transparent {
+    background: #fff;
+    color: #47607e;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 11px;
+    gap: 8px;
+    /* For the icons */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.button-link {
+    background: transparent;
+    color: inherit;
+    /* Takes color from nav or parent */
+    padding: 0;
+    border-radius: 0;
+    font-weight: 500;
+    /* Usually nav links are a bit lighter than action buttons */
+    transition: color 200ms ease;
+}
+
+/* If using React Router's active class via NavLink */
+.button-link.active {
+    font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+
+    .button:active {
+        transform: none;
+    }
 }
