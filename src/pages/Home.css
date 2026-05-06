@@ -1,40 +1,6 @@
-.brand,
-.desktop-nav,
 .hero-actions {
   align-items: center;
   display: flex;
-}
-
-.brand {
-  color: var(--color-primary);
-  gap: 12px;
-  text-decoration: none;
-}
-
-.brand span:last-child {
-  font-family: var(--font-headline);
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.desktop-nav {
-  gap: 28px;
-}
-
-.desktop-nav a {
-  color: var(--color-primary);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.desktop-nav a:hover {
-  color: var(--color-primary-dark);
-}
-
-button {
-  border: 0;
-  cursor: pointer;
-  font: inherit;
 }
 
 .mobile-menu {
@@ -89,7 +55,8 @@ button {
 .hero-panel {
   aspect-ratio: 0.82;
   display: grid;
-  margin-bottom: 15%; /* account for card tilt/rotation space */
+  margin-bottom: 15%;
+  /* account for card tilt/rotation space */
 }
 
 .swipe-card {
@@ -224,6 +191,7 @@ button {
   gap: 8px;
   justify-content: center;
   padding: 14px 16px;
+  border: none;
   transition:
     transform 160ms ease,
     box-shadow 180ms ease;
@@ -245,9 +213,6 @@ button {
 }
 
 @media (max-width: 760px) {
-  .desktop-nav {
-    display: none;
-  }
 
   .mobile-menu {
     display: block;
