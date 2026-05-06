@@ -20,9 +20,9 @@ function App() {
         <main className="site-main">
           <Routes>
             <Route index element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/about" element={<About />} />
 
             <Route element={<ProtectedRoute allowedRoles={['candidate', 'recruiter']} />}>
               <Route path="/profile" element={<Profile />} />

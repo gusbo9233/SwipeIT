@@ -14,7 +14,7 @@ function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   }
 
   if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/notfound" replace />
   }
 
   return <Outlet />
