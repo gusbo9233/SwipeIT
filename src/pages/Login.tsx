@@ -15,10 +15,10 @@ function Login() {
       return "Both email and password are required.";
     }
 
-    const user = authService.loginByEmail(email);
+    const user = await authService.login(email, password);
     
     if (user) {
-      navigate('/search');
+      navigate('/');
       return null;
     } else {
       return "Invalid email or password.";

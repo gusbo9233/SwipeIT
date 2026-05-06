@@ -1,13 +1,39 @@
 import accountsData from '../data/Account.json';
+import { hashPassword } from '../helper/authHelper';
 import type { RawAccount, User } from '../types/Account';
 
 const USER_KEY = 'swipeit_user';
-
-// Cast the JSON import to an array of any to allow destructuring later, 
-// or define a full RawAccount interface if you want to be strict.
 const accounts = accountsData as RawAccount[];
 
 export const authService = {
+  // New secure login method
+  login: async (email: string, password: string): Promise<User | null> => {
+    const account = accounts.find(
+      (acc) => acc.email.toLowerCase() === email.toLowerCase()
+    );
+    
+    if (!account) return null;
+
+    // Hash the entered password to compare with the "hashed" password in DB
+    const inputHash = await hashPassword(password);
+
+    // In a real app, your Account.json would already contain SHA-256 strings
+    if (inputHash === account.password) {
+      const userSansPassword: User = {
+        id: account.id,
+        email: account.email,
+        role: account.role,
+        name: account.name
+      };
+
+      localStorage.setItem(USER_KEY, JSON.stringify(userSansPassword));
+      return userSansPassword;
+    }
+
+    return null;
+  },
+
+  // this is for test only and shall be remove before production!
   loginByEmail: (email: string): User | null => {
     const user = accounts.find(
       (acc) => acc.email.toLowerCase() === email.toLowerCase()
@@ -16,10 +42,6 @@ export const authService = {
     if (user) {
       // Destructure to remove password from the object we store
         const userSansPassword: User = { ...user };
-        
-        console.log("HEREEE REMOVE THIS");
-        
-        console.log(userSansPassword);
         
       try {
         localStorage.setItem(USER_KEY, JSON.stringify(userSansPassword));
@@ -44,7 +66,6 @@ export const authService = {
 
   logout: () => {
     localStorage.removeItem(USER_KEY);
-    // Optional: Force a reload or redirect to clear application state
     window.location.href = '/login';
   }
 };
