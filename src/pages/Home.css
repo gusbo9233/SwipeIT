@@ -3,12 +3,6 @@
   display: flex;
 }
 
-.mobile-menu {
-  background: transparent;
-  color: var(--color-primary);
-  display: none;
-}
-
 .home-main {
   min-height: 100dvh;
   padding: 96px 24px 48px;
@@ -213,10 +207,6 @@
 }
 
 @media (max-width: 760px) {
-
-  .mobile-menu {
-    display: block;
-  }
 
   .hero-section {
     grid-template-columns: 1fr;

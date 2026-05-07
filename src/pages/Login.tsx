@@ -4,6 +4,8 @@ import './Login.css';
 import { useAuth } from '../context/AuthProvider';
 import credentialsData from '../data/AccountCredentials.json';
 
+export const loginRoute = '/login'
+
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();

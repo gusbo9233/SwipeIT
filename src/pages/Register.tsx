@@ -6,6 +6,8 @@ import RegisterWithRoleToggle from '../components/registration/RegisterWithRoleT
 import type { RegisterFormData } from '../types/Profile'
 import './Register.css'
 
+export const registerRoute = '/register'
+
 const initialFormData: RegisterFormData = {
   email: '',
   name: '',

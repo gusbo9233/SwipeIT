@@ -3,6 +3,12 @@ import Button from '../components/Button'
 import CandidateSwipePreview from '../components/CandidateSwipePreview'
 import { useAuth } from '../context/AuthProvider'
 import './Home.css'
+import { aboutRoute } from './About'
+import { searchRoute } from './Search'
+import { registerRoute } from './Register'
+import { loginRoute } from './Login'
+
+export const homeRoute = '/'
 
 const previewCandidate = {
   initials: 'AM',
@@ -24,35 +30,35 @@ function Home() {
 
   return (
     <div className="home-page page">
-        <section className="hero-section">
-          <div className="hero-copy">
-            <h1>Swipe IT</h1>
-            <p>Connect candidates and recruiters with a focused swipe flow.</p>
-            <div className="hero-actions">
-              {!user ? (
-                <>
-                  <Button to="/login">
-                    Login
-                  </Button>
-                  <Button to="/register" variant="secondary">
-                    Register
-                  </Button>
-                </>
-              ) : user.role === 'recruiter' ? (
-                <Button to="/search">
-                  Start Searching
+      <section className="hero-section">
+        <div className="hero-copy">
+          <h1>Swipe IT</h1>
+          <p>Connect candidates and recruiters with a focused swipe flow.</p>
+          <div className="hero-actions">
+            {!user ? (
+              <>
+                <Button to={registerRoute}>
+                  Register
                 </Button>
-              ) : null}
-            </div>
+                <Button to={loginRoute} variant="secondary">
+                  Login
+                </Button>
+              </>
+            ) : user.role === 'recruiter' ? (
+              <Button to={searchRoute}>
+                Start Searching
+              </Button>
+            ) : null}
           </div>
+        </div>
 
-          <CandidateSwipePreview candidate={previewCandidate} />
-        </section>
-        <section className="home-about-promo">
-          <p>Want to learn how the recruiter-first swipe model works?</p>
-          <p>Discover our approach to talent discovery and IT hiring on the About page.</p>
-          <Link className="button button-secondary" to="/about">About Swipe IT</Link>
-        </section>
+        <CandidateSwipePreview candidate={previewCandidate} />
+      </section>
+      <section className="home-about-promo">
+        <p>Want to learn how the recruiter-first swipe model works?</p>
+        <p>Discover our approach to talent discovery and IT hiring on the About page.</p>
+        <Link className="button button-secondary" to={aboutRoute}>About Swipe IT</Link>
+      </section>
     </div>
   )
 }
