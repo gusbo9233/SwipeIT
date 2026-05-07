@@ -162,7 +162,7 @@
 .candidate-profile-contact-list {
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
 }
 
 .candidate-profile-contact-item {
@@ -247,9 +247,6 @@
     max-width: 380px;
   }
 
-  .candidate-profile-contact-list {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 560px) {
