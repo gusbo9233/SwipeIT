@@ -32,9 +32,7 @@ function Header() {
 
       {user?.role === 'candidate' && (
         <>
-          <Button variant="link" to="/search" onClick={onItemClick}>Search</Button>
           <Button variant="link" to="/profile" onClick={onItemClick}>Profile</Button>
-          <Button variant="link" to="/swipe" onClick={onItemClick}>Swipe IT</Button>
         </>
       )}
 
