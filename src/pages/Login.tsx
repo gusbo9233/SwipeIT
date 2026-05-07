@@ -1,31 +1,63 @@
-import { useActionState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthProvider'
-import './Login.css'
+import { useActionState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
+import { useAuth } from '../context/AuthProvider';
+import credentialsData from '../data/AccountCredentials.json';
 
 function Login() {
-  const navigate = useNavigate()
-  const { login } = useAuth()
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
-  async function loginAction(_previousError: string | null, formData: FormData) {
-    const email = String(formData.get('email') ?? '')
-    const password = String(formData.get('password') ?? '')
+  async function loginAction(prevState: string | null, formData: FormData) {
+    const email = (formData.get('email') as string).trim().toLowerCase();
+    const password = formData.get('password') as string;
 
     if (!email || !password) {
       return 'Both email and password are required.'
     }
 
-    const user = await login(email, password)
+    // 1. Kolla 'activeProfile' (Detta är vad som syns i din Application-tab!)
+    const activeProfile = localStorage.getItem('activeProfile');
+    if (activeProfile) {
+      const profileData = JSON.parse(activeProfile);
+      // I din bild heter fältet bara "email"
+      const savedEmail = (profileData.email || "").trim().toLowerCase();
 
-    if (!user) {
-      return 'Invalid email or password.'
+   if (savedEmail === email) {
+  // Logga in användaren i ditt Auth-system
+  login(email, password); 
+  
+  // Åk till adressen vi skapade i App.tsx (utan bindestreck!)
+  navigate('/recruiterprofile'); 
+  return null;
+}
     }
 
-    navigate(user.role === 'recruiter' ? '/recruiterprofile' : '/profile')
-    return null
+    // 2. Kolla 'temp_reg_data' (Som en extra säkerhet baserat på din bild)
+    const tempReg = localStorage.getItem('temp_reg_data');
+    if (tempReg) {
+      const tempData = JSON.parse(tempReg);
+      if (tempData.email.toLowerCase() === email) {
+        login(email, password);
+        navigate('/recruiter-profile');
+        return null;
+      }
+    }
+
+    // 3. Fallback till JSON
+    const hardcodedUser = credentialsData.find((user) => user.email.toLowerCase() === email);
+    if (hardcodedUser) {
+      const success = await login(email, password);
+      if (success) {
+        navigate(hardcodedUser.role === 'recruiter' ? '/recruiter-profile' : '/');
+        return null;
+      }
+    }
+
+    return "Invalid email or password.";
   }
 
-  const [error, formAction, isPending] = useActionState(loginAction, null)
+  const [error, formAction, isPending] = useActionState(loginAction, null);
 
   return (
     <div className="login-page page">

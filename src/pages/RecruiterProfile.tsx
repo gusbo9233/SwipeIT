@@ -17,14 +17,17 @@ type RecruiterDisplayProfile = {
   specialties: string[]
 }
 
-const fallbackProfile: RecruiterDisplayProfile = recruiterData
+  useEffect(() => {
+    // 1. Hämta datan från 'activeProfile' (där Ella ligger!)
+    const savedProfile = localStorage.getItem('activeProfile');
 
-function getActiveProfile(): RecruiterDisplayProfile {
-  try {
-    const storedProfile = window.localStorage.getItem('activeProfile')
-
-    if (!storedProfile) {
-      return fallbackProfile
+    if (savedProfile) {
+      const parsedData = JSON.parse(savedProfile);
+      console.log("Laddar sparad profil:", parsedData);
+      setData(parsedData);
+    } else {
+      // Om ingen sparad profil finns, visa Anna Andersson (JSON-filen)
+      setData(recruiterDataRaw);
     }
 
     return {
@@ -39,6 +42,9 @@ function getActiveProfile(): RecruiterDisplayProfile {
 function RecruiterProfile() {
   const data = getActiveProfile()
   const displayName = data.name || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim()
+
+  // 2. Den här raden är viktig! Den ser till att vi hittar namnet oavsett format
+  const displayName = data.name || data.companyName || "Okänd Rekryterare";
 
   return (
     <div className="home-page page">
@@ -62,7 +68,7 @@ function RecruiterProfile() {
                   {displayName}
                 </h1>
                 <h2 className="profile-role">
-                  {data.role} at <span className="profile-company">{data.company || 'Swipe IT'}</span>
+                  {data.role || 'Recruiter'} at <span className="profile-company">{data.company || data.companyName || 'Swipe IT'}</span>
                 </h2>
               </div>
               <img src={data.logo} alt="Logo" className="profile-logo" />
@@ -78,8 +84,8 @@ function RecruiterProfile() {
             <div className="profile-section">
               <h3 className="profile-section-title">Recruitment Expertise</h3>
               <div className="profile-chips">
-                {data.specialties.map((skill) => (
-                  <Chip key={skill}>{skill}</Chip>
+                {(data.specialties || data.expertise || []).map((skill: string, index: number) => (
+                  <Chip key={index}>{skill}</Chip>
                 ))}
               </div>
             </div>
@@ -95,4 +101,4 @@ function RecruiterProfile() {
   )
 }
 
-export default RecruiterProfile
+export default RecruiterProfile;
