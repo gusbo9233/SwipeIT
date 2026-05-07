@@ -13,7 +13,7 @@
   align-items: stretch;
 }
 
-.site-main > * {
+.site-main>* {
   width: 100%;
 }
 
@@ -29,4 +29,11 @@
   background:
     radial-gradient(circle at top left, rgb(71 96 126 / 14%), transparent 34%),
     var(--color-surface);
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding: 2rem 1.5rem;
+  }
+
 }

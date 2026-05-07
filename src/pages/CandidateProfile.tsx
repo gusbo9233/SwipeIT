@@ -1,5 +1,4 @@
 import Button from '../components/Button'
-import CandidateCard from '../components/CandidateCard'
 import { useAuth } from '../context/AuthProvider'
 import {
   getProfileForUser,
@@ -10,6 +9,7 @@ import type { Candidate } from '../types/Candidate'
 import type { CandidateProfileData, UserProfile } from '../types/Profile'
 import { profileRoute } from './Profile'
 import './Profile.css'
+import CandidateCard from '../components/search/CandidateCard'
 
 export const candidateProfileRoute = '/candidate-profile'
 

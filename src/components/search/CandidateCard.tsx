@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import type { CandidatePreview } from '../types/Candidate'
+import type { CandidatePreview } from '../../types/Candidate'
 import './CandidateCard.css'
 
 type CandidateCardProps = {
   candidate: CandidatePreview
   onDislike: () => void
   onLike: () => void
-  onSuperLike?: () => void
   onViewResume?: (candidateId: string | number) => void
 }
 

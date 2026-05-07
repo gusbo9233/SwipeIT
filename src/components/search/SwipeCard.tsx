@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from 'react'
 import type { CandidatePreview } from '../../types/Candidate'
-import CandidateCard from '../CandidateCard'
-import './SwipeCard.css'
+import CandidateCard from './CandidateCard';
+import './SwipeCard.css';
 
 type SwipeCardProps = {
   candidate: CandidatePreview
   onDislike: () => void
   onLike: () => void
-  onSuperLike?: () => void
 }
 
 const swipeThreshold = 80
@@ -27,16 +26,12 @@ function buildExitTransform(direction: 'left' | 'right', dx: number, dy: number)
   const clamped = direction === 'right' ? Math.max(rotate, 15) : Math.min(rotate, -15)
   return `translate(${toX}px, -100px) rotate(${clamped}deg)`
 }
-
-function SwipeCard(props: SwipeCardProps) {
-  return <SwipeCardContent key={props.candidate.id} {...props} />
-}
-
-function SwipeCardContent({ candidate, onDislike, onLike, onSuperLike }: SwipeCardProps) {
-  const dragStartRef = useRef<{ x: number; y: number; time: number } | null>(null)
-  const lastDeltaRef = useRef({ x: 0, y: 0 })
-  const flyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const isFlyingOutRef = useRef(false)
+function SwipeCard({ candidate, onLike, onDislike }: SwipeCardProps) {
+  // Refs: mutable state that must not trigger re-renders.
+  const dragStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
+  const lastDeltaRef = useRef({ x: 0, y: 0 });
+  const flyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isFlyingOutRef = useRef(false);
 
   const [offset, setOffset] = useState({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
@@ -166,7 +161,6 @@ function SwipeCardContent({ candidate, onDislike, onLike, onSuperLike }: SwipeCa
         candidate={candidate}
         onDislike={() => flyOut('left', onDislike)}
         onLike={() => flyOut('right', onLike)}
-        onSuperLike={onSuperLike}
       />
     </div>
   )

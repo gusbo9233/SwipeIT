@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Candidate, CandidatePreview } from "../../types/Candidate";
 import Button from "../Button";
-import CandidateCard from "../CandidateCard";
+import CandidateCard from "./CandidateCard";
 import SwipeCard from "./SwipeCard";
 
 type SwipeDeckProps = {
@@ -85,7 +85,6 @@ const SwipeDeck = ({ candidates, onBack } : SwipeDeckProps) => {
             candidate={previewData}
             onLike={handleNext}
             onDislike={handleNext}
-            onSuperLike={handleNext}
           />
         </div>
         <div className="swipe-deck__hint" aria-hidden="true">
