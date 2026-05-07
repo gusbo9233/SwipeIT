@@ -46,9 +46,15 @@
   margin-left: auto;
 }
 
-.desktop-nav a {
+.desktop-nav a,
+.nav-button {
+  background: transparent;
+  border: 0;
   color: #ffffff;
+  cursor: pointer;
+  font: inherit;
   font-weight: 600;
+  padding: 0;
   text-decoration: none;
 }
 
@@ -75,11 +81,16 @@
   transition: max-height 300ms ease, padding 300ms ease;
 }
 
-.mobile-nav a {
+.mobile-nav a,
+.mobile-nav-button {
   color: #ffffff;
   font-weight: 600;
   text-decoration: none;
   padding: 8px 0;
+}
+
+.mobile-nav-button {
+  text-align: left;
 }
 
 .mobile-nav a.active {

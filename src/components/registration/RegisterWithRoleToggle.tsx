@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react'
 import Button from '../Button'
-import type { RegisterFormData, RegistrationRole } from './types'
+import type { RegisterFormData, RegistrationRole } from '../../types/Profile'
 
 type RegisterWithRoleToggleProps = {
   formData: RegisterFormData

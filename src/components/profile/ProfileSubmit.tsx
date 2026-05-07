@@ -1,23 +1,25 @@
-type OnboardingSubmitProps = {
+import Button from '../Button'
+
+type ProfileSubmitProps = {
   helperText: string
   label: string
   tone?: 'candidate' | 'recruiter'
 }
 
-function OnboardingSubmit({
+function ProfileSubmit({
   helperText,
   label,
   tone = 'candidate',
-}: OnboardingSubmitProps) {
+}: ProfileSubmitProps) {
   return (
     <div className="candidate-submit-block">
-      <button className={`candidate-submit ${tone}-submit`} type="submit">
+      <Button className={`candidate-submit ${tone}-submit`} type="submit">
         <span>{label}</span>
         <span className="material-symbols-outlined">check_circle</span>
-      </button>
+      </Button>
       <p>{helperText}</p>
     </div>
   )
 }
 
-export default OnboardingSubmit
+export default ProfileSubmit

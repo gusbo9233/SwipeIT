@@ -7,17 +7,17 @@
   font-family: var(--font-body);
 }
 
-main {
+.site-main {
   flex-grow: 1;
   display: flex;
   align-items: stretch;
 }
 
-main>* {
+.site-main > * {
   width: 100%;
 }
 
-footer {
+.site-footer {
   background: var(--color-surface-container);
   padding: 16px 24px;
   text-align: center;

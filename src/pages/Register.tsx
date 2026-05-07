@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import CandidatePreferencesSetup from '../components/registration/CandidatePreferencesSetup'
 import RecruiterPreferencesSetup from '../components/registration/RecruiterPreferencesSetup'
 import RegisterWithRoleToggle from '../components/registration/RegisterWithRoleToggle'
-import type { RegisterFormData } from '../components/registration/types'
+import type { RegisterFormData } from '../types/Profile'
 import './Register.css'
 
 const initialFormData: RegisterFormData = {
@@ -14,12 +14,27 @@ const initialFormData: RegisterFormData = {
 }
 
 function Register() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState(initialFormData)
   const [step, setStep] = useState<'register' | 'preferences'>('register')
-  const navigate = useNavigate()
+
+  function handleComplete() {
+    navigate(formData.role === 'recruiter' ? '/recruiterprofile' : '/profile')
+  }
+
+  function handleNext() {
+    window.localStorage.setItem('temp_reg_data', JSON.stringify(formData))
+    setStep('preferences')
+  }
 
   if (step === 'preferences' && formData.role === 'candidate') {
-    return <CandidatePreferencesSetup onBack={() => setStep('register')} />
+    return (
+      <CandidatePreferencesSetup
+        onBack={() => setStep('register')}
+        onComplete={handleComplete}
+        registration={formData}
+      />
+    )
   }
 
   return (
@@ -43,13 +58,14 @@ function Register() {
           <RegisterWithRoleToggle
             formData={formData}
             onChange={setFormData}
-            onNext={() => {
-              localStorage.setItem('temp_reg_data', JSON.stringify(formData))
-              setStep('preferences')
-            }}
+            onNext={handleNext}
           />
         ) : (
-          <RecruiterPreferencesSetup onBack={() => setStep('register')} />
+          <RecruiterPreferencesSetup
+            onBack={() => setStep('register')}
+            onComplete={handleComplete}
+            registration={formData}
+          />
         )}
       </div>
     </div>

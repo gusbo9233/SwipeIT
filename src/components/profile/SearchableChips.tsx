@@ -1,20 +1,35 @@
-import { useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 
 type SearchableChipsProps = {
   accentClassName?: string
-  placeholder: string
+  onChange?: (items: string[]) => void
   selected: string[]
   suggested: string[]
 }
 
 function SearchableChips({
   accentClassName = '',
-  placeholder,
+  onChange,
   selected,
   suggested,
 }: SearchableChipsProps) {
   const [inputValue, setInputValue] = useState('')
   const [selectedItems, setSelectedItems] = useState(selected)
+  const didMountRef = useRef(false)
+  const onChangeRef = useRef(onChange)
+
+  useEffect(() => {
+    onChangeRef.current = onChange
+  }, [onChange])
+
+  useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true
+      return
+    }
+
+    onChangeRef.current?.(selectedItems)
+  }, [selectedItems])
 
   const availableSuggestions = suggested.filter(
     (item) => !selectedItems.some((selectedItem) => isSameItem(selectedItem, item)),
@@ -38,9 +53,9 @@ function SearchableChips({
   }
 
   function removeItem(item: string) {
-    setSelectedItems((currentItems) =>
-      currentItems.filter((currentItem) => !isSameItem(currentItem, item)),
-    )
+    setSelectedItems((currentItems) => {
+      return currentItems.filter((currentItem) => !isSameItem(currentItem, item))
+    })
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
@@ -59,7 +74,6 @@ function SearchableChips({
         <input
           onChange={(event) => setInputValue(event.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={placeholder}
           type="text"
           value={inputValue}
         />
