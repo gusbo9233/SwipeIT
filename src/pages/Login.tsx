@@ -18,28 +18,28 @@ function Login() {
       return 'Both email and password are required.'
     }
 
-    // 1. Kolla 'activeProfile' (Detta är vad som syns i din Application-tab!)
+    const getDestination = (role: string) => {
+      return role === 'recruiter' ? '/recruiterprofile' : '/recruiterprofile';
+    };
+
     const activeProfile = localStorage.getItem('activeProfile');
     if (activeProfile) {
       const profileData = JSON.parse(activeProfile);
-      // I din bild heter fältet bara "email"
       const savedEmail = (profileData.email || "").trim().toLowerCase();
 
-   if (savedEmail === email) {
-  // Logga in användaren i ditt Auth-system
-  login(email, password); 
-  
-  navigate('/'); 
-  return null;
-}
+      if (savedEmail === email) {
+        await login(email, password);
+        navigate(getDestination(profileData.role));
+        return null;
+      }
     }
 
     const tempReg = localStorage.getItem('temp_reg_data');
     if (tempReg) {
       const tempData = JSON.parse(tempReg);
       if (tempData.email.toLowerCase() === email) {
-        login(email, password);
-        navigate('/');
+        await login(email, password);
+        navigate(getDestination(tempData.role));
         return null;
       }
     }
@@ -48,7 +48,7 @@ function Login() {
     if (hardcodedUser) {
       const success = await login(email, password);
       if (success) {
-        navigate('/');
+        navigate(getDestination(hardcodedUser.role));
         return null;
       }
     }

@@ -21,7 +21,8 @@ function Register() {
   const [step, setStep] = useState<'register' | 'preferences'>('register')
 
   function handleComplete() {
-    navigate(formData.role === 'recruiter' ? '/recruiterprofile' : '/profile')
+    window.localStorage.setItem('temp_reg_data', JSON.stringify(formData));
+    navigate('/login');
   }
 
   function handleNext() {
