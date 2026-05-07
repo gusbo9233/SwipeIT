@@ -1,4 +1,5 @@
 import Button from '../components/Button'
+import CandidateCard from '../components/CandidateCard'
 import { useAuth } from '../context/AuthProvider'
 import {
   getProfileForUser,
@@ -40,28 +41,37 @@ function CandidateProfile() {
     : getStoredProfile() ?? fallbackProfile
   const candidate = profile.candidate
   const displayName = candidate.fullName || profile.name || 'Candidate'
-  const initials = getInitials(displayName)
   const skills = getVisibleList(candidate.skills, ['React', 'TypeScript', 'Node.js'])
   const workPreferences = getVisibleList(candidate.workPreferences, ['Open to opportunities'])
+  const previewCandidate = {
+    id: user?.id ?? profile.email ?? 'candidate-profile-preview',
+    imageUrl: '',
+    name: displayName,
+    skills,
+  }
 
   return (
     <div className="candidate-profile-view page">
       <section className="candidate-profile-preview" aria-label="Recruiter profile preview">
+        <div className="candidate-profile-card-preview">
+          <p className="candidate-profile-kicker">Recruiter preview</p>
+          <CandidateCard
+            candidate={previewCandidate}
+            onDislike={() => undefined}
+            onLike={() => undefined}
+            onViewResume={() => undefined}
+          />
+        </div>
+
         <div className="candidate-profile-card">
-          <div className="candidate-profile-hero">
-            <div className="candidate-profile-avatar" aria-hidden="true">
-              {initials}
-            </div>
-            <div className="candidate-profile-hero-copy">
-              <p className="candidate-profile-kicker">Recruiter preview</p>
-              <h1>{displayName}</h1>
-              <p>
+          <div className="candidate-profile-body">
+            <section className="candidate-profile-section" aria-labelledby="candidate-summary-title">
+              <h1 id="candidate-summary-title">{displayName}</h1>
+              <p className="candidate-profile-summary">
                 {buildSummary(candidate)}
               </p>
-            </div>
-          </div>
+            </section>
 
-          <div className="candidate-profile-body">
             <section className="candidate-profile-section" aria-labelledby="candidate-skills-title">
               <h2 id="candidate-skills-title">Skills</h2>
               <div className="candidate-profile-chip-list">
@@ -149,15 +159,6 @@ function formatLabel(value: string) {
     .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(' ')
-}
-
-function getInitials(name: string) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part.charAt(0).toUpperCase())
-    .join('') || 'ME'
 }
 
 function getVisibleList(list: string[], fallback: string[]) {

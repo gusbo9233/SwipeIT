@@ -65,12 +65,13 @@
   align-items: start;
   display: grid;
   gap: 32px;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr) 320px;
   margin-inline: auto;
-  max-width: 1120px;
+  max-width: 1240px;
   width: 100%;
 }
 
+.candidate-profile-card-preview,
 .candidate-profile-card,
 .candidate-profile-actions {
   background: #ffffff;
@@ -79,31 +80,24 @@
   overflow: hidden;
 }
 
-.candidate-profile-hero {
-  align-items: end;
-  background: linear-gradient(135deg, #47607e 0%, #90aacb 100%);
-  color: #ffffff;
+.candidate-profile-card-preview {
   display: grid;
-  gap: 28px;
-  grid-template-columns: 148px minmax(0, 1fr);
-  min-height: 280px;
-  padding: 40px;
+  gap: 16px;
+  justify-items: center;
+  overflow: visible;
+  padding: 24px;
 }
 
-.candidate-profile-avatar {
-  align-items: center;
-  aspect-ratio: 1;
-  background: rgb(255 255 255 / 18%);
-  border: 1px solid rgb(255 255 255 / 28%);
-  border-radius: 20px;
-  display: flex;
-  font-family: var(--font-headline);
-  font-size: 44px;
-  font-weight: 800;
-  justify-content: center;
+.candidate-profile-card-preview .candidate-profile-kicker {
+  color: var(--color-primary);
+  justify-self: start;
 }
 
-.candidate-profile-hero-copy h1,
+.candidate-profile-card-preview .candidate-card {
+  max-width: 100%;
+}
+
+.candidate-profile-section h1,
 .candidate-profile-actions h2 {
   font-family: var(--font-headline);
   font-weight: 800;
@@ -112,18 +106,14 @@
   margin: 0;
 }
 
-.candidate-profile-hero-copy h1 {
-  font-size: 44px;
-}
-
-.candidate-profile-hero-copy p,
+.candidate-profile-summary,
 .candidate-profile-actions p {
   line-height: 1.6;
   margin: 12px 0 0;
 }
 
-.candidate-profile-hero-copy p {
-  color: rgb(255 255 255 / 86%);
+.candidate-profile-summary {
+  color: var(--color-muted);
   font-size: 18px;
 }
 
@@ -253,12 +243,8 @@
     position: static;
   }
 
-  .candidate-profile-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .candidate-profile-avatar {
-    max-width: 132px;
+  .candidate-profile-card-preview .candidate-card {
+    max-width: 380px;
   }
 
   .candidate-profile-contact-list {
@@ -271,12 +257,11 @@
     padding: 24px 16px 48px;
   }
 
-  .candidate-profile-hero,
   .candidate-profile-body {
     padding: 24px;
   }
 
-  .candidate-profile-hero-copy h1 {
+  .candidate-profile-section h1 {
     font-size: 34px;
   }
 }
