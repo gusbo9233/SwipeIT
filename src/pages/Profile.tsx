@@ -30,14 +30,12 @@ function Profile() {
 
     return getStoredProfile(user) ?? getProfileForUser(user)
   })
-  const [saveMessage, setSaveMessage] = useState('')
-  const [saveError, setSaveError] = useState('')
+  const [showSuccessToast, setShowSuccessToast] = useState(false)
+  const [showErrorToast, setShowErrorToast] = useState(false)
   const activeTone = profile.role
 
   function updateProfile(nextProfile: UserProfile) {
     setProfile(nextProfile)
-    setSaveMessage('')
-    setSaveError('')
   }
 
   function saveProfile(nextProfile = profile) {
@@ -52,12 +50,12 @@ function Profile() {
         })
       }
       setProfile(nextProfile)
-      setSaveError('')
-      setSaveMessage('Profile changes saved.')
+      setShowSuccessToast(true)
+      setTimeout(() => setShowSuccessToast(false), 3000)
     } catch (error) {
       console.error('Failed to save profile', error)
-      setSaveMessage('')
-      setSaveError('We could not save your changes. Please try again.')
+      setShowErrorToast(true)
+      setTimeout(() => setShowErrorToast(false), 3000)
     }
   }
 
@@ -68,6 +66,18 @@ function Profile() {
       title="Profile"
       tone={activeTone}
     >
+      {showSuccessToast && (
+        <div className="success-toast">
+          <span className="material-symbols-outlined">check_circle</span>
+          Profile changes saved successfully!
+        </div>
+      )}
+      {showErrorToast && (
+        <div className="error-toast">
+          <span className="material-symbols-outlined">error_outline</span>
+          We could not save your changes. Please try again.
+        </div>
+      )}
       <div className="profile-page-forms">
         <ProfileSection icon="manage_accounts" title="Profile Details">
           <div className="candidate-field-grid">
@@ -97,9 +107,6 @@ function Profile() {
             Profile type: <strong>{profile.role === 'candidate' ? 'Candidate' : 'Recruiter'}</strong>
           </p>
         </ProfileSection>
-
-        {saveMessage ? <p className="form-message">{saveMessage}</p> : null}
-        {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
 
         {profile.role === 'candidate' ? (
           <CandidateProfileForm
