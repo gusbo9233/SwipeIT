@@ -3,6 +3,10 @@ import './RecruiterProfile.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
 import recruiterData from '../data/Recruiterprofile.json'
+import { searchRoute } from './Search'
+import { profileRoute } from './Profile'
+
+export const recruiterProfileRoute = '/recruiterprofile'
 
 type RecruiterDisplayProfile = {
   bio: string
@@ -85,8 +89,8 @@ function RecruiterProfile() {
             </div>
 
             <div className="profile-actions">
-              <Button variant="primary" to="/profile" className="large-button">Edit Profile</Button>
-              <Button variant="secondary" to="/search" className="large-button">Find Talent</Button>
+              <Button variant="primary" to={profileRoute} className="large-button">Edit Profile</Button>
+              <Button variant="secondary" to={searchRoute} className="large-button">Find Talent</Button>
             </div>
           </div>
         </div>

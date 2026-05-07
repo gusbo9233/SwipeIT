@@ -14,6 +14,8 @@ import {
 import './Register.css'
 import './Profile.css'
 
+export const profileRoute = '/profile'
+
 const guestProfile = buildProfileFromRegistration({
   email: '',
   name: '',

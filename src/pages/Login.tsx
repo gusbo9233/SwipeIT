@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthProvider'
 import './Login.css'
 
+export const loginRoute = '/login'
+
 function Login() {
   const navigate = useNavigate()
   const { login } = useAuth()

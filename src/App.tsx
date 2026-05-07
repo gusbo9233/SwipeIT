@@ -3,14 +3,14 @@ import { Link, Route, Routes } from 'react-router-dom'
 import Header from './components/base/Header'
 import AppProvider from './context/AppProvider'
 import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Profile from './pages/Profile'
-import RecruiterProfile from './pages/RecruiterProfile'
+import Login, { loginRoute } from './pages/Login'
+import Register, { registerRoute } from './pages/Register'
+import Profile, { profileRoute } from './pages/Profile'
+import RecruiterProfile, { recruiterProfileRoute } from './pages/RecruiterProfile'
 import ProtectedRoute from './pages/ProtectedRoute'
 import NotFound from './pages/NotFound'
-import Search from './pages/Search'
-import About from './pages/About'
+import Search, { searchRoute } from './pages/Search'
+import About, { aboutRoute } from './pages/About'
 
 function App() {
   return (
@@ -20,17 +20,17 @@ function App() {
         <main className="site-main">
           <Routes>
             <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path={aboutRoute} element={<About />} />
+            <Route path={loginRoute} element={<Login />} />
+            <Route path={registerRoute} element={<Register />} />
 
             <Route element={<ProtectedRoute allowedRoles={['candidate', 'recruiter']} />}>
-              <Route path="/profile" element={<Profile />} />
+              <Route path={profileRoute} element={<Profile />} />
             </Route>
 
             <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
-              <Route path="/search" element={<Search />} />
-              <Route path="/recruiterprofile" element={<RecruiterProfile />} />
+              <Route path={searchRoute} element={<Search />} />
+              <Route path={recruiterProfileRoute} element={<RecruiterProfile />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
@@ -39,7 +39,7 @@ function App() {
         <footer className="site-footer">
           <p>
             &copy; {new Date().getFullYear()} SwipeIT. All rights reserved.{' '}
-            <Link to="/about">About Us</Link>
+            <Link to={aboutRoute}>About Us</Link>
           </p>
         </footer>
       </div>

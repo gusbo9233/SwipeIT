@@ -3,6 +3,12 @@ import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/AuthProvider'
 import './Header.css'
 import Button from '../Button'
+import { searchRoute } from '../../pages/Search'
+import { homeRoute } from '../../pages/Home'
+import { profileRoute } from '../../pages/Profile'
+import { recruiterProfileRoute } from '../../pages/RecruiterProfile'
+import { loginRoute } from '../../pages/Login'
+import { registerRoute } from '../../pages/Register'
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -20,27 +26,26 @@ function Header() {
   const NavContent = (onItemClick?: () => void) => {
     return <>
       {/* Navigation for all users */}
-      <Button variant="link" to="/" onClick={onItemClick}>Home</Button>
+      <Button variant="link" to={homeRoute} onClick={onItemClick}>Home</Button>
 
       {user?.role === 'recruiter' && (
         <>
-          <Button variant="link" to="/search" onClick={onItemClick}>Search</Button>
-          <Button variant="link" to="/recruiterprofile" onClick={onItemClick}>Profile</Button>
-          <Button variant="link" to="/swipe" onClick={onItemClick}>Swipe IT</Button>
+          <Button variant="link" to={searchRoute} onClick={onItemClick}>Search</Button>
+          <Button variant="link" to={recruiterProfileRoute} onClick={onItemClick}>Profile</Button>
         </>
       )}
 
       {user?.role === 'candidate' && (
         <>
-          <Button variant="link" to="/profile" onClick={onItemClick}>Profile</Button>
+          <Button variant="link" to={profileRoute} onClick={onItemClick}>Profile</Button>
         </>
       )}
 
       {/* Conditional Auth Links */}
       {!user ? (
         <>
-          <Button variant="link" to="/login" onClick={onItemClick}>Login</Button>
-          <Button variant="link" to="/register" onClick={onItemClick}>Register</Button>
+          <Button variant="link" to={loginRoute} onClick={onItemClick}>Login</Button>
+          <Button variant="link" to={registerRoute} onClick={onItemClick}>Register</Button>
         </>
       ) : (
         <Button variant="link" onClick={handleLogout}>Logout</Button>
@@ -51,7 +56,7 @@ function Header() {
   return (
     <header className={`top-bar ${mobileMenuOpen ? 'expanded' : ''}`}>
       <div className="top-bar-row">
-        <NavLink className="brand" to="/">
+        <NavLink className="brand" to={homeRoute}>
           <span className="brand-mark">SI</span>
           <span>Swipe IT</span>
         </NavLink>
