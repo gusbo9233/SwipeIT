@@ -54,3 +54,229 @@
   font-size: 24px;
 }
 
+.candidate-profile-view {
+  background: var(--color-surface);
+  color: var(--color-text);
+  min-height: 100%;
+  padding: 48px 24px 72px;
+}
+
+.candidate-profile-preview {
+  align-items: start;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  margin-inline: auto;
+  max-width: 1120px;
+  width: 100%;
+}
+
+.candidate-profile-card,
+.candidate-profile-actions {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 16px 44px rgb(71 96 126 / 12%);
+  overflow: hidden;
+}
+
+.candidate-profile-hero {
+  align-items: end;
+  background: linear-gradient(135deg, #47607e 0%, #90aacb 100%);
+  color: #ffffff;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: 148px minmax(0, 1fr);
+  min-height: 280px;
+  padding: 40px;
+}
+
+.candidate-profile-avatar {
+  align-items: center;
+  aspect-ratio: 1;
+  background: rgb(255 255 255 / 18%);
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 20px;
+  display: flex;
+  font-family: var(--font-headline);
+  font-size: 44px;
+  font-weight: 800;
+  justify-content: center;
+}
+
+.candidate-profile-hero-copy h1,
+.candidate-profile-actions h2 {
+  font-family: var(--font-headline);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.candidate-profile-hero-copy h1 {
+  font-size: 44px;
+}
+
+.candidate-profile-hero-copy p,
+.candidate-profile-actions p {
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+
+.candidate-profile-hero-copy p {
+  color: rgb(255 255 255 / 86%);
+  font-size: 18px;
+}
+
+.candidate-profile-kicker {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.candidate-profile-body {
+  display: grid;
+  gap: 32px;
+  padding: 40px;
+}
+
+.candidate-profile-section h2 {
+  color: var(--color-primary);
+  font-family: var(--font-headline);
+  font-size: 20px;
+  margin: 0 0 16px;
+}
+
+.candidate-profile-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.candidate-profile-chip {
+  background: rgb(71 96 126 / 10%);
+  border-radius: 999px;
+  color: var(--color-primary);
+  display: inline-flex;
+  font-weight: 800;
+  padding: 10px 16px;
+}
+
+.candidate-profile-chip-muted {
+  background: var(--color-surface-low, #fef1e6);
+  color: var(--color-muted);
+}
+
+.candidate-profile-contact-list {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.candidate-profile-contact-item {
+  align-items: center;
+  background: var(--color-surface-low, #fef1e6);
+  border-radius: 18px;
+  display: flex;
+  gap: 14px;
+  min-width: 0;
+  padding: 16px;
+}
+
+.candidate-profile-contact-item .material-symbols-outlined {
+  align-items: center;
+  background: #ffffff;
+  border-radius: 12px;
+  color: var(--color-primary);
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.candidate-profile-contact-item div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.candidate-profile-contact-item span:not(.material-symbols-outlined) {
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.candidate-profile-contact-item strong {
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.candidate-profile-actions {
+  display: grid;
+  gap: 28px;
+  padding: 32px;
+  position: sticky;
+  top: 104px;
+}
+
+.candidate-profile-actions .candidate-profile-kicker {
+  color: var(--color-primary);
+}
+
+.candidate-profile-actions h2 {
+  font-size: 28px;
+}
+
+.candidate-profile-actions p {
+  color: var(--color-muted);
+}
+
+.candidate-profile-edit-button {
+  align-items: center;
+  display: inline-flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.candidate-profile-edit-button .material-symbols-outlined {
+  font-size: 20px;
+}
+
+@media (max-width: 860px) {
+  .candidate-profile-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-profile-actions {
+    position: static;
+  }
+
+  .candidate-profile-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-profile-avatar {
+    max-width: 132px;
+  }
+
+  .candidate-profile-contact-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .candidate-profile-view {
+    padding: 24px 16px 48px;
+  }
+
+  .candidate-profile-hero,
+  .candidate-profile-body {
+    padding: 24px;
+  }
+
+  .candidate-profile-hero-copy h1 {
+    font-size: 34px;
+  }
+}

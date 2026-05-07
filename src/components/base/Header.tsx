@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/AuthProvider'
 import './Header.css'
 import Button from '../Button'
+import { candidateProfileRoute } from '../../pages/CandidateProfile'
 import { searchRoute } from '../../pages/Search'
 import { homeRoute } from '../../pages/Home'
-import { profileRoute } from '../../pages/Profile'
 import { recruiterProfileRoute } from '../../pages/RecruiterProfile'
 import { loginRoute } from '../../pages/Login'
 import { registerRoute } from '../../pages/Register'
@@ -37,7 +37,7 @@ function Header() {
 
       {user?.role === 'candidate' && (
         <>
-          <Button variant="link" to={profileRoute} onClick={onItemClick}>Profile</Button>
+          <Button variant="link" to={candidateProfileRoute} onClick={onItemClick}>Profile</Button>
         </>
       )}
 

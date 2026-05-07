@@ -10,7 +10,7 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  async function loginAction(prevState: string | null, formData: FormData) {
+  async function loginAction(_prevState: string | null, formData: FormData) {
     const email = (formData.get('email') as string).trim().toLowerCase();
     const password = formData.get('password') as string;
 

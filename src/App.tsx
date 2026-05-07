@@ -3,6 +3,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 import Header from './components/base/Header'
 import AppProviders from './context/AppProvider'
 import Home from './pages/Home'
+import CandidateProfile, { candidateProfileRoute } from './pages/CandidateProfile'
 import Login, { loginRoute } from './pages/Login'
 import Register, { registerRoute } from './pages/Register'
 import Profile, { profileRoute } from './pages/Profile'
@@ -27,6 +28,10 @@ function App() {
 
             <Route element={<ProtectedRoute allowedRoles={['candidate', 'recruiter']} />}>
               <Route path={profileRoute} element={<Profile />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={['candidate']} />}>
+              <Route path={candidateProfileRoute} element={<CandidateProfile />} />
             </Route>
 
             <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
