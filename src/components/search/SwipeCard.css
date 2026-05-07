@@ -5,6 +5,9 @@
 
 .swipe-card {
   position: relative;
+  z-index: 3;
+  width: min(100%, 400px);
+  margin: 0 auto;
   /* Snap-back easing when the card is released without swiping. */
   transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   will-change: transform;
@@ -22,6 +25,10 @@
   cursor: grabbing;
 }
 
+.swipe-card--entering {
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* While flying off-screen: use a longer ease that matches FLY_OUT_MS (600 ms).
    Disable pointer events so nothing can interrupt the animation. */
 .swipe-card--flying {
@@ -37,7 +44,9 @@
   top: 1.75rem;
   z-index: 20;
   padding: 0.3rem 0.9rem;
+  background: rgba(255, 255, 255, 0.88);
   border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgba(32, 27, 20, 0.16);
   font-family: Manrope, sans-serif;
   font-weight: 800;
   font-size: 1.5rem;
@@ -53,7 +62,7 @@
 /* "LIKE" stamp – left side of card, green, tilted counter-clockwise */
 .swipe-card__indicator--like {
   left: 1.25rem;
-  color: #22c55e;
+  color: #12803a;
   border: 3px solid #22c55e;
   transform: rotate(-12deg);
 }
@@ -61,7 +70,7 @@
 /* "NOPE" stamp – right side of card, red, tilted clockwise */
 .swipe-card__indicator--nope {
   right: 1.25rem;
-  color: #ef4444;
+  color: #ba1a1a;
   border: 3px solid #ef4444;
   transform: rotate(12deg);
 }

@@ -13,6 +13,7 @@ type SwipeCardProps = {
 const swipeThreshold = 80
 const velocityThreshold = 0.5
 const flyOutMs = 600
+const deckEntryTransform = 'translate(34px, 28px) rotate(4.5deg) scale(0.965)'
 
 function getRotationDeg(dx: number, dy: number) {
   const xMulti = dx * 0.03
@@ -41,6 +42,7 @@ function SwipeCardContent({ candidate, onDislike, onLike, onSuperLike }: SwipeCa
   const [isDragging, setIsDragging] = useState(false)
   const [flyDirection, setFlyDirection] = useState<'left' | 'right' | null>(null)
   const [exitTransform, setExitTransform] = useState<string | null>(null)
+  const [entryTransform, setEntryTransform] = useState<string | null>(deckEntryTransform)
 
   useEffect(
     () => () => {
@@ -50,6 +52,12 @@ function SwipeCardContent({ candidate, onDislike, onLike, onSuperLike }: SwipeCa
     },
     [],
   )
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setEntryTransform(null))
+
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   const flyOut = useCallback((direction: 'left' | 'right', callback: () => void) => {
     if (isFlyingOutRef.current) {
@@ -123,6 +131,7 @@ function SwipeCardContent({ candidate, onDislike, onLike, onSuperLike }: SwipeCa
     `translate(${offset.x}px, ${offset.y}px) rotate(${getRotationDeg(offset.x, offset.y)}deg)`
   const className = [
     'swipe-card',
+    entryTransform && 'swipe-card--entering',
     isDragging && 'swipe-card--dragging',
     exitTransform && 'swipe-card--flying',
   ]
@@ -136,7 +145,7 @@ function SwipeCardContent({ candidate, onDislike, onLike, onSuperLike }: SwipeCa
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      style={{ transform }}
+      style={{ transform: entryTransform ?? transform }}
     >
       <div
         aria-hidden="true"

@@ -24,7 +24,7 @@ function Search() {
   }, [view]);
 
   return (
-    <div className="search-view-container page">
+    <div className={`search-view-container page${view === 'swiping' ? ' search-view-container--swiping' : ''}`}>
       {/* "wait" mode ensures views don't jump or overlap */}
       <AnimatePresence mode="wait">
         {view === 'filter' ? (

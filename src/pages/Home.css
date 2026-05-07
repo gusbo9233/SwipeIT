@@ -53,7 +53,7 @@
   /* account for card tilt/rotation space */
 }
 
-.swipe-card {
+.preview-swipe-card {
   border: 1px solid rgb(71 96 126 / 12%);
   border-radius: 28px;
   box-shadow: 0 24px 60px rgb(71 96 126 / 12%);

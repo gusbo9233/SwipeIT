@@ -14,7 +14,6 @@ function CandidateCard({
   candidate,
   onDislike,
   onLike,
-  onSuperLike,
   onViewResume,
 }: CandidateCardProps) {
   const [loadedImageId, setLoadedImageId] = useState<string | number | null>(null)
@@ -82,22 +81,12 @@ function CandidateCard({
         </button>
 
         <button
-          aria-label="Save candidate"
-          className="candidate-card__action candidate-card__action--superlike"
-          disabled={!onSuperLike}
-          onClick={onSuperLike}
-          type="button"
-        >
-          <span className="material-symbols-outlined">star_border</span>
-        </button>
-
-        <button
           aria-label="Like candidate"
           className="candidate-card__action candidate-card__action--like"
           onClick={onLike}
           type="button"
         >
-          <span className="material-symbols-outlined">favorite</span>
+          <span className="material-symbols-outlined">star</span>
         </button>
       </div>
     </article>

@@ -6,11 +6,12 @@
 .candidate-card {
   position: relative;
   width: 100%;
-  max-width: 380px;
-  border-radius: 1.5rem;
+  max-width: 400px;
+  border: 1px solid rgba(71, 96, 126, 0.1);
+  border-radius: 1.25rem;
   overflow: hidden;
   background-color: #ffffff;
-  box-shadow: 0 12px 40px rgba(71, 96, 126, 0.14);
+  box-shadow: 0 22px 60px rgba(71, 96, 126, 0.18);
   display: flex;
   flex-direction: column;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -25,7 +26,7 @@
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 1.25rem 1.25rem 0 0;
 }
 
 .candidate-card__image {
@@ -40,11 +41,9 @@
 .candidate-card__gradient-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 40%,
-    rgba(32, 27, 20, 0.88) 100%
-  );
+  background:
+    linear-gradient(to bottom, rgba(32, 27, 20, 0) 35%, rgba(32, 27, 20, 0.84) 100%),
+    linear-gradient(to top, rgba(71, 96, 126, 0.32), rgba(71, 96, 126, 0) 42%);
 }
 
 /* spinner overlay centered, used when image is loading */
@@ -83,7 +82,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 1.25rem 1.5rem 1.5rem;
+  padding: 1.4rem 1.5rem 1.55rem;
 }
 
 .candidate-card__name {
@@ -92,7 +91,6 @@
   font-size: 1.75rem;
   color: #ffffff;
   margin: 0 0 0.75rem;
-  letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
@@ -153,29 +151,45 @@
    -------------------------------------------------------------------------- */
 
 .candidate-card__actions {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.25rem;
-  padding: 1.25rem 1.5rem 1.75rem;
-  background-color: #fff8f4;
+  gap: 1.65rem;
+  padding: 1.1rem 1.6rem 1.45rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 182, 143, 0.2), transparent 46%),
+    linear-gradient(180deg, #ffffff 0%, #fff7f1 100%);
+}
+
+.candidate-card__actions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.6rem;
+  right: 1.6rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(71, 96, 126, 0.16), transparent);
 }
 
 .candidate-card__action {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4.1rem;
+  height: 4.1rem;
   border-radius: 9999px;
-  border: none;
+  border: 1px solid rgba(71, 96, 126, 0.1);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-  box-shadow: 0 4px 14px rgba(71, 96, 126, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  box-shadow:
+    0 13px 24px rgba(71, 96, 126, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .candidate-card__action .material-symbols-outlined {
-  font-size: 1.5rem;
+  font-size: 1.65rem;
   line-height: 1;
 }
 
@@ -187,46 +201,25 @@
 .candidate-card__action--dislike {
   background-color: #ffffff;
   color: #ba1a1a;
-  border: 2px solid #ffdad6;
+  border-color: #ffdad6;
 }
 
 .candidate-card__action--dislike:hover {
-  background-color: #ffdad6;
+  background-color: #fff1ef;
+  border-color: #ffc0b8;
   box-shadow: 0 4px 20px rgba(186, 26, 26, 0.22);
-}
-
-/* Superlike (outline star) - smallest and centered between buttons */
-.candidate-card__action--superlike {
-  width: 2.6rem;
-  height: 2.6rem;
-  background-color: #ffffff;
-  color: #f2b705;
-  border: 1.5px solid rgba(242,183,5,0.18);
-  box-shadow: 0 2px 8px rgba(71,96,126,0.06);
-  padding: 0;
-}
-
-.candidate-card__action--superlike .material-symbols-outlined {
-  font-size: 1.05rem;
-  line-height: 1;
-}
-
-.candidate-card__action--superlike:hover:not(:disabled) {
-  background-color: rgba(242,183,5,0.04);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(242,183,5,0.10);
-}
-
-.candidate-card__action--superlike:active {
-  transform: scale(0.94);
 }
 
 /* Like button — slightly larger, uses hero gradient */
 .candidate-card__action--like {
-  width: 4rem;
-  height: 4rem;
-  background: linear-gradient(135deg, #47607e 0%, #90aacb 100%);
+  width: 4.65rem;
+  height: 4.65rem;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.3), transparent 34%),
+    linear-gradient(135deg, #243f5b 0%, #47607e 100%);
   color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .candidate-card__action--like:hover {

@@ -18,9 +18,9 @@ type CandidateSwipePreviewProps = {
 function CandidateSwipePreview({ candidate }: CandidateSwipePreviewProps) {
   return (
     <div className="hero-panel" aria-label="Candidate swipe preview">
-      <div className="swipe-card card-one" />
-      <div className="swipe-card card-two" />
-      <article className="swipe-card candidate-preview">
+      <div className="preview-swipe-card card-one" />
+      <div className="preview-swipe-card card-two" />
+      <article className="preview-swipe-card candidate-preview">
         <div className="candidate-header">
           <div className="candidate-avatar">{candidate.initials}</div>
           <div>

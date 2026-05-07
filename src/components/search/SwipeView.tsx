@@ -23,18 +23,35 @@ const SwipeView: React.FC<SwipeViewProps> = ({ onBack }) => {
     });
   }, [selectedSkills, candidates]);
 
-    const searchKey = selectedSkills.join(',');
-
+  const searchKey = selectedSkills.join(',');
   return (
     <div className="swipe-view">
-      <Button variant="transparent" onClick={onBack}>
+      <div className="swipe-view__topbar">
+        <Button className="swipe-view__back" variant="transparent" onClick={onBack}>
           <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
             arrow_back
           </span>
-          BACK TO SEARCH SETTINGS
+          Filters
         </Button>
+      </div>
+
+      <header className="swipe-view__hero">
+        <p className="swipe-view__eyebrow">Candidate deck</p>
+        {selectedSkills.length > 0 ? (
+          <div className="swipe-view__filters" aria-label="Active skill filters">
+            {selectedSkills.slice(0, 4).map((skill) => (
+              <span className="swipe-view__filter-chip" key={skill}>
+                {skill}
+              </span>
+            ))}
+            {selectedSkills.length > 4 ? (
+              <span className="swipe-view__filter-chip">+{selectedSkills.length - 4}</span>
+            ) : null}
+          </div>
+        ) : null}
+      </header>
+
       <div className="swipe-stack-container">
-        {/* Whenever searchKey changes, SwipeDeck is destroyed and recreated */}
         <SwipeDeck 
           key={searchKey} 
           candidates={filteredDeck} 
