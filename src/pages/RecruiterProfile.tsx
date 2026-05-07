@@ -3,8 +3,12 @@ import './Home.css'
 import './RecruiterProfile.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
+import { searchRoute } from './Search'
+import { profileRoute } from './Profile'
 // @ts-ignore
 import recruiterDataRaw from '../data/Recruiterprofile.json'
+
+export const recruiterProfileRoute = '/recruiterprofile'
 
 function RecruiterProfile() {
   const [data, setData] = useState<any>(null);
@@ -77,8 +81,8 @@ function RecruiterProfile() {
             </div>
 
             <div className="profile-actions">
-              <Button variant="primary" className="large-button">Edit Profile</Button>
-              <Button variant="secondary" to="/search" className="large-button">Find Talent</Button>
+              <Button variant="primary" to={profileRoute} className="large-button">Edit Profile</Button>
+              <Button variant="secondary" to={searchRoute} className="large-button">Find Talent</Button>
             </div>
           </div>
         </div>

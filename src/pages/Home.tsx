@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import CandidateSwipePreview from '../components/CandidateSwipePreview'
 import './Home.css'
+import { aboutRoute } from './About'
+import { searchRoute } from './Search'
+import { registerRoute } from './Register'
+
+export const homeRoute = '/'
 
 const previewCandidate = {
   initials: 'AM',
@@ -21,27 +26,27 @@ const previewCandidate = {
 function Home() {
   return (
     <div className="home-page page">
-        <section className="hero-section">
-          <div className="hero-copy">
-            <h1>Swipe IT</h1>
-            <p>Connect candidates and recruiters with a focused swipe flow.</p>
-            <div className="hero-actions">
-              <Button to="/register">
-                Get Started
-              </Button>
-              <Button to="/search" variant="secondary">
-                Search
-              </Button>
-            </div>
+      <section className="hero-section">
+        <div className="hero-copy">
+          <h1>Swipe IT</h1>
+          <p>Connect candidates and recruiters with a focused swipe flow.</p>
+          <div className="hero-actions">
+            <Button to={registerRoute}>
+              Get Started
+            </Button>
+            <Button to={searchRoute} variant="secondary">
+              Search
+            </Button>
           </div>
+        </div>
 
-          <CandidateSwipePreview candidate={previewCandidate} />
-        </section>
-        <section className="home-about-promo">
-          <p>Want to learn how the recruiter-first swipe model works?</p>
-          <p>Discover our approach to talent discovery and IT hiring on the About page.</p>
-          <Link className="button button-secondary" to="/about">About Swipe IT</Link>
-        </section>
+        <CandidateSwipePreview candidate={previewCandidate} />
+      </section>
+      <section className="home-about-promo">
+        <p>Want to learn how the recruiter-first swipe model works?</p>
+        <p>Discover our approach to talent discovery and IT hiring on the About page.</p>
+        <Link className="button button-secondary" to={aboutRoute}>About Swipe IT</Link>
+      </section>
     </div>
   )
 }

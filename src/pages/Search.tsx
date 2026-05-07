@@ -4,6 +4,8 @@ import './Search.css';
 import SearchView from '../components/search/SearchView';
 import SwipeView from '../components/search/SwipeView';
 
+export const searchRoute = '/search';
+
 type ViewState = 'filter' | 'swiping';
 
 // Simple fade variants for better UX

@@ -1,5 +1,8 @@
 import Button from '../components/Button'
+import { homeRoute } from './Home'
 import './NotFound.css'
+
+export const notFoundRoute = '/notfound'
 
 function NotFound() {
     return (
@@ -12,7 +15,7 @@ function NotFound() {
                     The page you are looking for does not exist or has been moved.
                 </p>
 
-                <Button to="/">
+                <Button to={homeRoute}>
                     <span>Go home</span>
                     <span className="material-symbols-outlined">arrow_forward</span>
                 </Button>
