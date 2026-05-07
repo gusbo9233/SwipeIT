@@ -7,7 +7,9 @@ import recruiterData from '../data/Recruiterprofile.json'
 type RecruiterDisplayProfile = {
   bio: string
   company: string
+  companyName?: string
   companyImage: string
+  expertise?: string[]
   firstName?: string
   lastName?: string
   location: string
@@ -17,19 +19,16 @@ type RecruiterDisplayProfile = {
   specialties: string[]
 }
 
-  useEffect(() => {
-    // 1. Hämta datan från 'activeProfile' (där Ella ligger!)
-    const savedProfile = localStorage.getItem('activeProfile');
+const fallbackProfile = recruiterData as RecruiterDisplayProfile
 
-    if (savedProfile) {
-      const parsedData = JSON.parse(savedProfile);
-      console.log("Laddar sparad profil:", parsedData);
-      setData(parsedData);
-    } else {
-      // Om ingen sparad profil finns, visa Anna Andersson (JSON-filen)
-      setData(recruiterDataRaw);
-    }
+function getActiveProfile() {
+  const storedProfile = window.localStorage.getItem('activeProfile')
 
+  if (!storedProfile) {
+    return fallbackProfile
+  }
+
+  try {
     return {
       ...fallbackProfile,
       ...(JSON.parse(storedProfile) as Partial<RecruiterDisplayProfile>),
@@ -42,9 +41,6 @@ type RecruiterDisplayProfile = {
 function RecruiterProfile() {
   const data = getActiveProfile()
   const displayName = data.name || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim()
-
-  // 2. Den här raden är viktig! Den ser till att vi hittar namnet oavsett format
-  const displayName = data.name || data.companyName || "Okänd Rekryterare";
 
   return (
     <div className="home-page page">

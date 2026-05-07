@@ -8,7 +8,7 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  async function loginAction(prevState: string | null, formData: FormData) {
+  async function loginAction(_prevState: string | null, formData: FormData) {
     const email = (formData.get('email') as string).trim().toLowerCase();
     const password = formData.get('password') as string;
 
@@ -27,8 +27,7 @@ function Login() {
   // Logga in användaren i ditt Auth-system
   login(email, password); 
   
-  // Åk till adressen vi skapade i App.tsx (utan bindestreck!)
-  navigate('/recruiterprofile'); 
+  navigate('/'); 
   return null;
 }
     }
@@ -39,7 +38,7 @@ function Login() {
       const tempData = JSON.parse(tempReg);
       if (tempData.email.toLowerCase() === email) {
         login(email, password);
-        navigate('/recruiter-profile');
+        navigate('/');
         return null;
       }
     }
@@ -49,7 +48,7 @@ function Login() {
     if (hardcodedUser) {
       const success = await login(email, password);
       if (success) {
-        navigate(hardcodedUser.role === 'recruiter' ? '/recruiter-profile' : '/');
+        navigate('/');
         return null;
       }
     }

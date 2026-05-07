@@ -25,22 +25,24 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/search">Search</NavLink>
-          <NavLink to={user?.role === 'recruiter' ? '/recruiterprofile' : '/profile'}>
-            Profile
-          </NavLink>
-          <NavLink to="/about">About</NavLink>
           {user ? (
-            <button className="nav-button" onClick={handleLogout} type="button">
-              Logout ({user.name})
-            </button>
+            <>
+              <NavLink to="/" end>Home</NavLink>
+              {user.role === 'recruiter' ? <NavLink to="/search">Search</NavLink> : null}
+              <NavLink to={user.role === 'recruiter' ? '/recruiterprofile' : '/profile'}>
+                Profile
+              </NavLink>
+              <button className="nav-button" onClick={handleLogout} type="button">
+                Logout ({user.name})
+              </button>
+            </>
           ) : (
             <>
               <NavLink to="/login">Login</NavLink>
               <NavLink to="/register">Register</NavLink>
             </>
           )}
+          <NavLink to="/about">About</NavLink>
         </nav>
 
         <button
@@ -55,25 +57,29 @@ function Header() {
       </div>
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
-        <NavLink to="/" end onClick={closeMobileMenu}>Home</NavLink>
-        <NavLink to="/search" onClick={closeMobileMenu}>Search</NavLink>
-        <NavLink
-          to={user?.role === 'recruiter' ? '/recruiterprofile' : '/profile'}
-          onClick={closeMobileMenu}
-        >
-          Profile
-        </NavLink>
-        <NavLink to="/about" onClick={closeMobileMenu}>About</NavLink>
         {user ? (
-          <button className="nav-button mobile-nav-button" onClick={handleLogout} type="button">
-            Logout ({user.name})
-          </button>
+          <>
+            <NavLink to="/" end onClick={closeMobileMenu}>Home</NavLink>
+            {user.role === 'recruiter' ? (
+              <NavLink to="/search" onClick={closeMobileMenu}>Search</NavLink>
+            ) : null}
+            <NavLink
+              to={user.role === 'recruiter' ? '/recruiterprofile' : '/profile'}
+              onClick={closeMobileMenu}
+            >
+              Profile
+            </NavLink>
+            <button className="nav-button mobile-nav-button" onClick={handleLogout} type="button">
+              Logout ({user.name})
+            </button>
+          </>
         ) : (
           <>
             <NavLink to="/login" onClick={closeMobileMenu}>Login</NavLink>
             <NavLink to="/register" onClick={closeMobileMenu}>Register</NavLink>
           </>
         )}
+        <NavLink to="/about" onClick={closeMobileMenu}>About</NavLink>
       </nav>
     </header>
   )

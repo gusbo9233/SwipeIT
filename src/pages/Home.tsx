@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import CandidateSwipePreview from '../components/CandidateSwipePreview'
+import { useAuth } from '../context/AuthProvider'
 import './Home.css'
 
 const previewCandidate = {
@@ -19,6 +20,8 @@ const previewCandidate = {
 }
 
 function Home() {
+  const { user } = useAuth()
+
   return (
     <div className="home-page page">
         <section className="hero-section">
@@ -26,12 +29,20 @@ function Home() {
             <h1>Swipe IT</h1>
             <p>Connect candidates and recruiters with a focused swipe flow.</p>
             <div className="hero-actions">
-              <Button to="/register">
-                Get Started
-              </Button>
-              <Button to="/search" variant="secondary">
-                Search
-              </Button>
+              {!user ? (
+                <>
+                  <Button to="/login">
+                    Login
+                  </Button>
+                  <Button to="/register" variant="secondary">
+                    Register
+                  </Button>
+                </>
+              ) : user.role === 'recruiter' ? (
+                <Button to="/search">
+                  Start Searching
+                </Button>
+              ) : null}
             </div>
           </div>
 
