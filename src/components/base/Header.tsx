@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthProvider'
 import './Header.css'
 import Button from '../Button'
 import { candidateProfileRoute } from '../../pages/CandidateProfile'
+import { aboutRoute } from '../../pages/About'
 import { searchRoute } from '../../pages/Search'
 import { homeRoute } from '../../pages/Home'
 import { recruiterProfileRoute } from '../../pages/RecruiterProfile'
@@ -27,6 +28,7 @@ function Header() {
     return <>
       {/* Navigation for all users */}
       <Button variant="link" to={homeRoute} onClick={onItemClick}>Home</Button>
+      <Button variant="link" to={aboutRoute} onClick={onItemClick}>About</Button>
 
       {user?.role === 'recruiter' && (
         <>
