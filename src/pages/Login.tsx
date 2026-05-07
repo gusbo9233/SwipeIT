@@ -13,7 +13,7 @@ function Login() {
     const password = formData.get('password') as string;
 
     if (!email || !password) {
-      return "Both email and password are required.";
+      return 'Both email and password are required.'
     }
 
     // 1. Kolla 'activeProfile' (Detta är vad som syns i din Application-tab!)
@@ -63,37 +63,48 @@ function Login() {
     <div className="login-page page">
       <section className="login-card">
         <h1>Log in to Swipe IT</h1>
-        
-        {error && (
+        <p>
+          Continue to your candidate and recruiter matching workspace.
+        </p>
+
+        {error ? (
           <div className="login-error-banner" role="alert">
             {error}
           </div>
-        )}
+        ) : null}
 
         <form action={formAction} className="login-form">
           <div className="login-fields">
             <label className="login-field">
               Email
-              <input name="email" type="email" required />
+              <input
+                autoComplete="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                type="email"
+              />
             </label>
             <label className="login-field">
               Password
-              <input name="password" type="password" required />
+              <input
+                autoComplete="current-password"
+                name="password"
+                placeholder="Enter your password"
+                required
+                type="password"
+              />
             </label>
           </div>
 
-          <button 
-            className="login-button" 
-            type="submit" 
-            disabled={isPending}
-          >
+          <button className="login-button" disabled={isPending} type="submit">
             <span>{isPending ? 'Logging in...' : 'Login'}</span>
             <span className="material-symbols-outlined">arrow_forward</span>
           </button>
         </form>
       </section>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login

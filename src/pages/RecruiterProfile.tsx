@@ -1,13 +1,21 @@
-import { useEffect, useState } from 'react'
 import './Home.css'
 import './RecruiterProfile.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
-// @ts-ignore
-import recruiterDataRaw from '../data/Recruiterprofile.json'
+import recruiterData from '../data/Recruiterprofile.json'
 
-function RecruiterProfile() {
-  const [data, setData] = useState<any>(null);
+type RecruiterDisplayProfile = {
+  bio: string
+  company: string
+  companyImage: string
+  firstName?: string
+  lastName?: string
+  location: string
+  logo: string
+  name?: string
+  role: string
+  specialties: string[]
+}
 
   useEffect(() => {
     // 1. Hämta datan från 'activeProfile' (där Ella ligger!)
@@ -21,9 +29,19 @@ function RecruiterProfile() {
       // Om ingen sparad profil finns, visa Anna Andersson (JSON-filen)
       setData(recruiterDataRaw);
     }
-  }, []);
 
-  if (!data) return null;
+    return {
+      ...fallbackProfile,
+      ...(JSON.parse(storedProfile) as Partial<RecruiterDisplayProfile>),
+    }
+  } catch {
+    return fallbackProfile
+  }
+}
+
+function RecruiterProfile() {
+  const data = getActiveProfile()
+  const displayName = data.name || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim()
 
   // 2. Den här raden är viktig! Den ser till att vi hittar namnet oavsett format
   const displayName = data.name || data.companyName || "Okänd Rekryterare";
@@ -32,15 +50,14 @@ function RecruiterProfile() {
     <div className="home-page page">
       <div className="profile-container">
         <div className="profile-card">
-          
           <div className="profile-image-section">
             <img
-              src={data.companyImage || recruiterDataRaw.companyImage}
+              src={data.companyImage}
               alt="Office"
               className="profile-main-image"
             />
             <div className="profile-location-badge">
-              📍 {data.location || 'Location missing'}
+              {data.location || 'Location missing'}
             </div>
           </div>
 
@@ -54,7 +71,7 @@ function RecruiterProfile() {
                   {data.role || 'Recruiter'} at <span className="profile-company">{data.company || data.companyName || 'Swipe IT'}</span>
                 </h2>
               </div>
-              <img src={data.logo || recruiterDataRaw.logo} alt="Logo" className="profile-logo" />
+              <img src={data.logo} alt="Logo" className="profile-logo" />
             </div>
 
             <div className="profile-section">
@@ -74,7 +91,7 @@ function RecruiterProfile() {
             </div>
 
             <div className="profile-actions">
-              <Button variant="primary" className="large-button">Edit Profile</Button>
+              <Button variant="primary" to="/profile" className="large-button">Edit Profile</Button>
               <Button variant="secondary" to="/search" className="large-button">Find Talent</Button>
             </div>
           </div>

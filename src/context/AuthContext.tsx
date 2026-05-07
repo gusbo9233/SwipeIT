@@ -1,28 +1,41 @@
-import { useState, type ReactNode } from 'react';
-import { AuthContext } from './AuthProvider';
-import { authService } from '../service/authService';
-import type { User } from '../types/Account';
+import { useState, type ReactNode } from 'react'
+import { authService } from '../service/authService'
+import type { RegisterFormData } from '../types/Profile'
+import type { User } from '../types/User'
+import { AuthContext as AuthContextProvider } from './AuthProvider'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(authService.getCurrentUser());
+  const [user, setUser] = useState<User | null>(() => authService.getCurrentUser())
 
-  const login = async (e: string, p: string) => {
-    const loggedInUser = await authService.login(e, p);
+  async function login(email: string, password: string) {
+    const loggedInUser = await authService.login(email, password)
+
     if (loggedInUser) {
-      setUser(loggedInUser);
-      return true;
+      setUser(loggedInUser)
     }
-    return false;
-  };
 
-  const logout = () => {
-    authService.logout();
-    setUser(null);
-  };
+    return loggedInUser
+  }
+
+  function logout() {
+    authService.logout()
+    setUser(null)
+  }
+
+  async function register(formData: RegisterFormData) {
+    const registeredUser = await authService.register(formData)
+    setUser(registeredUser)
+    return registeredUser
+  }
+
+  function updateUser(user: User) {
+    authService.updateCurrentUser(user)
+    setUser(user)
+  }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContextProvider.Provider value={{ login, logout, register, updateUser, user }}>
       {children}
-    </AuthContext.Provider>
-  );
+    </AuthContextProvider.Provider>
+  )
 }

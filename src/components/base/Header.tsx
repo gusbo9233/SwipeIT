@@ -1,45 +1,21 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import './Header.css'
-import Button from '../Button'
 import { useAuth } from '../../context/AuthProvider'
+import './Header.css'
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { user, logout } = useAuth();
-  
-  const closeMobileMenu = () => setMobileMenuOpen(false);
-  
-  const handleLogout = () => {
-    closeMobileMenu();
-    logout();
+  const { logout, user } = useAuth()
+
+  function closeMobileMenu() {
+    setMobileMenuOpen(false)
   }
 
-  const NavContent = () => {
-    return           <>
-    {/* Navigation for all users */}
-          <Button variant="link" to="/">Home</Button>
-
-          {/* Navigation for Recruiters */}
-          {user?.role === 'recruiter' && (
-            <>
-              <Button variant="link" to="/search">Search</Button>
-              <Button variant="link" to="/swipe">Swipe IT</Button>
-            </>
-          )}
-
-          {/* Conditional Auth Links */}
-          {!user ? (
-            <>
-              <Button variant="link" to="/login">Login</Button>
-              <Button variant="link" to="/register">Register</Button>
-            </>
-          ) : (
-            <Button variant="link" onClick={handleLogout}>Logout</Button>
-          )}
-            </>
+  function handleLogout() {
+    closeMobileMenu()
+    logout()
   }
-  
+
   return (
     <header className={`top-bar ${mobileMenuOpen ? 'expanded' : ''}`}>
       <div className="top-bar-row">
@@ -49,7 +25,22 @@ function Header() {
         </NavLink>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {NavContent()}
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/search">Search</NavLink>
+          <NavLink to={user?.role === 'recruiter' ? '/recruiterprofile' : '/profile'}>
+            Profile
+          </NavLink>
+          <NavLink to="/about">About</NavLink>
+          {user ? (
+            <button className="nav-button" onClick={handleLogout} type="button">
+              Logout ({user.name})
+            </button>
+          ) : (
+            <>
+              <NavLink to="/login">Login</NavLink>
+              <NavLink to="/register">Register</NavLink>
+            </>
+          )}
         </nav>
 
         <button
@@ -64,7 +55,25 @@ function Header() {
       </div>
 
       <nav className="mobile-nav" aria-label="Mobile navigation">
-        {NavContent()}
+        <NavLink to="/" end onClick={closeMobileMenu}>Home</NavLink>
+        <NavLink to="/search" onClick={closeMobileMenu}>Search</NavLink>
+        <NavLink
+          to={user?.role === 'recruiter' ? '/recruiterprofile' : '/profile'}
+          onClick={closeMobileMenu}
+        >
+          Profile
+        </NavLink>
+        <NavLink to="/about" onClick={closeMobileMenu}>About</NavLink>
+        {user ? (
+          <button className="nav-button mobile-nav-button" onClick={handleLogout} type="button">
+            Logout ({user.name})
+          </button>
+        ) : (
+          <>
+            <NavLink to="/login" onClick={closeMobileMenu}>Login</NavLink>
+            <NavLink to="/register" onClick={closeMobileMenu}>Register</NavLink>
+          </>
+        )}
       </nav>
     </header>
   )

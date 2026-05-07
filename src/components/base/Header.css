@@ -7,28 +7,54 @@
 .top-bar-row {
   align-items: center;
   display: flex;
-  gap: 24px;
+  gap: 3rem;
   padding: 12px 24px;
 }
 
 .brand {
   align-items: center;
   display: flex;
-  gap: 8px;
+  gap: 1.25rem;
   color: #ffffff;
   text-decoration: none;
   font-weight: 700;
 }
 
+.brand span:last-child {
+  font-family: var(--font-headline);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.brand-mark {
+  align-items: center;
+  background: var(--color-primary);
+  border-radius: 999px;
+  color: #ffffff;
+  display: flex;
+  font-size: 13px;
+  font-weight: 800;
+  height: 40px;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  width: 40px;
+}
+
 .desktop-nav {
   display: flex;
-  gap: 16px;
+  gap: 2rem;
   margin-left: auto;
 }
 
-.desktop-nav a {
+.desktop-nav a,
+.nav-button {
+  background: transparent;
+  border: 0;
   color: #ffffff;
+  cursor: pointer;
+  font: inherit;
   font-weight: 600;
+  padding: 0;
   text-decoration: none;
 }
 
@@ -48,18 +74,23 @@
 .mobile-nav {
   display: none;
   flex-direction: column;
-  gap: 12px;
+  gap: 1.25rem;
   padding: 0 24px;
   max-height: 0;
   overflow: hidden;
   transition: max-height 300ms ease, padding 300ms ease;
 }
 
-.mobile-nav a {
+.mobile-nav a,
+.mobile-nav-button {
   color: #ffffff;
   font-weight: 600;
   text-decoration: none;
   padding: 8px 0;
+}
+
+.mobile-nav-button {
+  text-align: left;
 }
 
 .mobile-nav a.active {

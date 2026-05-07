@@ -1,18 +1,18 @@
 import type { ReactNode } from 'react'
 
-type OnboardingSectionProps = {
+type ProfileSectionProps = {
   children: ReactNode
   className?: string
   icon: string
   title: string
 }
 
-function OnboardingSection({
+function ProfileSection({
   children,
   className = '',
   icon,
   title,
-}: OnboardingSectionProps) {
+}: ProfileSectionProps) {
   return (
     <section className={`candidate-form-section ${className}`.trim()}>
       <div className="candidate-section-title">
@@ -24,4 +24,4 @@ function OnboardingSection({
   )
 }
 
-export default OnboardingSection
+export default ProfileSection

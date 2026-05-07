@@ -1,24 +1,17 @@
-import type { ReactNode } from 'react';
-import { AuthProvider } from './AuthContext';
-import { SearchProvider } from './SearchProvider';
+import type { ReactNode } from 'react'
+import { AuthProvider } from './AuthContext'
+import { SearchProvider } from './SearchProvider'
 
-interface AppProvidersProps {
-  children: ReactNode;
+type AppProviderProps = {
+  children: ReactNode
 }
 
-/**
- * A wrapper component to manage all global context providers.
- * Order matters: Higher-level providers (like Auth) should wrap 
- * data-dependent providers (like Search).
- */
-const AppProviders = ({ children }: AppProvidersProps) => {
+function AppProvider({ children }: AppProviderProps) {
   return (
     <AuthProvider>
-      <SearchProvider>
-        {children}
-      </SearchProvider>
+      <SearchProvider>{children}</SearchProvider>
     </AuthProvider>
-  );
+  )
 }
 
-export default AppProviders;
+export default AppProvider
