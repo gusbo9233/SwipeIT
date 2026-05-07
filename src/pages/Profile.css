@@ -162,7 +162,6 @@
 .candidate-profile-contact-list {
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
 }
 
 .candidate-profile-contact-item {
