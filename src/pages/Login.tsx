@@ -1,15 +1,15 @@
 import { useActionState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthProvider'
 import './Login.css'
+import { useAuth } from '../context/AuthProvider'
 
 function Login() {
   const navigate = useNavigate()
   const { login } = useAuth()
 
-  async function loginAction(_previousError: string | null, formData: FormData) {
-    const email = String(formData.get('email') ?? '')
-    const password = String(formData.get('password') ?? '')
+  async function loginAction(_prevState: string | null, formData: FormData) {
+    const email = (formData.get('email') as string).trim().toLowerCase()
+    const password = formData.get('password') as string
 
     if (!email || !password) {
       return 'Both email and password are required.'
@@ -21,7 +21,7 @@ function Login() {
       return 'Invalid email or password.'
     }
 
-    navigate(user.role === 'recruiter' ? '/recruiterprofile' : '/search')
+    navigate(user.role === 'recruiter' ? '/recruiterprofile' : '/profile')
     return null
   }
 
@@ -30,8 +30,6 @@ function Login() {
   return (
     <div className="login-page page">
       <section className="login-card">
-        <div className="login-icon material-symbols-outlined">login</div>
-        <p className="eyebrow">Welcome back</p>
         <h1>Log in to Swipe IT</h1>
         <p>
           Continue to your candidate and recruiter matching workspace.

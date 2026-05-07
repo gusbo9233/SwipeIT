@@ -35,8 +35,6 @@ function Profile() {
 
   function updateProfile(nextProfile: UserProfile) {
     setProfile(nextProfile)
-    setSaveMessage('')
-    setSaveError('')
   }
 
   function startEditing() {
@@ -102,6 +100,18 @@ function Profile() {
       title="Profile"
       tone={tone}
     >
+      {saveMessage ? (
+        <div className="success-toast">
+          <span className="material-symbols-outlined">check_circle</span>
+          {saveMessage}
+        </div>
+      ) : null}
+      {saveError ? (
+        <div className="error-toast">
+          <span className="material-symbols-outlined">error_outline</span>
+          {saveError}
+        </div>
+      ) : null}
       <div className="profile-page-forms">
         <div className="profile-actions">
           {editing ? (
@@ -152,9 +162,6 @@ function Profile() {
             Profile type: <strong>{tone === 'candidate' ? 'Candidate' : 'Recruiter'}</strong>
           </p>
         </ProfileSection>
-
-        {saveMessage ? <p className="form-message">{saveMessage}</p> : null}
-        {saveError ? <p className="form-message form-message-error">{saveError}</p> : null}
 
         {profile.role === 'candidate' ? (
           <CandidateProfileForm

@@ -153,6 +153,10 @@
   margin-top: 12px;
 }
 
+.login-error-banner {
+  margin-top: 1rem;
+}
+
 @media (max-width: 520px) {
   .login-page {
     align-items: stretch;

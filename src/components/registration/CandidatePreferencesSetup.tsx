@@ -29,6 +29,7 @@ function CandidatePreferencesSetup({
   async function handleSubmit() {
     setSaveError('')
     setSaving(true)
+
     try {
       await saveStoredProfile(buildCandidateProfile(registration, profile))
       onComplete()

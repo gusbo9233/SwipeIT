@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import candidateData from '../../data/Candidates.json';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { Candidate } from '../../types/Candidate';
 import { useSearchContext } from '../../context/SearchContext';
+import { loadSwipeCandidates } from '../../data/profileStorage';
 import Button from '../Button';
 import SwipeDeck from './SwipeDeck';
 
@@ -11,35 +11,47 @@ interface SwipeViewProps {
 
 const SwipeView: React.FC<SwipeViewProps> = ({ onBack }) => {
   const { selectedSkills } = useSearchContext();
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const candidates = candidateData as Candidate[];
+  useEffect(() => {
+    loadSwipeCandidates()
+      .then(setCandidates)
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : 'Could not load candidates.'))
+      .finally(() => setLoading(false));
+  }, []);
 
   const filteredDeck = useMemo(() => {
-    // filtering by skills, add for experienceLevels later
     return candidates.filter(candidate => {
-      const matchesSkills = selectedSkills.length === 0 || 
+      const matchesSkills = selectedSkills.length === 0 ||
         candidate.skills.some(skill => selectedSkills.includes(skill));
       return matchesSkills;
     });
   }, [selectedSkills, candidates]);
 
-    const searchKey = selectedSkills.join(',');
+  const searchKey = selectedSkills.join(',');
 
   return (
     <div className="swipe-view">
       <Button variant="transparent" onClick={onBack}>
-          <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
-            arrow_back
-          </span>
-          BACK TO SEARCH SETTINGS
-        </Button>
+        <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
+          arrow_back
+        </span>
+        BACK TO SEARCH SETTINGS
+      </Button>
       <div className="swipe-stack-container">
-        {/* Whenever searchKey changes, SwipeDeck is destroyed and recreated */}
-        <SwipeDeck 
-          key={searchKey} 
-          candidates={filteredDeck} 
-          onBack={onBack} 
-        />
+        {loading ? (
+          <p>Loading candidates...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <SwipeDeck
+            key={searchKey}
+            candidates={filteredDeck}
+            onBack={onBack}
+          />
+        )}
       </div>
     </div>
   );

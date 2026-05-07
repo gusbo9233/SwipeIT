@@ -2,7 +2,7 @@ import './Button.css'
 import { NavLink } from 'react-router-dom'
 import type { ReactNode } from 'react'
 
-type ButtonVariant = 'primary' | 'secondary' | 'transparent'
+type ButtonVariant = 'primary' | 'secondary' | 'transparent' | 'link'
 
 type ButtonProps = {
   'aria-label'?: string

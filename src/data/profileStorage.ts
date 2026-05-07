@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase'
+import type { Candidate } from '../types/Candidate'
 import type {
   CandidateProfileData,
   RecruiterProfileData,
@@ -137,4 +138,40 @@ export async function saveStoredProfile(profile: UserProfile): Promise<void> {
   if (error) {
     throw new Error(error.message)
   }
+}
+
+type CandidateRow = {
+  id: string
+  name: string | null
+  email: string | null
+  candidate: Partial<CandidateProfileData> | null
+}
+
+export async function loadSwipeCandidates(): Promise<Candidate[]> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id, name, email, candidate')
+    .eq('role', 'candidate')
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return (data ?? []).map((row: CandidateRow) => {
+    const c = row.candidate ?? {}
+    return {
+      id: row.id,
+      name: c.fullName || row.name || 'Unknown',
+      imageUrl: `https://i.pravatar.cc/600?u=${row.id}`,
+      skills: c.skills ?? [],
+      email: row.email ?? '',
+      address: '',
+      phoneNumber: c.phoneNumber ?? '',
+      linkedInUrl: c.linkedIn || undefined,
+      githubUrl: c.github || undefined,
+      education: [],
+      competences: [],
+      references: [],
+    }
+  })
 }
