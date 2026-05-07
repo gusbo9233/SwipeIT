@@ -1,5 +1,7 @@
 import './About.css'
 
+export const aboutRoute = '/about';
+
 function About() {
   return (
     <div className="about-page page">

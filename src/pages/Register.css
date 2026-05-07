@@ -2,8 +2,8 @@
   background: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-body);
-  min-height: max(884px, 100dvh);
-  padding-bottom: 80px;
+  min-height: 100%;
+  padding-bottom: 64px;
 }
 
 .candidate-topbar {
@@ -75,6 +75,7 @@
   margin-inline: auto;
   max-width: 672px;
   padding: 48px 24px 0;
+  width: 100%;
 }
 
 .candidate-onboarding-heading {
@@ -100,6 +101,21 @@
 .candidate-profile-form {
   display: grid;
   gap: 40px;
+}
+
+.form-message {
+  background: rgb(71 96 126 / 8%);
+  border-radius: 18px;
+  color: var(--color-primary);
+  font-weight: 800;
+  margin: 0;
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.form-message-error {
+  background: rgb(178 66 54 / 10%);
+  color: #9b2f25;
 }
 
 .candidate-form-section {
@@ -359,6 +375,7 @@
 .candidate-submit {
   align-items: center;
   background: linear-gradient(135deg, var(--color-primary), #90aacb);
+  border: 0;
   border-radius: 999px;
   box-shadow: 0 20px 40px rgb(71 96 126 / 18%);
   color: #ffffff;
@@ -400,24 +417,6 @@
 
 .recruiter-profile-dot {
   background: #8b4f2c;
-}
-
-.recruiter-glow {
-  background: rgb(139 79 44 / 8%);
-}
-
-.skill-chip.recruiter-chip {
-  background: #8b4f2c;
-  border-color: #8b4f2c;
-}
-
-.recruiter-preference input:checked+span {
-  color: #8b4f2c;
-}
-
-.recruiter-preference:has(input:checked) {
-  background: rgb(139 79 44 / 6%);
-  border-color: #8b4f2c;
 }
 
 .recruiter-note-section {

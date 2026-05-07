@@ -3,29 +3,64 @@ import './Home.css'
 import './RecruiterProfile.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
+import { searchRoute } from './Search'
+import { profileRoute } from './Profile'
 // @ts-ignore
 import recruiterDataRaw from '../data/Recruiterprofile.json'
 
+type RecruiterDisplayProfile = {
+  bio: string
+  company: string
+  companyName?: string
+  companyImage: string
+  expertise?: string[]
+  firstName?: string
+  lastName?: string
+  location: string
+  logo: string
+  name?: string
+  role: string
+  specialties: string[]
+}
+
+const fallbackProfile = recruiterDataRaw as RecruiterDisplayProfile
+
+export const recruiterProfileRoute = '/recruiterprofile'
+
 function RecruiterProfile() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<RecruiterDisplayProfile | null>(null)
 
   useEffect(() => {
-    const savedProfile = localStorage.getItem('activeProfile');
-
-    if (savedProfile) {
-      setData(JSON.parse(savedProfile));
-    } else {
-      setData(recruiterDataRaw);
+    try {
+      // 1. Hämta den inloggade profilen från localStorage
+      const savedProfile = localStorage.getItem('activeProfile');
+      
+      if (savedProfile) {
+        // Om det finns en inloggad person, använd den datan
+        setData({
+          ...fallbackProfile,
+          ...(JSON.parse(savedProfile) as Partial<RecruiterDisplayProfile>),
+        });
+      } else {
+        // Annars faller vi tillbaka på JSON-filen (bra för presentationen!)
+        setData(fallbackProfile);
+      }
+    } catch (error) {
+      console.error("Något gick fel vid hämtning av profil:", error);
+      setData(fallbackProfile); // Fallback så sidan inte kraschar
     }
-  }, []);
+  }, []); 
 
-  if (!data) return null;
+  // Om data fortfarande laddas eller saknas, visa ett meddelande eller fallback
+  if (!data) return <div className="page">Laddar profil...</div>;
+
+  const displayName =
+    data.name || data.companyName || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim() || "Okänd Rekryterare";
 
   return (
     <div className="home-page page">
       <div className="profile-container">
         <div className="profile-card">
-          
           <div className="profile-image-section">
             <img
               src={data.companyImage || recruiterDataRaw.companyImage}
@@ -41,10 +76,10 @@ function RecruiterProfile() {
             <div className="profile-header">
               <div>
                 <h1 className="profile-name">
-                  {data.name || `${data.firstName} ${data.lastName}`}
+                  {displayName}
                 </h1>
                 <h2 className="profile-role">
-                  {data.role} at <span className="profile-company">{data.company || 'Swipe IT'}</span>
+                  {data.role || 'Recruiter'} at <span className="profile-company">{data.company || data.companyName || 'Swipe IT'}</span>
                 </h2>
               </div>
               <img src={data.logo || recruiterDataRaw.logo} alt="Logo" className="profile-logo" />
@@ -60,15 +95,15 @@ function RecruiterProfile() {
             <div className="profile-section">
               <h3 className="profile-section-title">Recruitment Expertise</h3>
               <div className="profile-chips">
-                {(data.specialties || data.expertise || []).map((skill: string) => (
-                  <Chip key={skill}>{skill}</Chip>
+                {(data.specialties || data.expertise || []).map((skill: string, index: number) => (
+                  <Chip key={index}>{skill}</Chip>
                 ))}
               </div>
             </div>
 
             <div className="profile-actions">
-              <Button variant="primary" className="large-button">Edit Profile</Button>
-              <Button variant="secondary" to="/search" className="large-button">Find Talent</Button>
+              <Button variant="primary" to={profileRoute} className="large-button">Edit Profile</Button>
+              <Button variant="secondary" to={searchRoute} className="large-button">Find Talent</Button>
             </div>
           </div>
         </div>
@@ -77,4 +112,4 @@ function RecruiterProfile() {
   )
 }
 
-export default RecruiterProfile
+export default RecruiterProfile;

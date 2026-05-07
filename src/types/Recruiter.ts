@@ -1,4 +1,5 @@
 export type Recruiter = {
+    id: string;
     name: string;
     website: string;
     companySize: number;
@@ -7,5 +8,5 @@ export type Recruiter = {
     phoneNumber: string;
     linkedInUrl: string;
     organisationNumber: string;
-    matchedCandidates: string;
+    matchedCandidates: string[];
 }

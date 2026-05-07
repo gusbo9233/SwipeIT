@@ -3,13 +3,15 @@ import { Link, Route, Routes } from 'react-router-dom'
 import Header from './components/base/Header'
 import AppProviders from './context/AppProvider'
 import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import RecruiterProfile from './pages/RecruiterProfile'
-import NotFound from './pages/NotFound'
-import Search from './pages/Search'
-import About from './pages/About'
+import CandidateProfile, { candidateProfileRoute } from './pages/CandidateProfile'
+import Login, { loginRoute } from './pages/Login'
+import Register, { registerRoute } from './pages/Register'
+import Profile, { profileRoute } from './pages/Profile'
+import RecruiterProfile, { recruiterProfileRoute } from './pages/RecruiterProfile'
 import ProtectedRoute from './pages/ProtectedRoute'
+import NotFound from './pages/NotFound'
+import Search, { searchRoute } from './pages/Search'
+import About, { aboutRoute } from './pages/About'
 
 function App() {
   return (
@@ -20,18 +22,21 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route index element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path={aboutRoute} element={<About />} />
+            <Route path={loginRoute} element={<Login />} />
+            <Route path={registerRoute} element={<Register />} />
 
-            {/* Recruiter Only Routes */}
-            <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
-              <Route path="/search" element={<Search />} />
-              <Route path="/recruiterprofile" element={<RecruiterProfile/>} />     
+            <Route element={<ProtectedRoute allowedRoles={['candidate', 'recruiter']} />}>
+              <Route path={profileRoute} element={<Profile />} />
             </Route>
-            
-            {/* Candidate Only Routes */}
+
             <Route element={<ProtectedRoute allowedRoles={['candidate']} />}>
+              <Route path={candidateProfileRoute} element={<CandidateProfile />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={['recruiter']} />}>
+              <Route path={searchRoute} element={<Search />} />
+              <Route path={recruiterProfileRoute} element={<RecruiterProfile />} />
             </Route>
 
             {/* Catch All */}
@@ -39,7 +44,10 @@ function App() {
           </Routes>
         </main>
         <footer className="site-footer">
-          <p>&copy; {new Date().getFullYear()} SwipeIT. All rights reserved. <Link to="/about">About Us</Link></p>
+          <p>
+            &copy; {new Date().getFullYear()} SwipeIT. All rights reserved.{' '}
+            <Link to={aboutRoute}>About Us</Link>
+          </p>
         </footer>
       </div>
     </AppProviders>

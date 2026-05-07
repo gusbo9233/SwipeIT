@@ -1,12 +1,14 @@
-export interface User {
-    id: string
-    email: string
-    role: UserRole
-    name: string
+export type UserRole = 'recruiter' | 'candidate'
+
+export type User = {
+  email: string
+  id: string
+  name: string
+  role: UserRole
 }
 
-export interface RawUser extends User {
-  password?: string; // Included here because it exists in the JSON
+export type RawUser = User & {
+  candidateId?: string
+  password?: string
+  recruiterId?: string
 }
-
-export type UserRole = "recruiter" | "candidate"
