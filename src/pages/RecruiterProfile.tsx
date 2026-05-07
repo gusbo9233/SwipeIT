@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react'
 import './Home.css'
 import './RecruiterProfile.css'
 import Chip from '../components/Chip'
 import Button from '../components/Button'
-import recruiterData from '../data/Recruiterprofile.json'
+import recruiterDataRaw from '../data/Recruiterprofile.json'
 
 type RecruiterDisplayProfile = {
   bio: string
@@ -19,28 +20,37 @@ type RecruiterDisplayProfile = {
   specialties: string[]
 }
 
-const fallbackProfile = recruiterData as RecruiterDisplayProfile
-
-function getActiveProfile() {
-  const storedProfile = window.localStorage.getItem('activeProfile')
-
-  if (!storedProfile) {
-    return fallbackProfile
-  }
-
-  try {
-    return {
-      ...fallbackProfile,
-      ...(JSON.parse(storedProfile) as Partial<RecruiterDisplayProfile>),
-    }
-  } catch {
-    return fallbackProfile
-  }
-}
+const fallbackProfile = recruiterDataRaw as RecruiterDisplayProfile
 
 function RecruiterProfile() {
-  const data = getActiveProfile()
-  const displayName = data.name || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim()
+  const [data, setData] = useState<RecruiterDisplayProfile | null>(null)
+
+  useEffect(() => {
+    try {
+      // 1. Hämta den inloggade profilen från localStorage
+      const savedProfile = localStorage.getItem('activeProfile');
+      
+      if (savedProfile) {
+        // Om det finns en inloggad person, använd den datan
+        setData({
+          ...fallbackProfile,
+          ...(JSON.parse(savedProfile) as Partial<RecruiterDisplayProfile>),
+        });
+      } else {
+        // Annars faller vi tillbaka på JSON-filen (bra för presentationen!)
+        setData(fallbackProfile);
+      }
+    } catch (error) {
+      console.error("Något gick fel vid hämtning av profil:", error);
+      setData(fallbackProfile); // Fallback så sidan inte kraschar
+    }
+  }, []); 
+
+  // Om data fortfarande laddas eller saknas, visa ett meddelande eller fallback
+  if (!data) return <div className="page">Laddar profil...</div>;
+
+  const displayName =
+    data.name || data.companyName || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim() || "Okänd Rekryterare";
 
   return (
     <div className="home-page page">
@@ -48,12 +58,12 @@ function RecruiterProfile() {
         <div className="profile-card">
           <div className="profile-image-section">
             <img
-              src={data.companyImage}
+              src={data.companyImage || recruiterDataRaw.companyImage}
               alt="Office"
               className="profile-main-image"
             />
             <div className="profile-location-badge">
-              {data.location || 'Location missing'}
+              📍 {data.location || 'Location missing'}
             </div>
           </div>
 
@@ -67,7 +77,7 @@ function RecruiterProfile() {
                   {data.role || 'Recruiter'} at <span className="profile-company">{data.company || data.companyName || 'Swipe IT'}</span>
                 </h2>
               </div>
-              <img src={data.logo} alt="Logo" className="profile-logo" />
+              <img src={data.logo || recruiterDataRaw.logo} alt="Logo" className="profile-logo" />
             </div>
 
             <div className="profile-section">
@@ -87,7 +97,7 @@ function RecruiterProfile() {
             </div>
 
             <div className="profile-actions">
-              <Button variant="primary" to="/profile" className="large-button">Edit Profile</Button>
+              <Button variant="primary" className="large-button">Edit Profile</Button>
               <Button variant="secondary" to="/search" className="large-button">Find Talent</Button>
             </div>
           </div>
