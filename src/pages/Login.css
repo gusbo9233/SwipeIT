@@ -1,3 +1,4 @@
+/* --- 1. GRUNDEN OCH LAYOUT --- */
 .login-page {
   align-items: center;
   background:
@@ -8,23 +9,8 @@
   flex-direction: column;
   font-family: var(--font-body);
   justify-content: center;
-}
-
-.login-brand {
-  align-items: center;
-  color: var(--color-primary);
-  display: inline-flex;
-  gap: 12px;
-  left: 24px;
-  position: fixed;
-  text-decoration: none;
-  top: 24px;
-}
-
-.login-brand span:last-child {
-  font-family: var(--font-headline);
-  font-size: 20px;
-  font-weight: 800;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .login-card {
@@ -38,47 +24,12 @@
   width: 100%;
 }
 
-.login-icon {
-  align-items: center;
-  background: var(--color-surface-container);
-  border-radius: 999px;
-  color: var(--color-primary);
-  display: inline-flex;
-  font-size: 32px;
-  height: 64px;
-  justify-content: center;
-  margin-bottom: 24px;
-  width: 64px;
-}
-
-.login-card h1 {
-  font-family: var(--font-headline);
-  font-size: 40px;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin: 0;
-}
-
-.login-card p:not(.eyebrow) {
-  color: var(--color-muted);
-  line-height: 1.65;
-  margin: 16px 0 0;
-}
-
+/* --- 2. INPUT-FÄLTEN (Nu vita och fräscha!) --- */
 .login-fields {
   display: grid;
   gap: 16px;
   margin-top: 28px;
   text-align: left;
-}
-
-.login-error-banner {
-  background: rgb(178 66 54 / 10%);
-  border-radius: 16px;
-  color: #9b2f25;
-  font-weight: 800;
-  margin-top: 20px;
-  padding: 12px 16px;
 }
 
 .login-field {
@@ -90,77 +41,97 @@
 }
 
 .login-field input {
-  background: var(--color-surface-container);
-  border: 1px solid rgb(71 96 126 / 14%);
+  background: #ffffff !important; /* Tvingar fram vit bakgrund */
+  border: 2px solid #f3f4f6;
   border-radius: 16px;
   color: var(--color-text);
   font: inherit;
   font-weight: 500;
   padding: 14px 16px;
-}
-
-.login-field input::placeholder {
-  color: #73777e;
+  transition: all 0.2s ease;
 }
 
 .login-field input:focus {
-  border-color: var(--color-primary);
-  outline: 3px solid rgb(71 96 126 / 16%);
+  outline: none;
+  border-color: #5d7a97;
+  box-shadow: 0 0 0 4px rgb(93 122 151 / 12%);
 }
 
+/* --- 3. KNAPPEN (Swipe IT-blå med lyxig känsla) --- */
 .login-button {
-  align-items: center;
-  background: linear-gradient(135deg, var(--color-primary), #90aacb);
-  border-radius: 999px;
-  box-shadow: 0 20px 40px rgb(71 96 126 / 18%);
+  background: #5d7a97; 
   color: #ffffff;
+  border-radius: 12px; 
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(93, 122, 151, 0.25);
+  padding: 16px 20px;
   display: flex;
-  font-family: var(--font-headline);
-  font-size: 18px;
-  font-weight: 800;
-  gap: 12px;
+  align-items: center;
   justify-content: center;
-  margin-top: 24px;
-  padding: 18px 24px;
-  transition:
-    box-shadow 180ms ease,
-    transform 160ms ease;
+  gap: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
   width: 100%;
+  margin-top: 24px;
 }
 
-.login-button:disabled {
-  cursor: wait;
-  opacity: 0.72;
-}
-
-.login-button:hover {
-  box-shadow: 0 24px 50px rgb(71 96 126 / 22%);
+.login-button:hover:not(:disabled) {
+  background: #4a637a;
+  box-shadow: 0 12px 30px rgba(93, 122, 151, 0.35);
   transform: translateY(-2px);
 }
 
 .login-button:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
+}
+
+.login-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+/* --- 4. ÖVRIGA DETALJER --- */
+.login-brand {
+  align-items: center;
+  color: var(--color-primary);
+  display: inline-flex;
+  gap: 12px;
+  left: 24px;
+  position: fixed;
+  text-decoration: none;
+  top: 24px;
+}
+
+.login-card h1 {
+  font-family: var(--font-headline);
+  font-size: 40px;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
 }
 
 .login-error-banner {
-  margin-top: 1rem;
+  background: rgba(178, 66, 54, 0.1);
+  border-radius: 12px;
+  color: #9b2f25;
+  font-weight: 700;
+  margin-top: 20px;
+  padding: 12px;
+  font-size: 14px;
 }
 
+/* --- 5. MOBILANPASSNING --- */
 @media (max-width: 520px) {
-  .login-page {
-    align-items: stretch;
-    padding-inline: 16px;
-  }
-
-  .login-brand {
-    left: 16px;
-  }
-
   .login-card {
     padding: 32px 24px;
+    border-radius: 24px;
   }
-
   .login-card h1 {
-    font-size: 34px;
+    font-size: 32px;
+  }
+  .login-brand {
+    position: static;
+    margin-bottom: 24px;
   }
 }

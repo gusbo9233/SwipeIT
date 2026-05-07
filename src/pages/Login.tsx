@@ -34,7 +34,6 @@ function Login() {
 }
     }
 
-    // 2. Kolla 'temp_reg_data' (Som en extra säkerhet baserat på din bild)
     const tempReg = localStorage.getItem('temp_reg_data');
     if (tempReg) {
       const tempData = JSON.parse(tempReg);
@@ -45,7 +44,6 @@ function Login() {
       }
     }
 
-    // 3. Fallback till JSON
     const hardcodedUser = credentialsData.find((user) => user.email.toLowerCase() === email);
     if (hardcodedUser) {
       const success = await login(email, password);
