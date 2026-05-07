@@ -78,6 +78,5 @@ export const authService = {
 
   logout() {
     window.localStorage.removeItem(userKey)
-    window.location.href = '/login'
   },
 }
