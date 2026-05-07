@@ -30,8 +30,7 @@
 
 .candidate-card__image {
   width: 100%;
-  max-width: 120px; 
-  height: auto;
+  height: 100%;
   object-fit: cover;
   display: block;
 }

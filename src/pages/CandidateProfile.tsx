@@ -5,11 +5,17 @@ import {
   getProfileForUser,
   getStoredProfile,
 } from '../data/profileStorage'
+import candidatesData from '../data/Candidates.json'
+import type { Candidate } from '../types/Candidate'
 import type { CandidateProfileData, UserProfile } from '../types/Profile'
 import { profileRoute } from './Profile'
 import './Profile.css'
 
 export const candidateProfileRoute = '/candidate-profile'
+
+const candidates = candidatesData as Candidate[]
+const fallbackImageUrl =
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800'
 
 const fallbackProfile: UserProfile = {
   candidate: {
@@ -45,7 +51,7 @@ function CandidateProfile() {
   const workPreferences = getVisibleList(candidate.workPreferences, ['Open to opportunities'])
   const previewCandidate = {
     id: user?.id ?? profile.email ?? 'candidate-profile-preview',
-    imageUrl: '',
+    imageUrl: getCandidateImageUrl(profile, displayName),
     name: displayName,
     skills,
   }
@@ -163,6 +169,17 @@ function formatLabel(value: string) {
 
 function getVisibleList(list: string[], fallback: string[]) {
   return list.length > 0 ? list : fallback
+}
+
+function getCandidateImageUrl(profile: UserProfile, displayName: string) {
+  const matchingCandidate = candidates.find((candidate) => {
+    return (
+      candidate.email.toLowerCase() === profile.email.toLowerCase() ||
+      candidate.name.toLowerCase() === displayName.toLowerCase()
+    )
+  })
+
+  return matchingCandidate?.imageUrl ?? fallbackImageUrl
 }
 
 export default CandidateProfile
