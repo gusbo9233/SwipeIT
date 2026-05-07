@@ -1,7 +1,7 @@
 import './App.css'
 import { Link, Route, Routes } from 'react-router-dom'
 import Header from './components/base/Header'
-import AppProvider from './context/AppProvider'
+import AppProviders from './context/AppProvider'
 import Home from './pages/Home'
 import Login, { loginRoute } from './pages/Login'
 import Register, { registerRoute } from './pages/Register'
@@ -14,11 +14,12 @@ import About, { aboutRoute } from './pages/About'
 
 function App() {
   return (
-    <AppProvider>
+    <AppProviders>
       <div className="content">
         <Header />
         <main className="site-main">
           <Routes>
+            {/* Public Routes */}
             <Route index element={<Home />} />
             <Route path={aboutRoute} element={<About />} />
             <Route path={loginRoute} element={<Login />} />
@@ -33,6 +34,7 @@ function App() {
               <Route path={recruiterProfileRoute} element={<RecruiterProfile />} />
             </Route>
 
+            {/* Catch All */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
@@ -43,7 +45,7 @@ function App() {
           </p>
         </footer>
       </div>
-    </AppProvider>
+    </AppProviders>
   )
 }
 
