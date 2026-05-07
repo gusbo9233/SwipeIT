@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthProvider'
 import './Header.css'
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navigate = useNavigate()
   const { logout, user } = useAuth()
 
   function closeMobileMenu() {
@@ -14,6 +15,7 @@ function Header() {
   function handleLogout() {
     closeMobileMenu()
     logout()
+    navigate('/')
   }
 
   return (
