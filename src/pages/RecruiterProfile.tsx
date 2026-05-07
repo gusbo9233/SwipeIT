@@ -8,10 +8,27 @@ import { profileRoute } from './Profile'
 // @ts-ignore
 import recruiterDataRaw from '../data/Recruiterprofile.json'
 
+type RecruiterDisplayProfile = {
+  bio: string
+  company: string
+  companyName?: string
+  companyImage: string
+  expertise?: string[]
+  firstName?: string
+  lastName?: string
+  location: string
+  logo: string
+  name?: string
+  role: string
+  specialties: string[]
+}
+
+const fallbackProfile = recruiterDataRaw as RecruiterDisplayProfile
+
 export const recruiterProfileRoute = '/recruiterprofile'
 
 function RecruiterProfile() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<RecruiterDisplayProfile | null>(null)
 
   useEffect(() => {
     try {
@@ -20,21 +37,25 @@ function RecruiterProfile() {
       
       if (savedProfile) {
         // Om det finns en inloggad person, använd den datan
-        setData(JSON.parse(savedProfile));
+        setData({
+          ...fallbackProfile,
+          ...(JSON.parse(savedProfile) as Partial<RecruiterDisplayProfile>),
+        });
       } else {
         // Annars faller vi tillbaka på JSON-filen (bra för presentationen!)
-        setData(recruiterDataRaw);
+        setData(fallbackProfile);
       }
     } catch (error) {
       console.error("Något gick fel vid hämtning av profil:", error);
-      setData(recruiterDataRaw); // Fallback så sidan inte kraschar
+      setData(fallbackProfile); // Fallback så sidan inte kraschar
     }
   }, []); 
 
   // Om data fortfarande laddas eller saknas, visa ett meddelande eller fallback
   if (!data) return <div className="page">Laddar profil...</div>;
 
-  const displayName = data.name || data.companyName || "Okänd Rekryterare";
+  const displayName =
+    data.name || data.companyName || `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim() || "Okänd Rekryterare";
 
   return (
     <div className="home-page page">

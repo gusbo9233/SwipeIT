@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import Button from '../components/Button'
 import CandidateSwipePreview from '../components/CandidateSwipePreview'
+import { useAuth } from '../context/AuthProvider'
 import './Home.css'
 import { aboutRoute } from './About'
 import { searchRoute } from './Search'
 import { registerRoute } from './Register'
+import { loginRoute } from './Login'
 
 export const homeRoute = '/'
 
@@ -24,6 +26,8 @@ const previewCandidate = {
 }
 
 function Home() {
+  const { user } = useAuth()
+
   return (
     <div className="home-page page">
       <section className="hero-section">
@@ -31,12 +35,20 @@ function Home() {
           <h1>Swipe IT</h1>
           <p>Connect candidates and recruiters with a focused swipe flow.</p>
           <div className="hero-actions">
-            <Button to={registerRoute}>
-              Get Started
-            </Button>
-            <Button to={searchRoute} variant="secondary">
-              Search
-            </Button>
+            {!user ? (
+              <>
+                <Button to={registerRoute}>
+                  Register
+                </Button>
+                <Button to={loginRoute} variant="secondary">
+                  Login
+                </Button>
+              </>
+            ) : user.role === 'recruiter' ? (
+              <Button to={searchRoute}>
+                Start Searching
+              </Button>
+            ) : null}
           </div>
         </div>
 

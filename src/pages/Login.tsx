@@ -29,8 +29,7 @@ function Login() {
   // Logga in användaren i ditt Auth-system
   login(email, password); 
   
-  // Åk till adressen vi skapade i App.tsx (utan bindestreck!)
-  navigate('/recruiterprofile'); 
+  navigate('/'); 
   return null;
 }
     }
@@ -41,7 +40,7 @@ function Login() {
       const tempData = JSON.parse(tempReg);
       if (tempData.email.toLowerCase() === email) {
         login(email, password);
-        navigate('/recruiter-profile');
+        navigate('/');
         return null;
       }
     }
@@ -51,7 +50,7 @@ function Login() {
     if (hardcodedUser) {
       const success = await login(email, password);
       if (success) {
-        navigate(hardcodedUser.role === 'recruiter' ? '/recruiter-profile' : '/');
+        navigate('/');
         return null;
       }
     }
