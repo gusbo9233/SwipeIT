@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { useAuth } from '../context/AuthProvider';
 import credentialsData from '../data/AccountCredentials.json';
+import { recruiterProfileRoute } from './RecruiterProfile';
 
 export const loginRoute = '/login'
 
@@ -19,7 +20,7 @@ function Login() {
     }
 
     const getDestination = (role: string) => {
-      return role === 'recruiter' ? '/recruiterprofile' : '/recruiterprofile';
+      return role === 'recruiter' ? recruiterProfileRoute : '/';
     };
 
     const activeProfile = localStorage.getItem('activeProfile');
