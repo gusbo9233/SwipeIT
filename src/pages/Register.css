@@ -119,7 +119,7 @@
 }
 
 .candidate-form-section {
-  background: var(--color-surface-low, #fef1e6);
+  background: var(--color-surface-low, #ffffff);
   border-radius: 24px;
   padding: 32px;
   position: relative;
@@ -209,9 +209,7 @@
   display: flex;
   gap: 16px;
   padding: 8px;
-  transition:
-    border-color 180ms ease,
-    box-shadow 180ms ease;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .candidate-icon-input:focus-within {
@@ -285,9 +283,7 @@
   font-weight: 700;
   gap: 8px;
   padding: 8px 16px;
-  transition:
-    background 180ms ease,
-    transform 160ms ease;
+  transition: background 180ms ease, transform 160ms ease;
 }
 
 .skill-chip:hover {
@@ -327,9 +323,7 @@
   min-height: 136px;
   padding: 24px;
   text-align: center;
-  transition:
-    background 180ms ease,
-    border-color 180ms ease;
+  transition: background 180ms ease, border-color 180ms ease;
 }
 
 .work-preference input {
@@ -344,9 +338,7 @@
 .work-preference span {
   color: #73777e;
   font-size: 32px;
-  transition:
-    color 180ms ease,
-    transform 180ms ease;
+  transition: color 180ms ease, transform 180ms ease;
 }
 
 .work-preference input:checked+span {
@@ -386,9 +378,7 @@
   gap: 12px;
   justify-content: center;
   padding: 20px;
-  transition:
-    box-shadow 180ms ease,
-    transform 160ms ease;
+  transition: box-shadow 180ms ease, transform 160ms ease;
   width: 100%;
 }
 
@@ -410,9 +400,7 @@
 }
 
 .recruiter-onboarding {
-  background:
-    radial-gradient(circle at top right, rgb(139 79 44 / 10%), transparent 36%),
-    var(--color-surface);
+  background: radial-gradient(circle at top right, rgb(139 79 44 / 10%), transparent 36%), var(--color-surface);
 }
 
 .recruiter-profile-dot {
@@ -420,9 +408,7 @@
 }
 
 .recruiter-note-section {
-  background:
-    linear-gradient(135deg, rgb(139 79 44 / 7%), transparent 56%),
-    var(--color-surface-low, #fef1e6);
+  background: #ffffff;
 }
 
 .recruiter-submit {
@@ -567,15 +553,6 @@
   gap: 8px;
 }
 
-.form-field input {
-  background: var(--color-surface-container);
-  border: 1px solid rgb(71 96 126 / 14%);
-  border-radius: 16px;
-  color: var(--color-text);
-  font: inherit;
-  font-weight: 500;
-  padding: 14px 16px;
-}
 
 .form-field input:focus {
   border-color: var(--color-primary);
@@ -670,4 +647,62 @@
   .candidate-profile-form {
     gap: 28px;
   }
+}
+
+.candidate-submit,
+.register-submit,
+.recruiter-submit,
+.login-button,
+button {
+  background: #5d7a97 !important;
+  background-image: none !important;
+  background-color: #5d7a97 !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 10px 25px rgba(93, 122, 151, 0.3) !important;
+}
+
+.candidate-submit:hover,
+.register-submit:hover,
+button:hover {
+  background: #4a637a !important;
+  background-color: #4a637a !important;
+}
+input {
+  background-color: #ffffff !important;
+  border: 2px solid #f3f4f6 !important;
+}
+
+body .form-field input {
+  background: #fef1e6 !important;
+  border: 1px solid rgb(71 96 126 / 14%);
+  border-radius: 16px;
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 500;
+  padding: 14px 16px;
+}
+/* --- FINAL OVERRIDE SECTION --- */
+
+input {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border: 2px solid #f3f4f6 !important;
+}
+
+.register-shell input,
+.register-shell select,
+.register-shell textarea {
+  background-color: #fef1e6 !important;
+  background: #fef1e6 !important;
+  border: 1px solid rgb(71 96 126 / 14%) !important;
+  border-radius: 16px !important;
+  color: #333333 !important;
+}
+.register-submit,
+.recruiter-submit,
+button.submit-button {
+  background: #5d7a97 !important;
+  background-color: #5d7a97 !important;
+  color: #ffffff !important;
 }

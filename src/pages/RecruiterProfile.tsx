@@ -32,17 +32,17 @@ function RecruiterProfile() {
 
   useEffect(() => {
     try {
-      // 1. Hämta den inloggade profilen från localStorage
+      
       const savedProfile = localStorage.getItem('activeProfile');
       
       if (savedProfile) {
-        // Om det finns en inloggad person, använd den datan
+        
         setData({
           ...fallbackProfile,
           ...(JSON.parse(savedProfile) as Partial<RecruiterDisplayProfile>),
         });
       } else {
-        // Annars faller vi tillbaka på JSON-filen (bra för presentationen!)
+        
         setData(fallbackProfile);
       }
     } catch (error) {
@@ -51,7 +51,6 @@ function RecruiterProfile() {
     }
   }, []); 
 
-  // Om data fortfarande laddas eller saknas, visa ett meddelande eller fallback
   if (!data) return <div className="page">Laddar profil...</div>;
 
   const displayName =

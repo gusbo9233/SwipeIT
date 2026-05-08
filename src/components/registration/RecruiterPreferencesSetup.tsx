@@ -30,8 +30,11 @@ function RecruiterPreferencesSetup({
 
   async function handleSubmit() {
     try {
+      
       await register(registration)
-      saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))
+      
+      saveStoredProfile(buildProfileFromRegistration(registration, undefined, profile))    
+      window.localStorage.setItem('temp_reg_data', JSON.stringify(registration));          
       onComplete()
     } catch (error) {
       console.error('Failed to save recruiter account', error)
