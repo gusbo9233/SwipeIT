@@ -15,7 +15,7 @@ export const candidateProfileRoute = '/candidate-profile'
 
 const candidates = candidatesData as Candidate[]
 const fallbackImageUrl =
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800'
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800'
 
 const fallbackProfile: UserProfile = {
   candidate: {

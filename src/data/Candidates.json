@@ -2,7 +2,7 @@
   {
     "id": "somethinguuidthingy1",
     "name": "Elin Bergström",
-    "imageUrl": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400",
     "email": "elin.bergstrom@example.com",
     "address": "Hammarby Kaj 5, 120 30 Stockholm, Sweden",
     "phoneNumber": "+46 70 111 22 33",
@@ -40,7 +40,7 @@
   {
     "id": "somethinguuidthingy2",
     "name": "Lukas Jensen",
-    "imageUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400",
     "email": "lukas.jensen@example.com",
     "address": "Vesterbrogade 45, 1620 Copenhagen, Denmark",
     "phoneNumber": "+45 40 22 33 44",
@@ -73,7 +73,7 @@
   {
     "id": "somethinguuidtingy3",
     "name": "Mia Lund",
-    "imageUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=400",
     "email": "mia.lund@example.com",
     "address": "Fredrikinkatu 14, 00120 Helsinki, Finland",
     "phoneNumber": "+358 50 123 4567",
@@ -106,7 +106,7 @@
   {
     "id": "somethinguuidthingy4",
     "name": "Noah Özkan",
-    "imageUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400",
     "email": "noah.ozkan@example.com",
     "address": "Landegodegata 11, 9008 Tromsø, Norway",
     "phoneNumber": "+47 98 76 54 32",
@@ -139,7 +139,7 @@
   {
     "id": "somethinguuidthing6",
     "name": "Sara Pettersen",
-    "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400",
+    "imageUrl": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&q=80&w=400",
     "email": "sara.pettersen@example.com",
     "address": "Sæterbakken 8, 0672 Oslo, Norway",
     "phoneNumber": "+47 45 67 89 01",
@@ -167,6 +167,237 @@
     "references": [
       "Karoline Evensen, Product Owner at RetailTech",
       "Henrik Dahl, UX Lead at Travelify"
+    ]
+  },
+  {
+    "id": "candidate-7",
+    "name": "Aksel Holm",
+    "imageUrl": "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?auto=format&fit=crop&q=80&w=400",
+    "email": "aksel.holm@example.com",
+    "address": "Nørrebrogade 112, 2200 Copenhagen, Denmark",
+    "phoneNumber": "+45 31 44 55 66",
+    "linkedInUrl": "https://www.linkedin.com/in/akselholm",
+    "githubUrl": "https://github.com/akselholm",
+    "skills": [
+      "Go",
+      "PostgreSQL",
+      "Kubernetes",
+      "Terraform"
+    ],
+    "education": [
+      {
+        "institution": "Technical University of Denmark",
+        "degree": "MSc Software Technology",
+        "year": 2021
+      }
+    ],
+    "competences": [
+      "platform engineering",
+      "infrastructure automation",
+      "observability",
+      "incident response"
+    ],
+    "references": [
+      "Maja Nielsen, Platform Lead at ScaleOps",
+      "Frederik Larsen, CTO at CloudHarbor"
+    ]
+  },
+  {
+    "id": "candidate-8",
+    "name": "Iris Nieminen",
+    "imageUrl": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400",
+    "email": "iris.nieminen@example.com",
+    "address": "Kalevankatu 22, 00100 Helsinki, Finland",
+    "phoneNumber": "+358 45 222 3344",
+    "linkedInUrl": "https://www.linkedin.com/in/irisnieminen",
+    "githubUrl": "https://github.com/irisnieminen",
+    "skills": [
+      "Vue",
+      "Nuxt",
+      "Pinia",
+      "Tailwind"
+    ],
+    "education": [
+      {
+        "institution": "University of Helsinki",
+        "degree": "BSc Computer Science",
+        "year": 2020
+      }
+    ],
+    "competences": [
+      "design implementation",
+      "component libraries",
+      "frontend testing",
+      "accessibility audits"
+    ],
+    "references": [
+      "Eero Lahti, Product Designer at FlowApps",
+      "Sanni Korhonen, Frontend Lead at Marketly"
+    ]
+  },
+  {
+    "id": "candidate-9",
+    "name": "Oskar Lind",
+    "imageUrl": "https://images.unsplash.com/photo-1504257432389-52343af06ae3?auto=format&fit=crop&q=80&w=400",
+    "email": "oskar.lind@example.com",
+    "address": "Södra Vägen 18, 412 54 Gothenburg, Sweden",
+    "phoneNumber": "+46 72 333 44 55",
+    "linkedInUrl": "https://www.linkedin.com/in/oskarlind",
+    "githubUrl": "https://github.com/oskarlind",
+    "skills": [
+      "C#",
+      ".NET",
+      "Azure",
+      "SQL Server"
+    ],
+    "education": [
+      {
+        "institution": "Chalmers University of Technology",
+        "degree": "MSc Computer Systems and Networks",
+        "year": 2019
+      }
+    ],
+    "competences": [
+      "enterprise architecture",
+      "cloud migration",
+      "API integration",
+      "secure coding"
+    ],
+    "references": [
+      "Anna Sjöberg, Engineering Manager at Northware",
+      "David Hallgren, Principal Architect at CloudLine"
+    ]
+  },
+  {
+    "id": "candidate-10",
+    "name": "Lea Andersen",
+    "imageUrl": "https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?auto=format&fit=crop&q=80&w=400",
+    "email": "lea.andersen@example.com",
+    "address": "Prinsens gate 24, 0157 Oslo, Norway",
+    "phoneNumber": "+47 41 22 33 44",
+    "linkedInUrl": "https://www.linkedin.com/in/leaandersen",
+    "githubUrl": "https://github.com/leaandersen",
+    "skills": [
+      "Product Design",
+      "React",
+      "Storybook",
+      "CSS"
+    ],
+    "education": [
+      {
+        "institution": "Oslo School of Architecture and Design",
+        "degree": "MDes Interaction Design",
+        "year": 2022
+      }
+    ],
+    "competences": [
+      "design systems",
+      "prototyping",
+      "user interviews",
+      "frontend collaboration"
+    ],
+    "references": [
+      "Marius Solberg, Head of Product at FinLoop",
+      "Ingrid Viken, Design Lead at HealthGrid"
+    ]
+  },
+  {
+    "id": "candidate-11",
+    "name": "Matteo Rossi",
+    "imageUrl": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=400",
+    "email": "matteo.rossi@example.com",
+    "address": "Kungsgatan 42, 111 35 Stockholm, Sweden",
+    "phoneNumber": "+46 73 888 99 10",
+    "linkedInUrl": "https://www.linkedin.com/in/matteorossi",
+    "githubUrl": "https://github.com/matteorossi",
+    "skills": [
+      "Rust",
+      "WebAssembly",
+      "Linux",
+      "Performance"
+    ],
+    "education": [
+      {
+        "institution": "Politecnico di Milano",
+        "degree": "MSc Computer Engineering",
+        "year": 2018
+      }
+    ],
+    "competences": [
+      "systems programming",
+      "performance profiling",
+      "memory safety",
+      "technical documentation"
+    ],
+    "references": [
+      "Clara Ek, Staff Engineer at Runtime Labs",
+      "Giorgio Ferri, Engineering Director at DataForge"
+    ]
+  },
+  {
+    "id": "candidate-12",
+    "name": "Nora Salo",
+    "imageUrl": "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&q=80&w=400",
+    "email": "nora.salo@example.com",
+    "address": "Hämeentie 33, 00500 Helsinki, Finland",
+    "phoneNumber": "+358 40 555 6677",
+    "linkedInUrl": "https://www.linkedin.com/in/norasalo",
+    "githubUrl": "https://github.com/norasalo",
+    "skills": [
+      "Data Science",
+      "Python",
+      "PyTorch",
+      "MLOps"
+    ],
+    "education": [
+      {
+        "institution": "Aalto University",
+        "degree": "MSc Machine Learning",
+        "year": 2023
+      }
+    ],
+    "competences": [
+      "model training",
+      "experiment tracking",
+      "data pipelines",
+      "stakeholder communication"
+    ],
+    "references": [
+      "Petri Salonen, ML Lead at SignalWorks",
+      "Laura Heinonen, Data Product Manager at Insightly"
+    ]
+  },
+  {
+    "id": "candidate-13",
+    "name": "Yasmin Haddad",
+    "imageUrl": "https://images.unsplash.com/photo-1499952127939-9bbf5af6c51c?auto=format&fit=crop&q=80&w=400",
+    "email": "yasmin.haddad@example.com",
+    "address": "Malmöhusvägen 8, 211 18 Malmö, Sweden",
+    "phoneNumber": "+46 76 444 55 66",
+    "linkedInUrl": "https://www.linkedin.com/in/yasminhaddad",
+    "githubUrl": "https://github.com/yasminhaddad",
+    "skills": [
+      "React Native",
+      "Expo",
+      "Firebase",
+      "Jest"
+    ],
+    "education": [
+      {
+        "institution": "Lund University",
+        "degree": "BSc Information Systems",
+        "year": 2021
+      }
+    ],
+    "competences": [
+      "mobile development",
+      "release management",
+      "offline-first UX",
+      "automated testing"
+    ],
+    "references": [
+      "Olle Sandberg, Mobile Lead at CommuterTech",
+      "Nadia Rahman, Product Manager at Wellnest"
     ]
   }
 ]
